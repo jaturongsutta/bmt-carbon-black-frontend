@@ -1,0 +1,44 @@
+/**
+ * 
+ * Styles for a table with borders and centered header cells.
+ * 
+ * CSS Classes:
+ * - .n-table: Applies border to the table.
+ * - .n-table th: Applies border-left, text alignment, and background color to the table header cells.
+ * - .n-table td: Applies border-left to the table data cells.
+ * - .n-table th:last-child: Applies border-right to the last table header cell.
+ * - .n-table td:last-child: Applies border-right to the last table data cell.
+ */
+.n-table {
+  /* border: 1px solid #dee2e6; */
+}
+.n-table th,
+.n-table td {
+  border-left: 1px solid #dee2e6;
+}
+
+/* .n-table th:first-child,
+  .n-table td:first-child {
+    border-left: none;
+  }*/
+.n-table th:last-child,
+.n-table td:last-child {
+  border-right: 1px solid #dee2e6;
+}
+
+.n-table th {
+  text-align: center !important;
+  background-color: #f1f1f1;
+}
+
+.n-table thead th {
+  border-top: 1px solid #dee2e6;
+}
+
+.n-table tbody tr:last-child td {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.n-table.with-pagination tbody tr:last-child td {
+  border-bottom: none;
+}
