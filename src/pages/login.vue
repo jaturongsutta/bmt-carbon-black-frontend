@@ -47,11 +47,14 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, inject } from "vue";
 import rules from "@/utils/rules";
 import { authLogin, authGetMenuRoute } from "@/api/authentication.js";
 import { useRouter } from "vue-router";
 import { xorEncryptDecrypt } from "@/utils/data-protection.js";
+
+const Alert = inject("$alert");
+
 const router = useRouter();
 const form = reactive({
   username: "",
@@ -63,29 +66,36 @@ const frmLogin = ref(null);
 const isLoading = ref(false);
 
 const handleSubmit = async () => {
-  const { valid } = await frmLogin.value.validate();
-  if (valid) {
-    isLoading.value = true;
-    console.log("Form is valid");
+  try {
+    const { valid } = await frmLogin.value.validate();
+    if (valid) {
+      isLoading.value = true;
+      console.log("Form is valid");
 
-    let login = await authLogin(form.username, form.password);
-    if (login.status == 0) {
-      router.push("/");
+      let login = await authLogin(form.username, form.password);
+      isLoading.value = false;
+      if (login.result.status == 0) {
+        router.push("/");
 
-      try {
-        // Add Routes for Vue Router
-        const res = await authGetMenuRoute();
-        if (res.data != null && res.data) {
-          var data = xorEncryptDecrypt(JSON.stringify(res.data));
-          localStorage.setItem("menuRoutes", data);
-          await fetchRoutes();
+        try {
+          // Add Routes for Vue Router
+          const res = await authGetMenuRoute();
+          if (res.data != null && res.data) {
+            var data = xorEncryptDecrypt(JSON.stringify(res.data));
+            localStorage.setItem("menuRoutes", data);
+            await fetchRoutes();
+          }
+        } catch (error) {
+          console.error("Error Fetching Routes: ", error);
         }
-      } catch (error) {
-        console.error("Error Fetching Routes: ", error);
+      } else {
+        console.log("Login failed");
       }
-    } else {
-      console.log("Login failed");
     }
+  } catch (error) {
+    console.error("Error: ", error);
+    isLoading.value = false;
+    Alert.error("Login fail : " + error.message);
   }
 };
 </script>

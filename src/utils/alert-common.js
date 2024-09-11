@@ -36,7 +36,7 @@ function AlertSuccess(title) {
     title: title,
     icon: "success",
     customClass: {
-      confirmButton: "btn bg-gradient-success",
+      confirmButton: "btn-alert btn-alert-success",
     },
     buttonsStyling: false,
   });
@@ -51,13 +51,14 @@ function AlertWarning(title, detail) {
     text: detail,
     icon: "warning",
     customClass: {
-      confirmButton: "btn bg-gradient-warning",
+      confirmButton: "btn-alert btn-alert-warning",
     },
     buttonsStyling: false,
   });
 }
 
 function AlertError(title, detail) {
+  console.log("AlertError", title, detail);
   if (title == undefined || title == null || title == "") {
     title = "Error";
   }
@@ -66,7 +67,7 @@ function AlertError(title, detail) {
     text: detail,
     icon: "error",
     customClass: {
-      confirmButton: "btn bg-gradient-danger",
+      confirmButton: "btn-alert btn-alert-error",
     },
     buttonsStyling: false,
   });
@@ -96,8 +97,8 @@ function AlertConfirm(msg1, msg2) {
     confirmButtonText: "Yes",
     buttonsStyling: false,
     customClass: {
-      confirmButton: "btn bg-gradient-danger me-2",
-      cancelButton: "btn ",
+      confirmButton: "btn-alert btn-alert-confirm",
+      cancelButton: "btn-alert btn-alert-cancel",
     },
   };
 

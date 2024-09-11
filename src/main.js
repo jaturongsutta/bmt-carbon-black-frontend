@@ -7,6 +7,7 @@
 // Plugins
 import { registerPlugins } from "@/plugins";
 import { registerGlobalComponents } from "@/plugins/global-component";
+
 import alertCommon from "@/utils/alert-common.js";
 
 // css

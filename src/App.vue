@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import Swal from "sweetalert2";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import { authLogout, refreshToken } from "@/api/authentication";
@@ -29,7 +28,7 @@ export default {
     }
     const isLoggedIn = sessionStorage.getItem("isLogin") ?? false;
     if (!isLoggedIn) {
-      this.$router.push({ name: "login", params: { page } });
+      this.$router.push({ name: "login" });
     }
   },
   methods: {
@@ -38,51 +37,53 @@ export default {
 
       if (this.countdownExpire > 0 && Math.round(this.countdownExpire) === 30) {
         let timerInterval;
-        Swal.fire({
-          title: "Session expiration warning",
-          html: `เซคชั่นกำลังจะหมดอายุใน <b>${Math.round(
-            this.countdownExpire
-          )}</b> วินาที คุณต้องการอยู่ในระบบต่อหรือไม่?`,
-          confirmButtonText: "Yes",
-          showCancelButton: true,
-          cancelButtonText: "No",
-          didOpen: () => {
-            const timer = Swal.getPopup().querySelector("b");
-            timerInterval = setInterval(() => {
-              timer.textContent = `${Math.round(this.countdownExpire)}`;
-              if (this.countdownExpire <= 0) {
-                Swal.close({ isDenied: true });
-              }
-            }, 1000);
-          },
-          willClose: async () => {
-            clearInterval(timerInterval);
-          },
-        }).then(async (result) => {
-          /* Read more about handling dismissals below */
-          if (result.isDenied) {
-            await Swal.fire(
-              "Session Expired",
-              "Please sign in to continue",
-              "warning"
-            );
-            authLogout();
-            this.goToPage();
-          } else if (result.isDismissed) {
-            authLogout();
-            this.goToPage();
-          } else if (result.isConfirmed) {
-            refreshToken()
-              .then((response) => {
-                localStorage.setItem("jwt", response.data.accessToken);
-                axios.defaults.headers.common["Authorization"] =
-                  "Bearer " + response.data.accessToken;
-              })
-              .catch((error) => {
-                console.error("Refresh token failed : ", error);
-              });
-          }
-        });
+        this.$swal
+          .fire({
+            title: "Session expiration warning",
+            html: `เซคชั่นกำลังจะหมดอายุใน <b>${Math.round(
+              this.countdownExpire
+            )}</b> วินาที คุณต้องการอยู่ในระบบต่อหรือไม่?`,
+            confirmButtonText: "Yes",
+            showCancelButton: true,
+            cancelButtonText: "No",
+            didOpen: () => {
+              const timer = Swal.getPopup().querySelector("b");
+              timerInterval = setInterval(() => {
+                timer.textContent = `${Math.round(this.countdownExpire)}`;
+                if (this.countdownExpire <= 0) {
+                  Swal.close({ isDenied: true });
+                }
+              }, 1000);
+            },
+            willClose: async () => {
+              clearInterval(timerInterval);
+            },
+          })
+          .then(async (result) => {
+            /* Read more about handling dismissals below */
+            if (result.isDenied) {
+              await Swal.fire(
+                "Session Expired",
+                "Please sign in to continue",
+                "warning"
+              );
+              authLogout();
+              this.goToPage();
+            } else if (result.isDismissed) {
+              authLogout();
+              this.goToPage();
+            } else if (result.isConfirmed) {
+              refreshToken()
+                .then((response) => {
+                  localStorage.setItem("jwt", response.data.accessToken);
+                  axios.defaults.headers.common["Authorization"] =
+                    "Bearer " + response.data.accessToken;
+                })
+                .catch((error) => {
+                  console.error("Refresh token failed : ", error);
+                });
+            }
+          });
       }
     },
 

@@ -1,5 +1,9 @@
 <template>
-  <v-app-bar class="elevation-1 position-fixed" v-if="authStore.isLoggedIn">
+  <v-app-bar
+    class="elevation-1 position-fixed"
+    v-if="authStore.isLoggedIn"
+    density="compact"
+  >
     <v-app-bar-nav-icon
       variant="text"
       @click.stop="toggleMinimalMenu"

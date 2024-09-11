@@ -41,7 +41,6 @@
           :items="items"
           item-key="external_id"
           :items-per-page="pageSize"
-          :loading="isLoading"
         >
           <template v-slot:[`item.action`]="{ item }">
             <n-gbtn-edit @click="onEdit(item.Menu_No)"></n-gbtn-edit>

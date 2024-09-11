@@ -119,6 +119,7 @@ const allMenu = computed(() => {
 
 const mainMenu = computed(() => {
   const menus = authStore.permission == null ? [] : authStore.permission;
+  console.log("xxx", authStore.permission);
   return menus.filter((menu) => menu.IS_MainMenu === "Main Menu");
 });
 

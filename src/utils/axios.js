@@ -1,5 +1,4 @@
 import axios from "axios";
-import Swal from "sweetalert2";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 if (localStorage.getItem("jwt")) {
@@ -31,7 +30,7 @@ axios.interceptors.response.use(
       delete axios.defaults.headers.common["Authorization"];
       // router.push("/login");
 
-      await Swal.fire(
+      await this.$swal.fire(
         "Session Expired",
         "Please sign in to continue",
         "warning"

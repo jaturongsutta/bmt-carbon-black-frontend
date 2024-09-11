@@ -4,32 +4,17 @@ export const authLogin = async (username, password) => {
   const authStore = useAuthStore();
   try {
     const response = await axios.post("/auth/login", { username, password });
-
-    // const response = {
-    //   data: {
-    //     status: 0,
-    //     token: "xxx",
-    //     user: {
-    //       id: 1,
-    //       username: "admin",
-    //       email: "",
-    //     },
-    //     permission: {
-    //       data: [],
-    //     },
-    //   },
-    // };
-
-    if (response.data.status == 2) {
+    const data = response.data;
+    console.log("response", response);
+    if (data.result.status == 2) {
       return { status: 2 };
     }
 
-    localStorage.setItem("jwt", response.data.token);
-    axios.defaults.headers.common["Authorization"] =
-      "Bearer " + response.data.token;
+    localStorage.setItem("jwt", data.token);
+    axios.defaults.headers.common["Authorization"] = "Bearer " + data.token;
 
-    const user = response.data.user;
-    const permission = response.data.permission.data;
+    const user = data.user;
+    const permission = data.permission;
 
     // set store
     authStore.setUser(user);
@@ -39,7 +24,9 @@ export const authLogin = async (username, password) => {
     console.log("set isLogin", true);
     sessionStorage.setItem("isLogin", true);
 
-    return response.data;
+    console.log("permission", permission);
+
+    return data;
   } catch (error) {
     authStore.setIsLogin(false);
     throw error;

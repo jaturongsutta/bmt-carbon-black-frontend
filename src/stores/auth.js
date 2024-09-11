@@ -4,7 +4,7 @@ export const useAuthStore = defineStore("auth", {
   persist: true,
   state: () => ({
     user: {},
-    permission: {},
+    permission: [],
     isLoggedIn: false,
   }),
 

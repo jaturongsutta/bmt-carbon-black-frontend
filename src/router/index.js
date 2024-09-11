@@ -7,6 +7,7 @@ import routes from "./routes.js";
 import { refreshToken } from "@/api/authentication.js";
 import { xorEncryptDecrypt } from "@/utils/data-protection.js";
 import axios from "axios";
+import Swal from "sweetalert2";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
@@ -15,14 +16,13 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
   const requireAuth = to.meta.requireAuth;
-
   // console.log("to", to);
   // console.log("from", from);
   // console.log("authStore.isLoggedIn", authStore.isLoggedIn);
   // console.log("requireAuth", requireAuth);
 
   if (requireAuth === true && authStore.isLoggedIn === false) {
-    // await Swal.fire("Session Expired", "Please sign in to continue", "warning");
+    await Swal.fire("Session Expired", "Please sign in to continue", "warning");
     console.log("goto login");
     next({ name: "login" });
     return; // Prevent further execution to ensure next is called only once
