@@ -1,4 +1,6 @@
 import axios from "axios";
+import Swal from "sweetalert2";
+import { useAuthStore } from "@/stores/auth";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 if (localStorage.getItem("jwt")) {
@@ -28,9 +30,11 @@ axios.interceptors.response.use(
       console.log("JWT expired or invalid");
 
       delete axios.defaults.headers.common["Authorization"];
+      const authStore = useAuthStore();
+      authStore.logout();
       // router.push("/login");
 
-      await this.$swal.fire(
+      await Swal.fire(
         "Session Expired",
         "Please sign in to continue",
         "warning"

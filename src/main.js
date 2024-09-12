@@ -8,7 +8,7 @@
 import { registerPlugins } from "@/plugins";
 import { registerGlobalComponents } from "@/plugins/global-component";
 
-import alertCommon from "@/utils/alert-common.js";
+// import alertCommon from "@/utils/alert-common.js";
 
 // css
 import "@/styles/main.css";
@@ -27,5 +27,5 @@ registerGlobalComponents(app);
 
 app.mount("#app");
 
-// Initial Common function
-alertCommon.initialAlert(app);
+// // Initial Common function
+// alertCommon.initialAlert(app);

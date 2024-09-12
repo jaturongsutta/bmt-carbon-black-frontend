@@ -15,17 +15,13 @@
           :to="hd.URL"
           link
         >
-          <v-list-item-icon>
-            <v-icon>mdi mdi-form-select1</v-icon>
-          </v-list-item-icon>
+          <v-icon>mdi mdi-form-select1</v-icon>
           <!-- <v-list-item-title>{{ hd.Menu_Name }}</v-list-item-title> -->
         </v-list-item>
         <v-menu v-else open-on-hover location="end">
           <template v-slot:activator="{ props }">
             <v-list-item link v-bind="props">
-              <v-list-item-icon>
-                <v-icon>mdi mdi-form-select</v-icon>
-              </v-list-item-icon>
+              <v-icon>mdi mdi-form-select</v-icon>
 
               <!-- <v-list-item-title class="text-h6">
                 {{ hd.Menu_Name }}</v-list-item-title
@@ -48,9 +44,9 @@
                 <v-list-item-title class="title-sub-menu">{{
                   menu.Menu_Name
                 }}</v-list-item-title>
-                <v-list-item-icon v-if="menu.Menu_Icon != ''">
-                  <v-icon>{{ menu.Menu_Icon }}</v-icon>
-                </v-list-item-icon>
+                <v-icon v-if="menu.Menu_Icon != ''">{{
+                  menu.Menu_Icon
+                }}</v-icon>
               </v-list-item>
             </v-list>
           </v-card>
@@ -63,7 +59,11 @@
       open-strategy="single"
       density="comfortable"
     >
-      <v-list-item prepend-icon="mdi-home" title="Home"></v-list-item>
+      <v-list-item
+        prepend-icon="mdi-home"
+        title="Home"
+        @click="homeClick"
+      ></v-list-item>
 
       <v-list-group
         :value="menuItem.Menu_Name"
@@ -98,6 +98,8 @@
 import { computed, onMounted, ref } from "vue";
 import { useAuthStore } from "@/stores/auth";
 
+import { fetchRoutes } from "@/router/index";
+
 import { useAppStore } from "@/stores/app";
 import * as api from "@/api/common-master/auth";
 const drawer = ref(true);
@@ -111,26 +113,25 @@ const appStore = useAppStore();
 
 onMounted(() => {
   api.getMenuPermissionByUserId().then((res) => {
-    console.log("res.data", res.data);
     authStore.setPermission(res.data);
   });
 });
 
 const allMenu = computed(() => {
-  console.log("authStore.permission ", authStore.permission);
   return authStore.permission == null
     ? []
     : authStore.permission.sort((a, b) => a.Menu_Seq - b.Menu_Seq);
 });
 
 const mainMenu = computed(() => {
-  console.log(" mainMenu authStore.permission ", authStore.permission);
   const menus = authStore.permission == null ? [] : authStore.permission;
   return menus.filter((menu) => menu.IS_MainMenu === "Main Menu");
 });
 
 const miniMenu = computed(() => {
-  console.log("appStore.minimalMenu", appStore.minimalMenu);
   return appStore.minimalMenu;
 });
+const homeClick = () => {
+  fetchRoutes();
+};
 </script>

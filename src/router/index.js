@@ -63,7 +63,9 @@ async function fetchRoutes() {
     menuRoutes.forEach(async (routeConfig) => {
       try {
         if (router.hasRoute(routeConfig.routeName)) {
+          const route = router.getRoutes();
           router.removeRoute(routeConfig.routeName);
+
           console.warn(
             `Route '${routeConfig.routeName}' already exists. Overwriting...`
           );
@@ -72,7 +74,6 @@ async function fetchRoutes() {
           path: routeConfig.routePath,
           name: routeConfig.routeName,
           component: await loadComponent(routeConfig.physicalPath),
-
           meta: {
             requireAuth: routeConfig.isRequireAuth,
             menuNo: routeConfig.menuNo,
@@ -87,6 +88,12 @@ async function fetchRoutes() {
   } catch (error) {
     console.error("Failed to load route configuration:", error);
   }
+}
+
+// Function to dynamically import components based on their names
+async function loadComponent(componentName) {
+  return async () =>
+    await import(/* @vite-ignore */ `../pages/${componentName}`);
 }
 
 // Call fetchRoutes to initialize dynamic routes

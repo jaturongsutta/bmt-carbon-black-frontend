@@ -10,9 +10,9 @@
       ></v-select>
     </div>
     <div class="float-start mt-4">
-      <text-subtitle-1
-        >&nbsp;&nbsp; per page of {{ totalItems }} items</text-subtitle-1
-      >
+      <div class="text-subtitle-1">
+        &nbsp;&nbsp; per page of {{ totalItems }} items
+      </div>
     </div>
 
     <v-pagination

@@ -25,14 +25,19 @@ import { useAuthStore } from "@/stores/auth.js";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 import { useAppStore } from "@/stores/app";
-
+import { inject } from "vue";
+const Alert = inject("Alert");
 const storeApp = useAppStore();
 const router = useRouter();
 const authStore = useAuthStore();
 
 const logoutClick = () => {
-  authStore.logout();
-  router.push({ name: "login" });
+  Alert.confirm("Are you sure you want to logout?").then((c) => {
+    if (c.isConfirmed) {
+      authStore.logout();
+      window.location.href = "/login";
+    }
+  });
 };
 
 const userFullname = computed(() => {

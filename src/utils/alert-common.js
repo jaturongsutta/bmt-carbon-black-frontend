@@ -1,20 +1,22 @@
 let app = null;
-
+import Swal from "sweetalert2";
 function initialAlert(_app) {
   app = _app;
 
-  app.provide("$alert", {
+  app.provide("Alert", {
     confirm: AlertConfirm,
     success: AlertSuccess,
     warning: AlertWarning,
     error: AlertError,
     fromResult: AlertFromResult,
   });
-  app.provide("$AlertConfirm", AlertConfirm);
-  app.provide("$AlertSuccess", AlertSuccess);
-  app.provide("$AlertWarning", AlertWarning);
-  app.provide("$AlertError", AlertError);
 }
+const alertCommon = {
+  confirm: AlertConfirm,
+  success: AlertSuccess,
+  warning: AlertWarning,
+  error: AlertError,
+};
 
 function AlertFromResult(result, successMessage) {
   if (result.status === 0) {
@@ -32,7 +34,7 @@ function AlertSuccess(title) {
   if (title == undefined || title == null || title == "") {
     title = "Save successful";
   }
-  return app.config.globalProperties.$swal.fire({
+  return Swal.fire({
     title: title,
     icon: "success",
     customClass: {
@@ -46,7 +48,7 @@ function AlertWarning(title, detail) {
   if (title == undefined || title == null || title == "") {
     title = "Warring";
   }
-  return app.config.globalProperties.$swal.fire({
+  return Swal.fire({
     title: title,
     text: detail,
     icon: "warning",
@@ -62,7 +64,7 @@ function AlertError(title, detail) {
   if (title == undefined || title == null || title == "") {
     title = "Error";
   }
-  return app.config.globalProperties.$swal.fire({
+  return Swal.fire({
     title: title,
     text: detail,
     icon: "error",
@@ -73,22 +75,6 @@ function AlertError(title, detail) {
   });
 }
 
-// function AlertConfirm(msg) {
-//   return app.config.globalProperties.$swal.fire({
-//     // title: title,
-//     text: msg,
-//     icon: "warning",
-//     showCancelButton: true,
-//     cancelButtonText: "No",
-//     confirmButtonText: "Yes",
-//     buttonsStyling: false,
-//     customClass: {
-//       confirmButton: "btn bg-gradient-danger me-2",
-//       cancelButton: "btn ",
-//     },
-//   });
-// }
-
 function AlertConfirm(msg1, msg2) {
   let option = {
     icon: "warning",
@@ -97,7 +83,7 @@ function AlertConfirm(msg1, msg2) {
     confirmButtonText: "Yes",
     buttonsStyling: false,
     customClass: {
-      confirmButton: "btn-alert btn-alert-confirm",
+      confirmButton: "btn-alert btn-alert-confirm me-2",
       cancelButton: "btn-alert btn-alert-cancel",
     },
   };
@@ -109,9 +95,7 @@ function AlertConfirm(msg1, msg2) {
     option.text = msg1;
   }
 
-  return app.config.globalProperties.$swal.fire(option);
+  return Swal.fire(option);
 }
 
-export default {
-  initialAlert,
-};
+export default alertCommon;

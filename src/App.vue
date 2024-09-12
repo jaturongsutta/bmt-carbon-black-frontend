@@ -2,7 +2,7 @@
   <v-app>
     <v-layout class="rounded rounded-md">
       <app-bar></app-bar>
-      <nav-bar></nav-bar>
+      <nav-bar v-if="authStore.isLoggedIn"></nav-bar>
       <v-main class="main">
         <router-view class="pa-5"></router-view>
       </v-main>
@@ -14,8 +14,14 @@
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import { authLogout, refreshToken } from "@/api/authentication";
+import { useAuthStore } from "@/stores/auth";
 export default {
   name: "App",
+  setup() {
+    const authStore = useAuthStore();
+
+    return { authStore };
+  },
   data() {
     return {
       tokenCheckInterval: null,
