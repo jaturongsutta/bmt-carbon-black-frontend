@@ -99,7 +99,7 @@ import { computed, onMounted, ref } from "vue";
 import { useAuthStore } from "@/stores/auth";
 
 import { useAppStore } from "@/stores/app";
-
+import * as api from "@/api/common-master/auth";
 const drawer = ref(true);
 const rail = ref(false);
 
@@ -109,22 +109,28 @@ const authStore = useAuthStore();
 
 const appStore = useAppStore();
 
-onMounted(() => {});
+onMounted(() => {
+  api.getMenuPermissionByUserId().then((res) => {
+    console.log("res.data", res.data);
+    authStore.setPermission(res.data);
+  });
+});
 
 const allMenu = computed(() => {
+  console.log("authStore.permission ", authStore.permission);
   return authStore.permission == null
     ? []
     : authStore.permission.sort((a, b) => a.Menu_Seq - b.Menu_Seq);
 });
 
 const mainMenu = computed(() => {
+  console.log(" mainMenu authStore.permission ", authStore.permission);
   const menus = authStore.permission == null ? [] : authStore.permission;
-  console.log("xxx", authStore.permission);
   return menus.filter((menu) => menu.IS_MainMenu === "Main Menu");
 });
 
 const miniMenu = computed(() => {
-  console.log(appStore.minimalMenu);
+  console.log("appStore.minimalMenu", appStore.minimalMenu);
   return appStore.minimalMenu;
 });
 </script>
