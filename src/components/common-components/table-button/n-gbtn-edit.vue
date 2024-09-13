@@ -1,10 +1,10 @@
 <template>
   <v-icon
-    icon="fas fa-pencil-alt"
+    icon="mdi-pencil-outline"
     v-tooltip:end="'Edit'"
-    size="x-small"
-    class="text-secondary"
+    class="text-warning"
     style="margin-left: 5px; margin-right: 5px"
+    v-if="canAccess"
   ></v-icon>
 </template>
 
@@ -27,7 +27,6 @@ let canAccess = ref(false);
 
 onMounted(() => {
   const { meta } = route;
-
   if (props.permission) {
     // console.log("props", props.permission);
     // console.log("meta", meta.menuNo);
@@ -54,5 +53,6 @@ onMounted(() => {
   } else {
     canAccess.value = true;
   }
+  console.log(canAccess.value);
 });
 </script>

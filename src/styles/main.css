@@ -101,3 +101,12 @@
 .btn-alert-error:hover {
   opacity: 0.8;
 }
+
+.swal2-container {
+  z-index: 9999 !important;
+}
+
+.v-field__field:has(input[readonly]) ~ .v-field__outline {
+  opacity: 0.4;
+  background-color: #e9ecef;
+}
