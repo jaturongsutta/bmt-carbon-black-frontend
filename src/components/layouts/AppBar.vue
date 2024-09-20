@@ -56,12 +56,11 @@ const toggleMinimalMenu = () => {
 
 <style scoped>
 .bridgestone-top-bar {
-  background: rgb(255, 255, 255);
   background: linear-gradient(
     45deg,
     rgba(255, 255, 255, 1) 15%,
     rgba(0, 0, 0, 1) 100%
-  );
+  ) !important;
   color: white;
   padding: 0 16px;
   display: flex;
@@ -77,6 +76,7 @@ const toggleMinimalMenu = () => {
 .text-h6 {
   font-weight: bold;
   margin-right: 16px;
+  color: white;
 }
 
 .v-btn {
