@@ -51,8 +51,12 @@ const toggleMinimalMenu = () => {
 
 <style scoped>
 .bridgestone-top-bar {
-  background: linear-gradient(to right, rgb(255 255 255 / 80%), rgb(0 0 0)),
-    url(/src/assets/imgs/bridgestone-bg.jpg) no-repeat center center;
+  background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.8),
+      rgba(0, 0, 0, 1)
+    ),
+    url("@/assets/imgs/bridgestone-bg.jpg") no-repeat center center;
   background-size: cover;
   color: white;
   padding: 0 16px;
@@ -76,6 +80,6 @@ const toggleMinimalMenu = () => {
 }
 
 .v-app-bar-nav-icon {
-  color: rgb(6, 6, 6);
+  color: rgb(0, 0, 0);
 }
 </style>
