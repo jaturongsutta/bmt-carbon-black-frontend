@@ -1,6 +1,6 @@
 <template>
   <v-app-bar
-    class="elevation-1 position-fixed"
+    class="elevation-1 position-fixed bridgestone-top-bar"
     v-if="authStore.isLoggedIn"
     density="compact"
   >
@@ -41,7 +41,6 @@ const logoutClick = () => {
 };
 
 const userFullname = computed(() => {
-  console.log(authStore.user);
   return authStore.user?.firstName + " " + authStore.user?.lastName;
 });
 
@@ -49,3 +48,34 @@ const toggleMinimalMenu = () => {
   storeApp.minimalMenu = !storeApp.minimalMenu;
 };
 </script>
+
+<style scoped>
+.bridgestone-top-bar {
+  background: linear-gradient(to right, rgb(255 255 255 / 80%), rgb(0 0 0)),
+    url(/src/assets/imgs/bridgestone-bg.jpg) no-repeat center center;
+  background-size: cover;
+  color: white;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logo-sta {
+  height: 40px;
+  margin-right: 16px;
+}
+
+.text-h6 {
+  font-weight: bold;
+  margin-right: 16px;
+}
+
+.v-btn {
+  color: white;
+}
+
+.v-app-bar-nav-icon {
+  color: rgb(6, 6, 6);
+}
+</style>
