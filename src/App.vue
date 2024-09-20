@@ -41,6 +41,8 @@ export default {
       this.tokenCheckInterval = setInterval(this.checkTokenExpire, 1000); // Check every 10 seconds
     }
     const isLoggedIn = sessionStorage.getItem("isLogin") ?? false;
+
+    this.authStore.isLoggedIn = isLoggedIn;
     if (!isLoggedIn) {
       this.$router.push({ name: "login" });
     }

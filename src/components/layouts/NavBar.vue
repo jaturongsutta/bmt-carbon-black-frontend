@@ -59,11 +59,11 @@
       open-strategy="single"
       density="comfortable"
     >
-      <!-- <v-list-item
+      <v-list-item
         prepend-icon="mdi-home"
         title="Home"
         @click="homeClick"
-      ></v-list-item> -->
+      ></v-list-item>
 
       <v-list-group
         :value="menuItem.Menu_Name"

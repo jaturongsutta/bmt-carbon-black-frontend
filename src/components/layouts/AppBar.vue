@@ -1,7 +1,7 @@
 <template>
   <v-app-bar
     class="elevation-1 position-fixed bridgestone-top-bar"
-    v-if="authStore.isLoggedIn"
+    v-if="isShow"
     density="compact"
   >
     <v-app-bar-nav-icon
@@ -31,6 +31,11 @@ const storeApp = useAppStore();
 const router = useRouter();
 const authStore = useAuthStore();
 
+const isShow = computed(() => {
+  console.log("authStore.isLoggedIn ", authStore.isLoggedIn);
+  return authStore.isLoggedIn;
+});
+
 const logoutClick = () => {
   Alert.confirm("Are you sure you want to logout?").then((c) => {
     if (c.isConfirmed) {
@@ -51,13 +56,12 @@ const toggleMinimalMenu = () => {
 
 <style scoped>
 .bridgestone-top-bar {
+  background: rgb(255, 255, 255);
   background: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0.8),
-      rgba(0, 0, 0, 1)
-    ),
-    url("@/assets/imgs/bridgestone-bg.jpg") no-repeat center center;
-  background-size: cover;
+    45deg,
+    rgba(255, 255, 255, 1) 15%,
+    rgba(0, 0, 0, 1) 100%
+  );
   color: white;
   padding: 0 16px;
   display: flex;
