@@ -145,4 +145,8 @@ const onReset = () => {
   items.value = [];
   totalItems.value = 0;
 };
+
+const onAdd = () => {
+  router.push({ name: "user-info", params: { id: null } });
+};
 </script>

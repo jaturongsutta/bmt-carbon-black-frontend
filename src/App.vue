@@ -15,20 +15,28 @@ import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import { authLogout, refreshToken } from "@/api/authentication";
 import { useAuthStore } from "@/stores/auth";
+
+import { useRoute } from "vue-router";
 export default {
   name: "App",
   setup() {
     const authStore = useAuthStore();
-
-    return { authStore };
+    const route = useRoute();
+    return { authStore, route };
   },
   data() {
     return {
       tokenCheckInterval: null,
       countdownExpire: 0,
+      isPopopOpen: false,
     };
   },
   created() {
+    // Clear all intervals
+    for (let i = 1; i < 99; i++) {
+      clearInterval(i);
+    }
+
     if (!this.tokenCheckInterval) {
       this.tokenCheckInterval = setInterval(this.checkTokenExpire, 1000); // Check every 10 seconds
     }
@@ -40,9 +48,12 @@ export default {
   methods: {
     checkTokenExpire() {
       this.countdownExpire = this.getCountdownTokenExpired();
+      // console.log("Countdown: ", this.countdownExpire);
+      if (this.isPopopOpen) return;
 
       if (this.countdownExpire > 0 && Math.round(this.countdownExpire) === 30) {
         let timerInterval;
+        this.isPopopOpen = true;
         this.$swal
           .fire({
             title: "Session expiration warning",
@@ -53,11 +64,11 @@ export default {
             showCancelButton: true,
             cancelButtonText: "No",
             didOpen: () => {
-              const timer = Swal.getPopup().querySelector("b");
+              const timer = this.$swal.getPopup().querySelector("b");
               timerInterval = setInterval(() => {
                 timer.textContent = `${Math.round(this.countdownExpire)}`;
                 if (this.countdownExpire <= 0) {
-                  Swal.close({ isDenied: true });
+                  this.$swal.close({ isDenied: true });
                 }
               }, 1000);
             },
@@ -68,16 +79,16 @@ export default {
           .then(async (result) => {
             /* Read more about handling dismissals below */
             if (result.isDenied) {
-              await Swal.fire(
+              await this.$swal.fire(
                 "Session Expired",
                 "Please sign in to continue",
                 "warning"
               );
               authLogout();
-              this.goToPage();
+              this.gotoLogin();
             } else if (result.isDismissed) {
               authLogout();
-              this.goToPage();
+              this.gotoLogin();
             } else if (result.isConfirmed) {
               refreshToken()
                 .then((response) => {
@@ -89,6 +100,18 @@ export default {
                   console.error("Refresh token failed : ", error);
                 });
             }
+
+            this.isPopopOpen = false;
+          });
+      } else if (this.route.name != "login" && this.countdownExpire < 0) {
+        this.isPopopOpen = true;
+        console.log("Current route name:", this.route.name);
+        this.$swal
+          .fire("Session Expired", "Please sign in to continue", "warning")
+          .then(() => {
+            authLogout();
+            this.gotoLogin();
+            this.isPopopOpen = false;
           });
       }
     },
@@ -108,6 +131,10 @@ export default {
         console.error("Error decoding token:", error);
         return -1; // Consider expired if there's an error decoding
       }
+    },
+
+    gotoLogin() {
+      this.$router.push({ name: "login" });
     },
   },
 };

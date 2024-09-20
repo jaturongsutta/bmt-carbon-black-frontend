@@ -59,11 +59,11 @@
       open-strategy="single"
       density="comfortable"
     >
-      <v-list-item
+      <!-- <v-list-item
         prepend-icon="mdi-home"
         title="Home"
         @click="homeClick"
-      ></v-list-item>
+      ></v-list-item> -->
 
       <v-list-group
         :value="menuItem.Menu_Name"
@@ -98,8 +98,6 @@
 import { computed, onMounted, ref } from "vue";
 import { useAuthStore } from "@/stores/auth";
 
-import { fetchRoutes } from "@/router/index";
-
 import { useAppStore } from "@/stores/app";
 import * as api from "@/api/common-master/auth";
 const drawer = ref(true);
@@ -131,7 +129,4 @@ const mainMenu = computed(() => {
 const miniMenu = computed(() => {
   return appStore.minimalMenu;
 });
-const homeClick = () => {
-  fetchRoutes();
-};
 </script>

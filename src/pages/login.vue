@@ -75,8 +75,6 @@ const handleSubmit = async () => {
       let login = await authLogin(form.username, form.password);
       isLoading.value = false;
       if (login.result.status == 0) {
-        router.push("/");
-
         try {
           // Add Routes for Vue Router
           const res = await authGetMenuRoute();
@@ -89,6 +87,8 @@ const handleSubmit = async () => {
         } catch (error) {
           console.error("Error Fetching Routes: ", error);
         }
+
+        router.push("/");
       } else {
         console.log("Login failed");
       }

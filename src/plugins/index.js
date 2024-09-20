@@ -5,7 +5,7 @@
  */
 
 // Plugins
-import vuetify from "./vuetify";
+import vuetify from "@/plugins/vuetify";
 import router from "@/router";
 import pinia from "@/stores";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
