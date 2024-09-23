@@ -47,6 +47,9 @@
           :items-length="totalItems"
           @update:options="loadData"
         >
+          <template v-slot:[`item.action`]="{ item }">
+            <n-gbtn-edit @click="onEdit(item.USER_ID)"></n-gbtn-edit>
+          </template>
           <template v-slot:bottom>
             <n-pagination
               v-model:currentPage="currentPage"
@@ -148,5 +151,9 @@ const onReset = () => {
 
 const onAdd = () => {
   router.push({ name: "user-info", params: { id: null } });
+};
+
+const onEdit = (id) => {
+  router.push({ name: "user-info", params: { id } });
 };
 </script>

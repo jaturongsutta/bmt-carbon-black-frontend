@@ -5,10 +5,16 @@
  */
 
 // Composables
-import { createRouter, createWebHistory } from "vue-router";
-import routes from "./routes.js";
+import { createRouter, createWebHistory } from "vue-router/auto";
+import { routes } from "vue-router/auto-routes";
 
 import { useAuthStore } from "@/stores/auth.js";
+import { jwtDecode } from "jwt-decode";
+// Composables
+import routesData from "./routes.js";
+import { refreshToken } from "@/api/authentication.js";
+import { xorEncryptDecrypt } from "@/utils/data-protection.js";
+import axios from "axios";
 import Swal from "sweetalert2";
 
 const router = createRouter({
@@ -18,14 +24,13 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
-  const requireAuth =
-    to.meta && to.meta.requireAuth !== undefined ? to.meta.requireAuth : true;
+  const requireAuth = to.meta.requireAuth;
+
+  console.log("to.name", to.name);
+  console.log("to.meta", to.meta);
+
   if (requireAuth === true && authStore.isLoggedIn === false) {
-    await Swal.fire(
-      "Session Expired1",
-      "Please sign in to continue",
-      "warning"
-    );
+    await Swal.fire("Session Expired", "Please sign in to continue", "warning");
     next({ name: "login" });
     return; // Prevent further execution to ensure next is called only once
   }
@@ -48,6 +53,8 @@ router.onError((err, to) => {
   }
 });
 
-router.isReady().then(() => {});
+router.isReady().then(() => {
+  localStorage.removeItem("vuetify:dynamic-reload");
+});
 
 export default router;

@@ -38,13 +38,13 @@ pinia.use(piniaPluginPersistedstate);
 import VueSweetalert2 from "vue-sweetalert2";
 // Import SweetAlert2 CSS
 import "sweetalert2/dist/sweetalert2.min.css";
-import createAppRouter from "./router";
+import router from "./router";
 
 import alertCommon from "@/utils/alert-common.js";
-
+import { updateRoutes } from "@/router/routeService.js";
 async function bootstrap() {
+  await updateRoutes(router);
   const app = createApp(App);
-  const router = await createAppRouter();
   app.use(vuetify);
   app.use(pinia);
   app.use(router);

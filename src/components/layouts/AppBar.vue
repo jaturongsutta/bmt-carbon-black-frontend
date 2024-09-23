@@ -52,6 +52,10 @@ const userFullname = computed(() => {
 const toggleMinimalMenu = () => {
   storeApp.minimalMenu = !storeApp.minimalMenu;
 };
+
+const homeClick = () => {
+  router.push({ path: "/" });
+};
 </script>
 
 <style scoped>

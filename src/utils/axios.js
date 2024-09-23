@@ -1,7 +1,7 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useAuthStore } from "@/stores/auth";
-
+import { refreshToken } from "@/api/authentication.js";
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 if (localStorage.getItem("jwt")) {
   axios.defaults.headers.common["Authorization"] =
@@ -21,6 +21,23 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   (response) => {
+    if (["post", ["put", "delete"]].includes(response.config.method)) {
+      // Update Token
+      if (axios.defaults.headers.common["Authorization"]) {
+        refreshToken()
+          .then((resUpdateToken) => {
+            localStorage.setItem("jwt", resUpdateToken.data.accessToken);
+            axios.defaults.headers.common["Authorization"] =
+              "Bearer " + resUpdateToken.data.accessToken;
+
+            console.debug("Refresh token success ");
+          })
+          .catch((error) => {
+            console.log("Refresh token failed : ", error);
+          });
+      }
+    }
+
     return response;
   },
   async (error) => {
@@ -35,7 +52,7 @@ axios.interceptors.response.use(
       // router.push("/login");
 
       await Swal.fire(
-        "Session Expired",
+        "Session Expired axios",
         "Please sign in to continue",
         "warning"
       );
