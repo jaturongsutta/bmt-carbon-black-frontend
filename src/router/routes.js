@@ -47,9 +47,16 @@ const routes = [
     component: () => import("@/pages/common-master/menu/menu-info.vue"),
   },
   {
-    path: "/common-master/app-log",
-    name: "app-log",
-    component: () => import("@/pages/common-master/app-log/app-log.vue"),
+    path: "/common-master/application-log",
+    name: "application-log",
+    component: () =>
+      import("@/pages/common-master/application-log/log-list.vue"),
+  },
+  {
+    path: "/common-master/application-log/preview-log/:logtype/:filename",
+    name: "preview-log",
+    component: () =>
+      import("@/pages/common-master/application-log/preview-log.vue"),
   },
 ];
 
