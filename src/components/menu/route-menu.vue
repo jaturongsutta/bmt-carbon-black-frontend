@@ -8,12 +8,10 @@
       hide-default-footer
     >
       <template v-slot:top>
-        <v-toolbar flat>
-          <v-divider class="mx-4" inset vertical></v-divider>
-          <v-spacer></v-spacer>
+        <v-toolbar style="background-color: white">
           <v-dialog v-model="dialog" max-width="700px">
             <template v-slot:activator="{ props }">
-              <n-btn-add class="mb-2" v-bind="props"> New Item </n-btn-add>
+              <n-btn-add class="mb-2" v-bind="props"> </n-btn-add>
             </template>
             <v-card>
               <v-form ref="frmInfo" @submit.prevent="save">
@@ -21,40 +19,38 @@
                   <span class="text-h5">{{ formTitle }}</span>
                 </v-card-title>
 
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col cols="6">
-                        <label>Route Name</label>
-                        <v-text-field
-                          v-model="editedItem.routeName"
-                          :rules="[rules.isRequire]"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="6">
-                        <label>Route Path</label>
-                        <v-text-field
-                          v-model="editedItem.routePath"
-                          :rules="[rules.isRequire]"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <label>Physical Path</label>
-                        <v-text-field
-                          v-model="editedItem.physicalPath"
-                          :rules="[rules.isRequire]"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-checkbox
-                          v-model="editedItem.isRequireAuth"
-                          label="Is Require Authentication"
-                          :rules="[rules.isRequire]"
-                        ></v-checkbox>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="6">
+                      <label>Route Name</label>
+                      <v-text-field
+                        v-model="editedItem.routeName"
+                        :rules="[rules.isRequire]"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="6">
+                      <label>Route Path</label>
+                      <v-text-field
+                        v-model="editedItem.routePath"
+                        :rules="[rules.isRequire]"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                      <label>Physical Path</label>
+                      <v-text-field
+                        v-model="editedItem.physicalPath"
+                        :rules="[rules.isRequire]"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-checkbox
+                        v-model="editedItem.isRequireAuth"
+                        label="Is Require Authentication"
+                        :rules="[rules.isRequire]"
+                      ></v-checkbox>
+                    </v-col>
+                  </v-row>
+                </v-container>
 
                 <v-card-actions>
                   <v-spacer></v-spacer>
