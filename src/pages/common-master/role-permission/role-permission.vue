@@ -288,37 +288,52 @@ const onAdd = () => {
     isActive: "Y",
   };
   itemsInfo.value = [];
-  api.getById("0").then((res) => {
-    const itemsPermission = res.data.items;
-    console.log(itemsPermission);
-    itemsPermission.forEach((item) => {
-      item.all =
-        item.canAdd === "Y" && item.canUpdate === "Y" && item.canView === "Y"
-          ? "Y"
-          : "N";
+  isLoading.value = true;
+  api
+    .getById("0")
+    .then((res) => {
+      isLoading.value = false;
+      const itemsPermission = res.data.items;
+
+      itemsPermission.forEach((item) => {
+        item.all =
+          item.canAdd === "Y" && item.canUpdate === "Y" && item.canView === "Y"
+            ? "Y"
+            : "N";
+      });
+      itemsInfo.value = itemsPermission;
+    })
+    .catch((e) => {
+      console.error(e);
+      isLoading.value = false;
+      Alert.error(e.message);
     });
-    itemsInfo.value = itemsPermission;
-  });
   dialog.value = true;
 };
 
 const onEdit = (id) => {
   mode.value = "Edit";
   dialog.value = true;
-  api.getById(id).then((res) => {
-    console.log(res.data);
-    form.value = res.data;
-
-    const itemsPermission = res.data.items;
-
-    itemsPermission.forEach((item) => {
-      item.all =
-        item.canAdd === "Y" && item.canUpdate === "Y" && item.canView === "Y"
-          ? "Y"
-          : "N";
+  isLoading.value = true;
+  api
+    .getById(id)
+    .then((res) => {
+      isLoading.value = false;
+      form.value = res.data;
+      const itemsPermission = res.data.items;
+      itemsPermission.forEach((item) => {
+        item.all =
+          item.canAdd === "Y" && item.canUpdate === "Y" && item.canView === "Y"
+            ? "Y"
+            : "N";
+      });
+      itemsInfo.value = itemsPermission;
+    })
+    .catch((e) => {
+      console.error(e);
+      isLoading.value = false;
+      Alert.error(e.message);
     });
-    itemsInfo.value = itemsPermission;
-  });
 };
 
 const saveClick = async () => {

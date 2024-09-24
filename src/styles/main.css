@@ -65,7 +65,7 @@
 /* Cancel button styles */
 .btn-alert-cancel {
   background-color: #6c757d;
-  color: #fff;
+  color: #fff !important;
 }
 
 .btn-alert-cancel:hover {
@@ -74,8 +74,8 @@
 
 /* Success button styles */
 .btn-alert-success {
-  background-image: linear-gradient(310deg, #28a745 0%, #218838 100%);
-  color: #fff;
+  background-color: hwb(260 28% 0%) !important;
+  color: #fff !important;
 }
 
 .btn-alert-success:hover {
@@ -85,7 +85,7 @@
 /* Warning button styles */
 .btn-alert-warning {
   background-image: linear-gradient(310deg, #ffc107 0%, #e0a800 100%);
-  color: #fff;
+  color: #fff !important;
 }
 
 .btn-alert-warning:hover {
@@ -95,7 +95,7 @@
 /* Error button styles */
 .btn-alert-error {
   background-image: linear-gradient(310deg, #dc3545 0%, #c82333 100%);
-  color: #fff;
+  color: #fff !important;
 }
 
 .btn-alert-error:hover {
