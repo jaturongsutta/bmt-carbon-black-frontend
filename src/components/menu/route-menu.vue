@@ -98,7 +98,7 @@ import {
 
 const router = useRouter();
 const route = useRoute();
-const Alert = inject("$Alert");
+const Alert = inject("Alert");
 
 const frmInfo = ref(null);
 let pageMode = ref("add");
@@ -186,29 +186,6 @@ const save = async () => {
   await Alert.Success();
 
   doLoadData();
-
-  // add route to routert
-  try {
-    if (router.hasRoute(editedItem.routeName)) {
-      router.removeRoute(editedItem.routeName);
-      console.warn(
-        `Route '${routeConfig.routeName}' already exists. Overwriting...`
-      );
-    }
-    const route = {
-      path: editedItem.routePath,
-      name: editedItem.routeName,
-      component: await loadComponent(editedItem.physicalPath),
-
-      meta: {
-        requireAuth: editedItem.isRequireAuth,
-      },
-    };
-    router.addRoute(route);
-  } catch (error) {
-    console.log(error);
-    Alert.Error("Error", error.message);
-  }
 };
 
 const deleteItem = (item) => {
@@ -234,8 +211,4 @@ const close = () => {
     editedIndex.value = -1;
   });
 };
-
-async function loadComponent(componentName) {
-  return async () => await import(`@/pages/${componentName}`);
-}
 </script>

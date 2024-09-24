@@ -54,8 +54,8 @@
 }
 /* Confirm button styles */
 .btn-alert-confirm {
-  background-image: linear-gradient(310deg, #dc3545 0%, #c82333 100%);
-  color: #fff;
+  background-color: hwb(260 28% 0%) !important;
+  color: #fff !important;
 }
 
 .btn-alert-confirm:hover {
@@ -84,7 +84,7 @@
 
 /* Warning button styles */
 .btn-alert-warning {
-  background-image: linear-gradient(310deg, #ffc107 0%, #e0a800 100%);
+  background-color: hwb(260 28% 0%) !important;
   color: #fff !important;
 }
 

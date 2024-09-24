@@ -77,7 +77,7 @@ function AlertError(title, detail) {
 
 function AlertConfirm(msg1, msg2) {
   let option = {
-    icon: "warning",
+    icon: "question",
     showCancelButton: true,
     cancelButtonText: "No",
     confirmButtonText: "Yes",

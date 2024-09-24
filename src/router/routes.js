@@ -31,6 +31,26 @@ const routes = [
     component: () =>
       import("@/pages/common-master/role-permission/role-permission.vue"),
   },
+  {
+    path: "/common-master/predefine",
+    name: "predefine",
+    component: () => import("@/pages/common-master/predefine/predefine.vue"),
+  },
+  {
+    path: "/common-master/menu",
+    name: "menu",
+    component: () => import("@/pages/common-master/menu/menu-list.vue"),
+  },
+  {
+    path: "/common-master/menu-info/:id?",
+    name: "menu-info",
+    component: () => import("@/pages/common-master/menu/menu-info.vue"),
+  },
+  {
+    path: "/common-master/app-log",
+    name: "app-log",
+    component: () => import("@/pages/common-master/app-log/app-log.vue"),
+  },
 ];
 
 export default routes;

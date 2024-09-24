@@ -96,7 +96,7 @@ import rules from "@/utils/rules.js";
 const router = useRouter();
 const route = useRoute();
 
-const Alert = inject("$Alert");
+const Alert = inject("Alert");
 let frmInfo = ref(null);
 
 let pageMode = ref("add");

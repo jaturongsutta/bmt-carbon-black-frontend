@@ -67,7 +67,7 @@ import ddlApi from "@/api/dropdown-list.js";
 import { getSearch } from "@/api/common-master/menu.js";
 
 const router = useRouter();
-const Alert = inject("$Alert");
+const Alert = inject("Alert");
 let form = ref({});
 
 let statusList = ref([]);

@@ -71,8 +71,6 @@
         </div>
       </div> -->
     </v-card-text>
-
-    <n-loading :loading="isLoading" />
   </v-card>
 </template>
 

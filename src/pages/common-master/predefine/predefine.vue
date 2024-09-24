@@ -142,6 +142,7 @@ import { getPaging } from "@/utils/utils.js";
 import ddlApi from "@/api/dropdown-list.js";
 import * as api from "@/api/common-master/predefine.js";
 import rules from "@/utils/rules";
+import moment from "moment";
 const Alert = inject("Alert");
 const frmInfo = ref(null);
 const router = useRouter();
@@ -159,8 +160,17 @@ const headers = [
   { title: "Value(EN)", key: "Value_EN", sortable: true },
   { title: "Value(TH)", key: "Value_TH", sortable: true },
   { title: "Status", key: "Status_Name", sortable: true },
-  { title: "Create Date", key: "CreateDate", sortable: true },
-  { title: "Update Date", key: "Update_Date", sortable: true },
+  { title: "Updated By", key: "Updated_By", sortable: true },
+  {
+    title: "Updated Date",
+    key: "Updated_Date",
+    sortable: true,
+    value: (item) => {
+      return item.Updated_Date
+        ? moment(item.Updated_Date).utc().format("DD/MM/YYYY HH:mm:ss")
+        : "";
+    },
+  },
 ];
 let items = ref([]);
 
