@@ -10,16 +10,15 @@ export const search = async (data) => {
 };
 
 export const saveAdd = async (data) => {
-  return await axios.post(`/role-permission`, data);
+  const response = await axios.post(`/role-permission`, data);
+  return response.data;
 };
 
-export const saveEdit = async (data) => {
-  return await axios.put(
-    `/role-permission/${data.predefineGroup}/${data.predefineCd}`,
-    data
-  );
+export const saveEdit = async (id, data) => {
+  const response = await axios.put(`/role-permission/${id}`, data);
+  return response.data;
 };
 
-export const getById = async (predefineGroup, predefineCd) => {
-  return await axios.get(`/role-permission/${predefineGroup}/${predefineCd}`);
+export const getById = async (roleId) => {
+  return await axios.get(`/role-permission/load-role-permission/${roleId}`);
 };

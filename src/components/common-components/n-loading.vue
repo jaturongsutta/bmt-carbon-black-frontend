@@ -3,6 +3,7 @@
     :model-value="loading"
     class="align-center justify-center"
     contained
+    persistent
   >
     <v-progress-circular
       color="primary"

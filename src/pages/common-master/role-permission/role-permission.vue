@@ -44,9 +44,7 @@
           @update:options="loadData"
         >
           <template v-slot:[`item.action`]="{ item }">
-            <n-gbtn-edit
-              @click="onEdit(item.Predefine_Group, item.Predefine_CD)"
-            ></n-gbtn-edit>
+            <n-gbtn-edit @click="onEdit(item.Role_ID)"></n-gbtn-edit>
           </template>
           <template v-slot:bottom>
             <n-pagination
@@ -56,62 +54,99 @@
             ></n-pagination>
           </template>
         </v-data-table-server>
-        <n-loading :loading="isLoading" />
       </v-card-text>
     </v-card>
 
-    <v-dialog v-model="dialog" max-width="600px">
+    <v-dialog v-model="dialog" max-width="900px" persistent>
       <v-form ref="frmInfo">
         <v-card>
           <v-card-title>
-            <span class="headline">{{ mode }} Predefine</span>
+            <span class="headline">{{ mode }} Role Permission</span>
           </v-card-title>
           <v-divider></v-divider>
           <v-card-text>
             <v-container>
               <v-row>
-                <v-col cols="6">
-                  <label>Predefine Group </label>
-                  <v-text-field
-                    v-model="form.predefineGroup"
-                    :rules="[rules.required]"
-                    :readonly="mode === 'Edit'"
-                  ></v-text-field>
+                <v-col cols="3">
+                  <label>Role Id </label>
+                  <v-text-field v-model="form.roleId" readonly></v-text-field>
                 </v-col>
-                <v-col cols="6">
-                  <label>Predefine Code </label>
+                <v-col cols="3">
+                  <label>Role Name TH </label>
                   <v-text-field
-                    v-model="form.predefineCd"
+                    v-model="form.roleNameTh"
                     :rules="[rules.required]"
-                    :readonly="mode === 'Edit'"
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12">
+                <v-col cols="3">
                   <label>Value(EN) </label>
                   <v-text-field
-                    v-model="form.valueEn"
+                    v-model="form.roleNameEn"
                     :rules="[rules.required]"
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12">
-                  <label>Value(TH) </label>
-                  <v-text-field
-                    v-model="form.valueTh"
-                    :rules="[rules.required]"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                  <label>Description </label>
-                  <v-text-field v-model="form.description"></v-text-field>
-                </v-col>
-                <v-col cols="6">
+
+                <v-col cols="3">
                   <label>Status </label>
                   <n-select
                     v-model="form.isActive"
                     :rules="[rules.required]"
                     :items="[...statusList]"
                   ></n-select>
+                </v-col>
+              </v-row>
+
+              <v-row>
+                <v-col cols="12">
+                  <v-data-table
+                    :headers="headersInfo"
+                    :items="itemsInfo"
+                    :v-model:items-per-page="-1"
+                  >
+                    <template v-slot:[`header.all`]="{}">
+                      <v-checkbox
+                        v-model="allHeader"
+                        value="Y"
+                        hide-details
+                        @update:model-value="triggerAll"
+                      ></v-checkbox>
+                    </template>
+
+                    <template v-slot:[`item.all`]="{ item }">
+                      <v-checkbox
+                        v-model="item.all"
+                        value="Y"
+                        hide-details
+                        @update:model-value="
+                          item.canAdd = item.all;
+                          item.canUpdate = item.all;
+                          item.canView = item.all;
+                        "
+                      ></v-checkbox>
+                    </template>
+                    <template v-slot:[`item.canAdd`]="{ item }">
+                      <v-checkbox
+                        v-model="item.canAdd"
+                        value="Y"
+                        hide-details
+                      ></v-checkbox>
+                    </template>
+                    <template v-slot:[`item.canUpdate`]="{ item }">
+                      <v-checkbox
+                        v-model="item.canUpdate"
+                        value="Y"
+                        hide-details
+                      ></v-checkbox>
+                    </template>
+                    <template v-slot:[`item.canView`]="{ item }">
+                      <v-checkbox
+                        v-model="item.canView"
+                        value="Y"
+                        hide-details
+                      ></v-checkbox>
+                    </template>
+                  </v-data-table>
                 </v-col>
               </v-row>
             </v-container>
@@ -125,6 +160,8 @@
         </v-card>
       </v-form>
     </v-dialog>
+
+    <n-loading :loading="isLoading" />
   </div>
 </template>
 
@@ -145,6 +182,8 @@ let formSearch = ref({
   status: "",
 });
 
+const form = ref({});
+
 const dialog = ref(false);
 
 let statusList = ref([]);
@@ -164,6 +203,16 @@ const headers = [
         ? moment(item.Created_Date).utc().format("DD/MM/YYYY HH:mm:ss")
         : "",
   },
+  { title: "Updated By", key: "Updated_By", sortable: true },
+  {
+    title: "Updated Date",
+    key: "Updated_Date",
+    sortable: true,
+    value: (item) =>
+      item.Updated_Date
+        ? moment(item.Updated_Date).utc().format("DD/MM/YYYY HH:mm:ss")
+        : "",
+  },
 ];
 let items = ref([]);
 
@@ -171,6 +220,19 @@ let isLoading = ref(false);
 let currentPage = ref(1);
 let pageSize = ref(20);
 let totalItems = ref(0);
+
+const allHeader = ref(false);
+
+const headersInfo = ref([
+  { title: " ", key: "all" },
+  { title: "Menu No", key: "menuNo" },
+  { title: "Menu Name", key: "menuName" },
+  { title: "Add", key: "canAdd" },
+  { title: "Edit", key: "canUpdate" },
+  { title: "View", key: "canView" },
+]);
+
+const itemsInfo = ref([]);
 
 const mode = ref("Add");
 
@@ -221,24 +283,41 @@ const onReset = () => {
 
 const onAdd = () => {
   mode.value = "Add";
-  console.log("Add");
   form.value = {
-    predefineGroup: "",
-    predefineCd: "",
-    valueEn: "",
-    valueTh: "",
-    description: "",
+    roleId: null,
     isActive: "Y",
   };
+  itemsInfo.value = [];
+  api.getById("0").then((res) => {
+    const itemsPermission = res.data.items;
+    console.log(itemsPermission);
+    itemsPermission.forEach((item) => {
+      item.all =
+        item.canAdd === "Y" && item.canUpdate === "Y" && item.canView === "Y"
+          ? "Y"
+          : "N";
+    });
+    itemsInfo.value = itemsPermission;
+  });
   dialog.value = true;
 };
 
-const onEdit = (predefineGroup, predefineCd) => {
+const onEdit = (id) => {
   mode.value = "Edit";
   dialog.value = true;
-  api.getById(predefineGroup, predefineCd).then((res) => {
+  api.getById(id).then((res) => {
     console.log(res.data);
     form.value = res.data;
+
+    const itemsPermission = res.data.items;
+
+    itemsPermission.forEach((item) => {
+      item.all =
+        item.canAdd === "Y" && item.canUpdate === "Y" && item.canView === "Y"
+          ? "Y"
+          : "N";
+    });
+    itemsInfo.value = itemsPermission;
   });
 };
 
@@ -247,23 +326,36 @@ const saveClick = async () => {
     const { valid } = await frmInfo.value.validate();
     if (!valid) return;
     let res = null;
+
+    const data = {
+      ...form.value,
+      items: itemsInfo.value,
+    };
     if (mode.value === "Add") {
       console.log("Add");
-      res = await api.saveAdd(form.value);
+      res = await api.saveAdd(data);
     } else {
       console.log("Edit");
-      res = await api.saveEdit(form.value);
+      res = await api.saveEdit(data.roleId, data);
     }
 
-    if (res.data.status === 0) {
+    if (res.status === 0) {
       Alert.success();
       dialog.value = false;
       onSearch();
     } else {
-      Alert.warning(res.data.message);
+      Alert.warning(res.message);
     }
   } catch (error) {
     Alert.error(error.message);
   }
+};
+const triggerAll = (val) => {
+  itemsInfo.value.forEach((item) => {
+    item.all = val === "Y" ? "Y" : "N";
+    item.canAdd = val === "Y" ? "Y" : "N";
+    item.canUpdate = val === "Y" ? "Y" : "N";
+    item.canView = val === "Y" ? "Y" : "N";
+  });
 };
 </script>

@@ -25,6 +25,12 @@ const routes = [
     name: "user-info",
     component: () => import("@/pages/common-master/user/user-info.vue"),
   },
+  {
+    path: "/common-master/role-permission",
+    name: "role-permission",
+    component: () =>
+      import("@/pages/common-master/role-permission/role-permission.vue"),
+  },
 ];
 
 export default routes;

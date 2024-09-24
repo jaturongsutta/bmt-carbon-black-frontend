@@ -5,7 +5,7 @@
     permanent
     class="position-fixed"
     v-if="authStore.isLoggedIn"
-    :width="300"
+    :width="270"
   >
     <v-divider></v-divider>
     <v-list v-if="miniMenu" density="compact">
