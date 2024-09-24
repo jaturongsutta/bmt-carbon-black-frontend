@@ -34,8 +34,6 @@ let canAccess = ref(false);
 onMounted(() => {
   const { meta } = route;
 
-  console.log("meta : ", meta);
-
   if (props.permission) {
     if (meta.menuNo) {
       const access = authStore.permission.filter(
@@ -61,10 +59,6 @@ onMounted(() => {
       console.warn("Menu No missing in route meta");
     }
   }
-
-  console.log("authStore.permission : ", authStore.permission);
-
-  console.log("onMounted Button Add : ", canAccess.value);
 });
 </script>
 

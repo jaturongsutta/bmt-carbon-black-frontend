@@ -53,6 +53,5 @@ onMounted(() => {
   } else {
     canAccess.value = true;
   }
-  console.log(canAccess.value);
 });
 </script>

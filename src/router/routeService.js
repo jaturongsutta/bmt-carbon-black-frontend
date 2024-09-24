@@ -12,15 +12,15 @@ const updateRoutes = (_route) => {
   } else {
     allRoutes = router.getRoutes();
   }
-  console.log("updateRoute");
-  console.log("allRoutes : ", allRoutes);
+  //console.log("updateRoute");
+  //console.log("allRoutes : ", allRoutes);
   menuRoutes.forEach(async (routeConfig) => {
     try {
       const route = allRoutes.find((r) => r.name === routeConfig.routeName);
 
-      console.log("fine route : ", route);
+      //console.log("fine route : ", route);
       if (route) {
-        console.log("update route : ", routeConfig.routeName);
+        //console.log("update route : ", routeConfig.routeName);
 
         if (route) {
           route.meta.requireAuth = routeConfig.isRequireAuth;

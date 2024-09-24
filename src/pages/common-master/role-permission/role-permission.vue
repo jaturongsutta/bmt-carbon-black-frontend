@@ -41,6 +41,7 @@
           v-model:items-per-page="pageSize"
           :headers="headers"
           :items="items"
+          :items-length="totalItems"
           @update:options="loadData"
         >
           <template v-slot:[`item.action`]="{ item }">

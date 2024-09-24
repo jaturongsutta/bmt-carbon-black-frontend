@@ -32,7 +32,6 @@ const router = useRouter();
 const authStore = useAuthStore();
 
 const isShow = computed(() => {
-  console.log("authStore.isLoggedIn ", authStore.isLoggedIn);
   return authStore.isLoggedIn;
 });
 
