@@ -1,88 +1,67 @@
 <template>
-  <v-form ref="frmInfo" @submit.prevent="onSave">
-    <div class="pa-2">
-      <div class="row">
-        <div class="col-md-3">
+  <v-container>
+    <v-form ref="frmInfo" @submit.prevent="onSave">
+      <v-row>
+        <v-col md="3">
           <label>Menu No</label>
           <v-text-field
             v-model="form.menuNo"
             :readonly="pageMode === 'edit'"
             :rules="[rules.isRequire]"
           ></v-text-field>
-        </div>
-        <div class="col-md-3">
+        </v-col>
+        <v-col md="3">
           <label>Group Menu No</label>
           <v-text-field v-model="form.menuGroup"></v-text-field>
-        </div>
-        <div class="col-md-3">
+        </v-col>
+        <v-col md="3">
           <label>Seq</label>
           <v-text-field v-model="form.menuSeq"></v-text-field>
-        </div>
-        <div class="col-md-3">
+        </v-col>
+        <v-col md="3">
           <label>Status</label>
           <n-select
             v-model="form.isActive"
             :items="statusList"
             :rules="[rules.isRequire]"
           ></n-select>
-        </div>
-        <div class="col-md-6">
+        </v-col>
+        <v-col md="6">
           <label>Menu Name (EN)</label>
 
           <v-text-field
             v-model="form.menuNameEN"
             :rules="[rules.isRequire]"
           ></v-text-field>
-        </div>
-        <div class="col-md-6">
+        </v-col>
+        <v-col md="6">
           <label>Menu Name (TH)</label>
           <v-text-field
             v-model="form.menuNameTH"
             :rules="[rules.isRequire]"
           ></v-text-field>
-        </div>
+        </v-col>
 
-        <div class="col-md-12">
+        <v-col md="12">
           <label>Url</label>
           <v-text-field
             v-model="form.url"
             :rules="[rules.isRequire]"
           ></v-text-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <v-radio-group color="primary" v-model="platform">
-            <v-radio value="Web">
-              <template v-slot:label>
-                <div class="pt-2">Web</div>
-              </template>
-            </v-radio>
-            <v-radio value="Hendheld">
-              <template v-slot:label>
-                <div class="pt-2">Hendheld</div>
-              </template>
-            </v-radio>
-            <v-radio value="Tablet">
-              <template v-slot:label>
-                <div class="pt-2">Tablet</div>
-              </template>
-            </v-radio>
-          </v-radio-group>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col md="12">
           <div class="d-flex justify-center">
             <n-btn-save type="submit" />
             <n-btn-cancel @click="onCancel" class="ml-3" />
           </div>
-        </div>
-      </div>
+        </v-col>
+      </v-row>
 
       <n-loading :loading="isLoading" />
-    </div>
-  </v-form>
+    </v-form>
+  </v-container>
 </template>
 
 <script setup>

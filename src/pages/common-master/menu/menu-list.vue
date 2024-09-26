@@ -92,6 +92,8 @@ onMounted(() => {
   ddlApi.getPredefine({ group: "Is_Active", sortby: "text" }).then((data) => {
     statusList.value = data;
   });
+
+  onSearch();
 });
 
 const onSearch = () => {
@@ -122,6 +124,6 @@ const onAdd = () => {
 };
 
 const onEdit = (id) => {
-  router.push({ path: `/menu-info/${id}` });
+  router.push({ name: `menu-info`, params: { id: id } });
 };
 </script>

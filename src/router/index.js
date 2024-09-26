@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  base: process.env.VITE_BASE_URL || "/",
   routes,
 });
 

@@ -16,60 +16,6 @@
 
         <v-tabs-window-item value="route"> <route-menu /> </v-tabs-window-item>
       </v-tabs-window>
-
-      <!-- 
-      <div class="row">
-        <div class="col-3">
-          <label>Menu No</label>
-          <v-text-field v-model="form.menu_no"></v-text-field>
-        </div>
-        <div class="col-3">
-          <label>Group Menu No</label>
-          <v-text-field v-model="form.menu_no"></v-text-field>
-        </div>
-        <div class="col-3">
-          <label>Seq</label>
-          <v-text-field v-model="form.menu_no"></v-text-field>
-        </div>
-        <div class="col-3">
-          <label>Status</label>
-          <v-text-field v-model="form.menu_no"></v-text-field>
-        </div>
-        <div class="col-6">
-          <label>Menu Name (EN)</label>
-          <v-text-field v-model="form.menu_no"></v-text-field>
-        </div>
-        <div class="col-6">
-          <label>Menu Name (TH)</label>
-          <v-text-field v-model="form.menu_no"></v-text-field>
-        </div>
-
-        <div class="col-12">
-          <label>Url</label>
-          <v-text-field v-model="form.menu_no"></v-text-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <v-radio-group>
-            <v-radio value="Web">
-              <template v-slot:label>
-                <div class="pt-2">Web</div>
-              </template>
-            </v-radio>
-            <v-radio value="Hendheld">
-              <template v-slot:label>
-                <div class="pt-2">Hendheld</div>
-              </template>
-            </v-radio>
-            <v-radio value="Tablet">
-              <template v-slot:label>
-                <div class="pt-2">Tablet</div>
-              </template>
-            </v-radio>
-          </v-radio-group>
-        </div>
-      </div> -->
     </v-card-text>
   </v-card>
 </template>
