@@ -20,6 +20,9 @@ importers:
       core-js:
         specifier: ^3.38.1
         version: 3.38.1
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.4.5
       jwt-decode:
         specifier: ^4.0.0
         version: 4.0.0
