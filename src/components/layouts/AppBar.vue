@@ -39,7 +39,7 @@ const logoutClick = () => {
   Alert.confirm("Are you sure you want to logout?").then((c) => {
     if (c.isConfirmed) {
       authStore.logout();
-      window.location.href = "/login";
+      window.location.reload();
     }
   });
 };

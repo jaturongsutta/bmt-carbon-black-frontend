@@ -54,7 +54,7 @@ import { useRouter } from "vue-router";
 import { xorEncryptDecrypt } from "@/utils/data-protection.js";
 import { updateRoutes } from "@/router/routeService.js";
 
-const Alert = inject("$alert");
+const Alert = inject("Alert");
 
 const router = useRouter();
 const form = reactive({
