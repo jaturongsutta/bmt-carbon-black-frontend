@@ -16,7 +16,6 @@ function createAppRouter(routeData) {
     const authStore = useAuthStore();
     const requireAuth =
       to.meta && to.meta.requireAuth !== undefined ? to.meta.requireAuth : true;
-    console.log("requireAuth ", requireAuth);
 
     if (requireAuth === true && authStore.isLoggedIn === false) {
       await Swal.fire(

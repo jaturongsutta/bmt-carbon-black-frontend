@@ -5,7 +5,6 @@ export const authLogin = async (username, password) => {
   try {
     const response = await axios.post("/auth/login", { username, password });
     const data = response.data;
-    console.log("response", response);
     if (data.result.status == 2) {
       return { status: 2 };
     }
@@ -23,8 +22,6 @@ export const authLogin = async (username, password) => {
 
     console.log("set isLogin", true);
     sessionStorage.setItem("isLogin", true);
-
-    console.log("permission", permission);
 
     return data;
   } catch (error) {

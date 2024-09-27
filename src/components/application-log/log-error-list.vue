@@ -42,7 +42,6 @@ onMounted(() => {
   isLoading.value = true;
 
   api.search().then((res) => {
-    console.log(res);
     items.value = res.logError;
     totalItems.value = items.value.length;
 
@@ -54,7 +53,7 @@ onMounted(() => {
 
 const onView = (filename) => {
   router.push({
-    name: "preview-log",
+    name: "application-log-preview",
     params: { logtype: "error", filename: filename },
   });
 };

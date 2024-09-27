@@ -44,8 +44,8 @@ import alertCommon from "@/utils/alert-common.js";
 import { getRouteList } from "@/router/routeService.js";
 async function bootstrap() {
   const routeData = await getRouteList();
+  console.log("routeData ", routeData);
   const router = createAppRouter(routeData);
-  console.log("router application ", router.getRoutes());
   const app = createApp(App);
   app.use(vuetify);
   app.use(pinia);

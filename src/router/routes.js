@@ -12,21 +12,21 @@ const routes = [
       requireAuth: false,
     },
   },
-  {
-    path: "/test1",
-    children: [
-      {
-        path: "",
-        name: "test1",
-        component: () => import("@/pages/test1/test1-list.vue"),
-      },
-      {
-        path: "test1-info",
-        name: "test1-info",
-        component: () => import("@/pages/test1/test1-info.vue"),
-      },
-    ],
-  },
+  // {
+  //   path: "/test1",
+  //   children: [
+  //     {
+  //       path: "",
+  //       name: "test1",
+  //       component: () => import("@/pages/test1/test1-list.vue"),
+  //     },
+  //     {
+  //       path: "test1-info",
+  //       name: "test1-info",
+  //       component: () => import("@/pages/test1/test1-info.vue"),
+  //     },
+  //   ],
+  // },
 
   // {
   // {

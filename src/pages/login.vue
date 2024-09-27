@@ -71,7 +71,6 @@ const handleSubmit = async () => {
     const { valid } = await frmLogin.value.validate();
     if (valid) {
       isLoading.value = true;
-      console.log("Form is valid");
 
       let login = await authLogin(form.username, form.password);
       isLoading.value = false;
@@ -81,7 +80,6 @@ const handleSubmit = async () => {
           const res = await authGetMenuRoute();
           if (res.data != null && res.data) {
             var data = xorEncryptDecrypt(JSON.stringify(res.data));
-            console.log("Menu Route: ", res.data);
             localStorage.setItem("menuRoutes", data);
             await updateRouterByRouteData(router);
           }

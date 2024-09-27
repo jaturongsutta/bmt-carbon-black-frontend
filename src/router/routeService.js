@@ -1,65 +1,23 @@
 import { xorEncryptDecrypt } from "@/utils/data-protection.js";
 import router from "./index.js";
 import routeStatic from "./routes.js";
-const updateRoutes = (_route) => {
+
+async function getRouteList() {
+  let routesDynamic = [];
+
   const menuRoutesStr = localStorage.getItem("menuRoutes");
-  if (!menuRoutesStr) return;
-
-  const reoutes = xorEncryptDecrypt(menuRoutesStr);
-  const menuRoutes = JSON.parse(reoutes);
-  let allRoutes = [];
-  if (_route) {
-    allRoutes = _route.getRoutes();
-  } else {
-    allRoutes = router.getRoutes();
-  }
-  //console.log("updateRoute");
-  //console.log("allRoutes : ", allRoutes);
-  menuRoutes.forEach(async (routeConfig) => {
-    try {
-      const route = allRoutes.find((r) => r.name === routeConfig.routeName);
-
-      //console.log("fine route : ", route);
-      if (route) {
-        //console.log("update route : ", routeConfig.routeName);
-
-        if (route) {
-          route.meta.requireAuth = routeConfig.isRequireAuth;
-          route.meta.menuNo = routeConfig.menuNo;
-          route.meta.menuRouteId = routeConfig.menuRouteId;
-        } else {
-          console.warn(
-            `Route '${routeConfig.routeName}' not found in the router.`
-          );
-        }
-      } else {
-        console.warn(`Route '${routeConfig.routeName}' does not exist.`);
-      }
-    } catch (error) {
-      console.warn(`Failed to load route '${routeConfig.routeName}':`, error);
-    }
-  });
-};
-
-async function fetchRoutes() {
-  try {
-    const menuRoutesStr = localStorage.getItem("menuRoutes");
-    if (!menuRoutesStr) return;
-
-    const reoutes = xorEncryptDecrypt(menuRoutesStr);
-    const menuRoutes = JSON.parse(reoutes);
-
-    menuRoutes.forEach(async (routeConfig) => {
-      try {
-        if (router.hasRoute(routeConfig.routeName)) {
-          const route = router.getRoutes();
-          router.removeRoute(routeConfig.routeName);
-
-          console.warn(
-            `Route '${routeConfig.routeName}' already exists. Overwriting...`
-          );
-        }
-        const route = {
+  if (menuRoutesStr) {
+    const decryptedRoutes = xorEncryptDecrypt(menuRoutesStr);
+    const menuRoutes = JSON.parse(decryptedRoutes);
+    const distinctMenuNo = [...new Set(menuRoutes.map((item) => item.menuNo))];
+    for (let i = 0; i < distinctMenuNo.length; i++) {
+      let route;
+      const menuGroupNo = menuRoutes.filter(
+        (item) => item.menuNo === distinctMenuNo[i]
+      );
+      if (menuGroupNo.length === 1) {
+        const routeConfig = menuGroupNo[0];
+        route = {
           path: routeConfig.routePath,
           name: routeConfig.routeName,
           component: await loadComponent(routeConfig.physicalPath),
@@ -69,37 +27,43 @@ async function fetchRoutes() {
             menuRouteId: routeConfig.menuRouteId,
           },
         };
-        router.addRoute(route);
-      } catch (error) {
-        console.warn(`Failed to load route '${routeConfig.routeName}':`, error);
+        routesDynamic.push(route);
+      } else if (menuGroupNo.length > 1) {
+        const routeMain = menuGroupNo.find((item) => item.isMain === true);
+        route = {
+          path: routeMain.routePath,
+        };
+        route.children = [
+          {
+            path: "",
+            name: routeMain.routeName,
+            component: await loadComponent(routeMain.physicalPath),
+            meta: {
+              requireAuth: routeMain.isRequireAuth,
+              menuNo: routeMain.menuNo,
+              menuRouteId: routeMain.menuRouteId,
+            },
+          },
+        ];
+
+        const routeChild = menuGroupNo.filter((item) => item.isMain === false);
+        for (let j = 0; j < routeChild.length; j++) {
+          const routeConfig = routeChild[j];
+          route.children.push({
+            path: routeConfig.routePath,
+            name: routeConfig.routeName,
+            component: await loadComponent(routeConfig.physicalPath),
+            meta: {
+              requireAuth: routeConfig.isRequireAuth,
+              menuNo: routeConfig.menuNo,
+              menuRouteId: routeConfig.menuRouteId,
+            },
+          });
+        }
+
+        routesDynamic.push(route);
       }
-    });
-  } catch (error) {
-    console.error("Failed to load route configuration:", error);
-  }
-}
-
-async function getRouteList() {
-  const menuRoutesStr = localStorage.getItem("menuRoutes");
-  if (!menuRoutesStr) return [];
-
-  const decryptedRoutes = xorEncryptDecrypt(menuRoutesStr);
-  const menuRoutes = JSON.parse(decryptedRoutes);
-  let routesDynamic = [];
-
-  for (let i = 0; i < menuRoutes.length; i++) {
-    const routeConfig = menuRoutes[i];
-    const route = {
-      path: routeConfig.routePath,
-      name: routeConfig.routeName,
-      component: await loadComponent(routeConfig.physicalPath),
-      meta: {
-        requireAuth: routeConfig.isRequireAuth,
-        menuNo: routeConfig.menuNo,
-        menuRouteId: routeConfig.menuRouteId,
-      },
-    };
-    routesDynamic.push(route);
+    }
   }
 
   return [...routesDynamic, ...routeStatic];
@@ -107,19 +71,13 @@ async function getRouteList() {
 
 async function updateRouterByRouteData(router) {
   const routeData = await getRouteList();
-  console.log("routeData ", routeData);
-  console.log("router ", router);
 
-  console.log("get routes ", router.getRoutes());
   for (let i = 0; i < routeData.length; i++) {
     if (router.hasRoute(routeData[i].name)) {
-      const r = router.getRoutes().find((r) => r.name === routeData[i].name);
-      if (r) {
-        r.meta = routeData[i].meta;
-      }
-    } else {
-      router.addRoute(routeData[i]);
+      router.removeRoute(routeData[i].name);
+      console.warn(`Route '${routeData[i].name}' already exists. Overwriting`);
     }
+    router.addRoute(routeData[i]);
   }
 }
 
@@ -127,4 +85,4 @@ async function loadComponent(componentName) {
   return () => import(/* @vite-ignore */ `../pages/${componentName}`);
 }
 
-export { fetchRoutes, updateRoutes, getRouteList, updateRouterByRouteData };
+export { getRouteList, updateRouterByRouteData };

@@ -64,7 +64,6 @@ onMounted(() => {
   if (route.params.id) {
     const id = route.params.id;
     api.getById(id).then((res) => {
-      console.log(res);
       form.value = res;
     });
   }

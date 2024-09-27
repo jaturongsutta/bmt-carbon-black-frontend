@@ -42,7 +42,6 @@ onMounted(() => {
   isLoading.value = true;
 
   api.search().then((res) => {
-    console.log(res);
     items.value = res.logCombined;
     totalItems.value = items.value.length;
 
@@ -58,7 +57,7 @@ const onView = (filename) => {
   // const url = `/preview-log/?logtype=combined&filename=${filename}`;
 
   router.push({
-    name: "preview-log",
+    name: "application-log-preview",
     params: { logtype: "detail", filename: filename },
   });
 };

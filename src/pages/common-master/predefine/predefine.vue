@@ -241,7 +241,6 @@ const onEdit = (predefineGroup, predefineCd) => {
   mode.value = "Edit";
   dialog.value = true;
   api.getById(predefineGroup, predefineCd).then((res) => {
-    console.log(res.data);
     form.value = res.data;
   });
 };
