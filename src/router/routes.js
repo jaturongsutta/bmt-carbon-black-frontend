@@ -3,9 +3,6 @@ const routes = [
     path: "/",
     name: "/",
     component: () => import("@/pages/home.vue"),
-    meta: {
-      requireAuth: false,
-    },
   },
   {
     path: "/login",
