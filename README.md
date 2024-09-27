@@ -10,16 +10,25 @@ This is the official scaffolding tool for Vuetify, designed to give you a head s
 - 🎮 [Playground](https://play.vuetifyjs.com/)
 - 💬 [Discord](https://community.vuetifyjs.com)
 
+## Description
+
+Nodejs version : 22.2.0
+
 ## 💿 Install
 
 Set up your project using your preferred package manager. Use the corresponding command to install the dependencies:
 
-| Package Manager                                                | Command        |
-|---------------------------------------------------------------|----------------|
-| [yarn](https://yarnpkg.com/getting-started)                   | `yarn install` |
-| [npm](https://docs.npmjs.com/cli/v7/commands/npm-install)     | `npm install`  |
-| [pnpm](https://pnpm.io/installation)                          | `pnpm install` |
-| [bun](https://bun.sh/#getting-started)                        | `bun install`  |
+| Package Manager                      | Command        |
+| ------------------------------------ | -------------- |
+| [pnpm](https://pnpm.io/installation) | `pnpm install` |
+
+# environment (.env)
+
+```bash
+ENV=develop
+VITE_API_URL=http://localhost:84/api
+VITE_BASE_URL=/
+```
 
 After completing the installation, your environment is ready for Vuetify development.
 
@@ -74,6 +83,7 @@ This project is built with [Vuetify](https://vuetifyjs.com/en/), a UI Library wi
 - [Making a one-time donation with Paypal](https://paypal.me/vuetify)
 
 ## 📑 License
+
 [MIT](http://opensource.org/licenses/MIT)
 
 Copyright (c) 2016-present Vuetify, LLC
