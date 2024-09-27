@@ -1,14 +1,18 @@
 import { useAuthStore } from "@/stores/auth.js";
 import { jwtDecode } from "jwt-decode";
 // Composables
-import { createRouter, createWebHistory } from "vue-router";
+import {
+  createRouter,
+  createWebHistory,
+  createWebHashHistory,
+} from "vue-router";
 import { refreshToken } from "@/api/authentication.js";
 import axios from "axios";
 import Swal from "sweetalert2";
 
 function createAppRouter(routeData) {
   const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
+    history: createWebHashHistory(import.meta.env.BASE_URL),
     routes: routeData,
   });
 
