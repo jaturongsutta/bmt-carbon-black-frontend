@@ -14,9 +14,12 @@ const routes = [
   },
   {
     path: "/test1",
-    name: "test1",
-    component: () => import("@/pages/test1/test1.vue"),
     children: [
+      {
+        path: "",
+        name: "test1",
+        component: () => import("@/pages/test1/test1-list.vue"),
+      },
       {
         path: "test1-info",
         name: "test1-info",
