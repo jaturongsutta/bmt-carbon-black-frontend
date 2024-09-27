@@ -52,7 +52,7 @@ import rules from "@/utils/rules";
 import { authLogin, authGetMenuRoute } from "@/api/authentication.js";
 import { useRouter } from "vue-router";
 import { xorEncryptDecrypt } from "@/utils/data-protection.js";
-import { updateRoutes } from "@/router/routeService.js";
+import { updateRouterByRouteData } from "@/router/routeService.js";
 
 const Alert = inject("Alert");
 
@@ -83,7 +83,7 @@ const handleSubmit = async () => {
             var data = xorEncryptDecrypt(JSON.stringify(res.data));
             console.log("Menu Route: ", res.data);
             localStorage.setItem("menuRoutes", data);
-            await updateRoutes();
+            await updateRouterByRouteData(router);
           }
         } catch (error) {
           console.error("Error Fetching Routes: ", error);

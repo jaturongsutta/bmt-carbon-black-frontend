@@ -1,5 +1,6 @@
 import { xorEncryptDecrypt } from "@/utils/data-protection.js";
 import router from "./index.js";
+import routeStatic from "./routes.js";
 const updateRoutes = (_route) => {
   const menuRoutesStr = localStorage.getItem("menuRoutes");
   if (!menuRoutesStr) return;
@@ -78,8 +79,52 @@ async function fetchRoutes() {
   }
 }
 
+async function getRouteList() {
+  const menuRoutesStr = localStorage.getItem("menuRoutes");
+  if (!menuRoutesStr) return [];
+
+  const decryptedRoutes = xorEncryptDecrypt(menuRoutesStr);
+  const menuRoutes = JSON.parse(decryptedRoutes);
+  let routesDynamic = [];
+
+  for (let i = 0; i < menuRoutes.length; i++) {
+    const routeConfig = menuRoutes[i];
+    const route = {
+      path: routeConfig.routePath,
+      name: routeConfig.routeName,
+      component: await loadComponent(routeConfig.physicalPath),
+      meta: {
+        requireAuth: routeConfig.isRequireAuth,
+        menuNo: routeConfig.menuNo,
+        menuRouteId: routeConfig.menuRouteId,
+      },
+    };
+    routesDynamic.push(route);
+  }
+
+  return [...routesDynamic, ...routeStatic];
+}
+
+async function updateRouterByRouteData(router) {
+  const routeData = await getRouteList();
+  console.log("routeData ", routeData);
+  console.log("router ", router);
+
+  console.log("get routes ", router.getRoutes());
+  for (let i = 0; i < routeData.length; i++) {
+    if (router.hasRoute(routeData[i].name)) {
+      const r = router.getRoutes().find((r) => r.name === routeData[i].name);
+      if (r) {
+        r.meta = routeData[i].meta;
+      }
+    } else {
+      router.addRoute(routeData[i]);
+    }
+  }
+}
+
 async function loadComponent(componentName) {
   return () => import(/* @vite-ignore */ `../pages/${componentName}`);
 }
 
-export { fetchRoutes, updateRoutes };
+export { fetchRoutes, updateRoutes, getRouteList, updateRouterByRouteData };

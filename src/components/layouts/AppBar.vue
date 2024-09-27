@@ -39,7 +39,8 @@ const logoutClick = () => {
   Alert.confirm("Are you sure you want to logout?").then((c) => {
     if (c.isConfirmed) {
       authStore.logout();
-      window.location.reload();
+      // window.location.reload();
+      router.push({ path: "/login" });
     }
   });
 };
