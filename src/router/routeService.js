@@ -30,38 +30,42 @@ async function getRouteList() {
         routesDynamic.push(route);
       } else if (menuGroupNo.length > 1) {
         const routeMain = menuGroupNo.find((item) => item.isMain === true);
-        route = {
-          path: routeMain.routePath,
-        };
-        route.children = [
-          {
-            path: "",
-            name: routeMain.routeName,
-            component: await loadComponent(routeMain.physicalPath),
-            meta: {
-              requireAuth: routeMain.isRequireAuth,
-              menuNo: routeMain.menuNo,
-              menuRouteId: routeMain.menuRouteId,
+        if (routeMain) {
+          route = {
+            path: routeMain.routePath,
+          };
+          route.children = [
+            {
+              path: "",
+              name: routeMain.routeName,
+              component: await loadComponent(routeMain.physicalPath),
+              meta: {
+                requireAuth: routeMain.isRequireAuth,
+                menuNo: routeMain.menuNo,
+                menuRouteId: routeMain.menuRouteId,
+              },
             },
-          },
-        ];
+          ];
 
-        const routeChild = menuGroupNo.filter((item) => item.isMain === false);
-        for (let j = 0; j < routeChild.length; j++) {
-          const routeConfig = routeChild[j];
-          route.children.push({
-            path: routeConfig.routePath,
-            name: routeConfig.routeName,
-            component: await loadComponent(routeConfig.physicalPath),
-            meta: {
-              requireAuth: routeConfig.isRequireAuth,
-              menuNo: routeConfig.menuNo,
-              menuRouteId: routeConfig.menuRouteId,
-            },
-          });
+          const routeChild = menuGroupNo.filter(
+            (item) => item.isMain === false
+          );
+          for (let j = 0; j < routeChild.length; j++) {
+            const routeConfig = routeChild[j];
+            route.children.push({
+              path: routeConfig.routePath,
+              name: routeConfig.routeName,
+              component: await loadComponent(routeConfig.physicalPath),
+              meta: {
+                requireAuth: routeConfig.isRequireAuth,
+                menuNo: routeConfig.menuNo,
+                menuRouteId: routeConfig.menuRouteId,
+              },
+            });
+          }
+
+          routesDynamic.push(route);
         }
-
-        routesDynamic.push(route);
       }
     }
   }
