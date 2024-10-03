@@ -1,33 +1,20 @@
+import Home from "@/pages/home.vue";
+import Login from "@/pages/Login.vue";
+
 const routes = [
   {
     path: "/",
     name: "/",
-    component: () => import("@/pages/home.vue"),
+    component: Home,
   },
   {
     path: "/login",
     name: "login",
-    component: () => import("@/pages/login.vue"),
+    component: Login,
     meta: {
       requireAuth: false,
     },
   },
-  {
-    path: "/test1",
-    children: [
-      {
-        path: "",
-        name: "test1",
-        component: () => import("@/pages/test1/test1-list.vue"),
-      },
-      {
-        path: "test1-info",
-        name: "test1-info",
-        component: () => import("@/pages/test1/test1-info.vue"),
-      },
-    ],
-  },
-
   {
     path: "/common-master/user",
     meta: {
@@ -81,14 +68,11 @@ const routes = [
       },
     ],
   },
-
   {
     path: "/common-master/application-log",
-
     meta: {
       menuNo: "M1005",
     },
-
     children: [
       {
         path: "",

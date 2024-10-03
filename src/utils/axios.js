@@ -2,6 +2,9 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useAuthStore } from "@/stores/auth";
 import { refreshToken } from "@/api/authentication.js";
+
+console.log("VITE_API_URL", import.meta.env.VITE_API_URL);
+
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 if (localStorage.getItem("jwt")) {
   axios.defaults.headers.common["Authorization"] =
