@@ -5,8 +5,8 @@
  */
 
 // Plugins
-// import { registerPlugins } from "@/plugins";
-// import { registerGlobalComponents } from "@/plugins/global-component";
+import { registerPlugins } from "@/plugins";
+import { registerGlobalComponents } from "@/plugins/global-component";
 
 // import alertCommon from "@/utils/alert-common.js";
 
@@ -19,40 +19,13 @@ import App from "./App.vue";
 // Composables
 import { createApp } from "vue";
 
-// const app = createApp(App);
+const app = createApp(App);
 
-// registerPlugins(app);
+registerPlugins(app);
 
-// registerGlobalComponents(app);
+registerGlobalComponents(app);
 
-// app.mount("#app");
+app.mount("#app");
 
 // // Initial Common function
 // alertCommon.initialAlert(app);
-
-// Plugins
-import vuetify from "@/plugins/vuetify";
-import pinia from "@/stores";
-import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
-pinia.use(piniaPluginPersistedstate);
-import VueSweetalert2 from "vue-sweetalert2";
-// Import SweetAlert2 CSS
-import "sweetalert2/dist/sweetalert2.min.css";
-import createAppRouter from "./router";
-
-import alertCommon from "@/utils/alert-common.js";
-import { getRouteList } from "@/router/routeService.js";
-async function bootstrap() {
-  const routeData = await getRouteList();
-  console.log("routeData ", routeData);
-  const router = createAppRouter(routeData);
-  const app = createApp(App);
-  app.use(vuetify);
-  app.use(pinia);
-  app.use(router);
-  app.use(VueSweetalert2);
-  app.provide("Alert", alertCommon);
-  app.mount("#app");
-}
-
-bootstrap();

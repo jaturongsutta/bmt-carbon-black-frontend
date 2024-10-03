@@ -1,96 +1,57 @@
-import { useAuthStore } from "@/stores/auth.js";
-import { jwtDecode } from "jwt-decode";
+/**
+ * router/index.ts
+ *
+ * Automatic routes for `./src/pages/*.vue`
+ */
+
 // Composables
-import {
-  createRouter,
-  createWebHistory,
-  createWebHashHistory,
-} from "vue-router";
-import { refreshToken } from "@/api/authentication.js";
-import axios from "axios";
+import { createRouter, createWebHashHistory } from "vue-router";
+import routes from "./routes.js";
+
+import { useAuthStore } from "@/stores/auth.js";
 import Swal from "sweetalert2";
 
-function createAppRouter(routeData) {
-  const router = createRouter({
-    history: createWebHashHistory(import.meta.env.BASE_URL),
-    routes: routeData,
-  });
+import { routes as r } from "vue-router/auto-routes";
 
-  router.beforeEach(async (to, from, next) => {
-    const authStore = useAuthStore();
-    const requireAuth =
-      to.meta && to.meta.requireAuth !== undefined ? to.meta.requireAuth : true;
+console.log("routes", r);
 
-    if (requireAuth === true && authStore.isLoggedIn === false) {
-      await Swal.fire(
-        "Session Expired",
-        "Please sign in to continue",
-        "warning"
-      );
-      next({ name: "login" });
-      return; // Prevent further execution to ensure next is called only once
-    }
+const router = createRouter({
+  history: createWebHashHistory(import.meta.env.BASE_URL),
+  routes,
+});
 
-    next(); // Default case if none of the conditions above are met
-  });
+router.beforeEach(async (to, from, next) => {
+  const authStore = useAuthStore();
+  const requireAuth =
+    to.meta && to.meta.requireAuth !== undefined ? to.meta.requireAuth : true;
+  if (requireAuth === true && authStore.isLoggedIn === false) {
+    await Swal.fire(
+      "Session Expired1",
+      "Please sign in to continue",
+      "warning"
+    );
+    next({ name: "login" });
+    return; // Prevent further execution to ensure next is called only once
+  }
 
-  router.afterEach((to, from) => {
-    const requireAuth =
-      to.meta && to.meta.requireAuth !== undefined ? to.meta.requireAuth : true;
-    const token = localStorage.getItem("jwt");
+  next(); // Default case if none of the conditions above are met
+});
 
-    if (requireAuth && token) {
-      const isExpired = isTokenExpired(token);
-      if (!isExpired) {
-        refreshToken()
-          .then((response) => {
-            localStorage.setItem("jwt", response.data.accessToken);
-            axios.defaults.headers.common["Authorization"] =
-              "Bearer " + response.data.accessToken;
-          })
-          .catch((error) => {
-            console.log("Refresh token failed : ", error);
-          });
-      }
-    }
-  });
-
-  const isTokenExpired = (token) => {
-    try {
-      const decoded = jwtDecode(token);
-      const currentTime = Date.now() / 1000; // Convert to seconds
-      return decoded.exp < currentTime;
-    } catch (error) {
-      console.error("Error decoding token:", error);
-      return true; // Consider expired if there's an error decoding
-    }
-  };
-
-  // Workaround for https://github.com/vitejs/vite/issues/11804
-  router.onError((err, to) => {
-    if (
-      err?.message?.includes?.("Failed to fetch dynamically imported module")
-    ) {
-      if (!localStorage.getItem("vuetify:dynamic-reload")) {
-        console.log("Reloading page to fix dynamic import error");
-        localStorage.setItem("vuetify:dynamic-reload", "true");
-        location.assign(to.fullPath);
-      } else {
-        console.error(
-          "Dynamic import error, reloading page did not fix it",
-          err
-        );
-      }
+// Workaround for https://github.com/vitejs/vite/issues/11804
+router.onError((err, to) => {
+  if (err?.message?.includes?.("Failed to fetch dynamically imported module")) {
+    if (!localStorage.getItem("vuetify:dynamic-reload")) {
+      console.log("Reloading page to fix dynamic import error");
+      localStorage.setItem("vuetify:dynamic-reload", "true");
+      location.assign(to.fullPath);
     } else {
-      console.error(err);
+      console.error("Dynamic import error, reloading page did not fix it", err);
     }
-  });
+  } else {
+    console.error(err);
+  }
+});
 
-  router.isReady().then(() => {
-    localStorage.removeItem("vuetify:dynamic-reload");
-  });
+router.isReady().then(() => {});
 
-  return router;
-}
-
-export default createAppRouter;
+export default router;

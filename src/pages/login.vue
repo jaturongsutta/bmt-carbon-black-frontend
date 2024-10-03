@@ -76,13 +76,13 @@ const handleSubmit = async () => {
       isLoading.value = false;
       if (login.result.status == 0) {
         try {
-          // Add Routes for Vue Router
-          const res = await authGetMenuRoute();
-          if (res.data != null && res.data) {
-            var data = xorEncryptDecrypt(JSON.stringify(res.data));
-            localStorage.setItem("menuRoutes", data);
-            await updateRouterByRouteData(router);
-          }
+          // // Add Routes for Vue Router
+          // const res = await authGetMenuRoute();
+          // if (res.data != null && res.data) {
+          //   var data = xorEncryptDecrypt(JSON.stringify(res.data));
+          //   localStorage.setItem("menuRoutes", data);
+          //   await updateRouterByRouteData(router);
+          // }
         } catch (error) {
           console.error("Error Fetching Routes: ", error);
         }
