@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <v-layout class="rounded rounded-md">
-      <app-bar></app-bar>
-      <nav-bar v-if="authStore.isLoggedIn"></nav-bar>
+      <app-bar-mockup></app-bar-mockup>
+      <nav-bar-mockup v-if="authStore.isLoggedIn"></nav-bar-mockup>
       <v-main class="main">
         <router-view class="pa-5"></router-view>
       </v-main>

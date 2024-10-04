@@ -15,6 +15,15 @@ import { createVuetify } from "vuetify";
 export default createVuetify({
   theme: {
     defaultTheme: "light",
+    themes: {
+      light: {
+        dark: false,
+        colors: {
+          primary: "#000", // #E53935
+          secondary: "#000", // #FFCDD2
+        },
+      },
+    },
   },
   defaults: {
     // VField: {
@@ -26,38 +35,37 @@ export default createVuetify({
     VTextField: {
       density: "compact",
       variant: "outlined",
-      rounded: "lg",
     },
     VSelect: {
       density: "compact",
       variant: "outlined",
     },
-    VAutocomplete: {
-      density: "compact",
-      variant: "outlined",
-    },
-    VCombobox: {
-      density: "compact",
-      variant: "outlined",
-    },
-    VBtn: {
-      // rounded: "lg",
-      class: "text-none font-weight-bold ",
-    },
-    VDataTable: {
-      itemsPerPageOptions: [20, 25, 100],
-      itemsPerPage: 25,
-      hover: true,
-    },
-    VCard: {
-      rounded: "lg",
-      elevation: "5",
-    },
-    VCardText: {
-      class: "pa-3",
-    },
-    VCol: {
-      class: "pa-0  ps-3 pe-3",
-    },
+    // VAutocomplete: {
+    //   density: "compact",
+    //   variant: "outlined",
+    // },
+    // VCombobox: {
+    //   density: "compact",
+    //   variant: "outlined",
+    // },
+    // VBtn: {
+    //   // rounded: "lg",
+    //   class: "text-none font-weight-bold ",
+    // },
+    // VDataTable: {
+    //   itemsPerPageOptions: [20, 25, 100],
+    //   itemsPerPage: 25,
+    //   hover: true,
+    // },
+    // VCard: {
+    //   rounded: "lg",
+    //   elevation: "5",
+    // },
+    // VCardText: {
+    //   class: "pa-3",
+    // },
+    // VCol: {
+    //   class: "pa-0  ps-3 pe-3",
+    // },
   },
 });

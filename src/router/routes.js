@@ -1,11 +1,11 @@
 import Home from "@/pages/home.vue";
-import Login from "@/pages/Login.vue";
-
+import Login from "@/pages/login.vue";
+import tankShipping1 from "@/pages/mockup/tank-shipping1/tank-shipping1.vue";
 const routes = [
   {
     path: "/",
     name: "/",
-    component: Home,
+    component: tankShipping1,
   },
   {
     path: "/login",
@@ -85,6 +85,33 @@ const routes = [
         name: "application-log-preview",
         component: () =>
           import("@/pages/common-master/application-log/preview-log.vue"),
+      },
+    ],
+  },
+
+  /// Mockup
+  {
+    path: "/tank-shipping1",
+    meta: {
+      requireAuth: false,
+    },
+    children: [
+      {
+        path: "",
+        name: "tank-shipping1",
+        component: tankShipping1,
+      },
+      {
+        path: "/tank-shipping1-info/:id?",
+        name: "tank-shipping1-info",
+        component: () =>
+          import("@/pages/mockup/tank-shipping1/tank-shipping1-info.vue"),
+      },
+      {
+        path: "/tank-shipping1-add",
+        name: "tank-shipping1-add",
+        component: () =>
+          import("@/pages/mockup/tank-shipping1/tank-shipping1-add.vue"),
       },
     ],
   },
