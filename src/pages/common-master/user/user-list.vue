@@ -50,6 +50,7 @@
           <template v-slot:[`item.action`]="{ item }">
             <n-gbtn-edit @click="onEdit(item.USER_ID)"></n-gbtn-edit>
           </template>
+
           <template v-slot:bottom>
             <n-pagination
               v-model:currentPage="currentPage"
@@ -87,14 +88,25 @@ const headers = [
   { title: "Last Name", key: "Last_Name", sortable: true },
   { title: "Position Name", key: "Position_Name", sortable: true },
   { title: "Status", key: "Status", sortable: true },
-  { title: "Created By", key: "Created_By", sortable: true },
+  // { title: "Created By", key: "Created_By", sortable: true },
+  // {
+  //   title: "Created Date",
+  //   key: "Created_Date",
+  //   sortable: true,
+  //   value: (item) => {
+  //     return item.Created_Date
+  //       ? moment.utc(item.Created_Date).format("DD/MM/YYYY HH:mm:ss")
+  //       : "";
+  //   },
+  // },
+  { title: "Updated By", key: "Updated_By", sortable: true },
   {
-    title: "Created Date",
-    key: "Created_Date",
+    title: "Updated Date",
+    key: "Updated_Date",
     sortable: true,
     value: (item) => {
-      return item.Created_Date
-        ? moment(item.Created_Date).format("DD/MM/YYYY HH:mm:ss")
+      return item.Updated_Date
+        ? moment.utc(item.Updated_Date).format("DD/MM/YYYY HH:mm:ss")
         : "";
     },
   },

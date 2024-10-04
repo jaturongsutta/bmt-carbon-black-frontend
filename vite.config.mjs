@@ -4,8 +4,8 @@ import Vue from "@vitejs/plugin-vue";
 import Vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 import ViteFonts from "unplugin-fonts/vite";
 import VueRouter from "unplugin-vue-router/vite";
-import * as dotenv from "dotenv";
-dotenv.config(); // Load environment variables from .env file
+// import * as dotenv from "dotenv";
+// dotenv.config(); // Load environment variables from .env file
 // Utilities
 import { defineConfig } from "vite";
 import { fileURLToPath, URL } from "node:url";
