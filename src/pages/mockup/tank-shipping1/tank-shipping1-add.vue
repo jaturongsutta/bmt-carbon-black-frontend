@@ -7,7 +7,7 @@
     <v-container>
       <v-form @submit.prevent="onSave" ref="frmInfo">
         <v-row>
-          <v-col md="3">
+          <v-col md="3" xl="2">
             <label class="require-field">Date</label>
             <n-date v-model="form.date" :rules="[rules.required]"></n-date>
           </v-col>
