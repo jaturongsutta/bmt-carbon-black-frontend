@@ -2,7 +2,7 @@
   <div>
     <v-card>
       <v-card-title>
-        <h4>Tank Shipping</h4>
+        <h4>Production Daily Volumn Record</h4>
       </v-card-title>
       <v-card-text>
         <v-row>
@@ -11,8 +11,12 @@
             <n-date v-model="form.field1"></n-date>
           </v-col>
           <v-col>
-            <label>Line Tank</label>
-            <n-select v-model="form.field2" :items="tankList"></n-select>
+            <label>Line</label>
+            <n-select v-model="form.field2" :items="['1', '2', '3']"></n-select>
+          </v-col>
+          <v-col>
+            <label>Grade</label>
+            <n-select v-model="form.grade" :items="['SAF']"></n-select>
           </v-col>
           <v-col>
             <label>Product Name</label>
@@ -44,17 +48,6 @@
         <v-btn
           prepend-icon="mdi mdi-plus-circle-outline"
           color="primary"
-          class="float-right mb-3"
-          @click="onAdd2"
-        >
-          <template v-slot:prepend>
-            <v-icon color="white" size="large"></v-icon>
-          </template>
-          Add 2
-        </v-btn>
-        <v-btn
-          prepend-icon="mdi mdi-plus-circle-outline"
-          color="primary"
           class="float-right mb-3 mr-3"
           @click="onAdd"
         >
@@ -72,15 +65,45 @@
           :items-per-page="pageSize"
           hover
         >
+          <template
+            v-slot:headers="{ columns, isSorted, getSortIcon, toggleSort }"
+          >
+            <tr>
+              <th rowspan="3"></th>
+              <th rowspan="3">Date</th>
+              <th rowspan="3">Line</th>
+              <th rowspan="3">Grade</th>
+              <th rowspan="3">Product Name</th>
+              <th colspan="15">Shift1</th>
+            </tr>
+            <tr>
+              <th colspan="3">Feedstock Oil</th>
+              <th colspan="6">Fuel</th>
+              <th colspan="2">Summarize Carbon</th>
+              <th rowspan="2">KOH Mixing</th>
+              <th rowspan="2">NaOH Consumption</th>
+              <th rowspan="2">Recyde Hopper Level</th>
+              <th rowspan="2">Tank</th>
+            </tr>
+            <tr>
+              <th>Production</th>
+              <th>EKINEN</th>
+              <th>Total</th>
+              <th>Production</th>
+              <th>Warm up</th>
+              <th>Prepeat</th>
+              <th>Drying</th>
+              <th>Liquid</th>
+              <th>Oil spray check</th>
+              <th>Total Mixing Volumn</th>
+              <th>Dischargen Volumn</th>
+            </tr>
+          </template>
           <template v-slot:[`item.action`]="{ item }">
             <n-gbtn-edit
               @click="onEdit(item.id)"
               :permission="false"
             ></n-gbtn-edit>
-            <n-gbtn-delete
-              @click="onDelete(item.id)"
-              :permission="false"
-            ></n-gbtn-delete>
           </template>
           <template v-slot:bottom>
             <n-pagination
@@ -123,53 +146,71 @@ let ProductList = ref([
 ]);
 
 const headers = [
-  { title: "", key: "action", width: "100px", sortable: false },
+  { title: "", key: "action", sortable: false },
   { title: "Date", key: "date" },
-  { title: "Line-Tank", key: "lineTank" },
+  { title: "Line", key: "line" },
   { title: "Grade", key: "grade" },
   { title: "Product Name", key: "productName" },
-  { title: "Shipping Type", key: "shippingType" },
-  { title: "Class", key: "class" },
-  { title: "Lot No.", key: "lotNo" },
-  { title: "Packing Weight(Kg.)", key: "packingWeight" },
-  { title: "Total Qty (Kg.)", key: "totalQty" },
+  { title: "Production", key: "production1" },
+  { title: "EKINEN", key: "ekinen" },
+  { title: "Total", key: "total1" },
+  { title: "Production", key: "production2" },
+  { title: "Warm up", key: "warmup" },
+  { title: "Prepeat", key: "prepeat" },
+  { title: "Drying", key: "drying" },
+  { title: "Liquid", key: "liquid" },
+  { title: "Oil spray check", key: "oilSprayCheck" },
+  { title: "Total Mixing Volumn", key: "totalMixingVolumn" },
+  { title: "Dischargen Volumn", key: "dischargenVolumn" },
+  { title: "KOH Mixing", key: "kohMixing" },
+  { title: "NaOH Consumption", key: "naohConsumption" },
+  { title: "Recycle Hopper Level", key: "recycleHopperLevel" },
+  { title: "Tank", key: "tank" },
 ];
 let items = ref([
   {
     id: 1,
     date: "09/09/2024",
-    lineTank: "1-1",
+    line: "1",
     grade: "SAF",
     productName: "B120",
-    shippingType: "FC (Outspec)",
-    class: "C",
-    lotNo: "412CD8",
-    packingWeight: "750",
-    totalQty: "60,000",
+    production1: "24,249",
+    ekinen: "5,760",
+    total1: "30,250",
+    production2: "0",
+    warmup: "0",
+    prepeat: "0",
+    drying: "0",
+    liquid: "0",
+    oilSprayCheck: "0",
+    totalMixingVolumn: "0",
+    dischargenVolumn: "0",
+    kohMixing: "0",
+    naohConsumption: "0",
+    recycleHopperLevel: "3",
+    tank: "1-1,1-2",
   },
   {
     id: 2,
     date: "09/09/2024",
-    lineTank: "1-2",
+    line: "1",
     grade: "SAF",
-    productName: "B120",
-    shippingType: "FC (Cleaning)",
-    class: "X",
-    lotNo: "412CD8",
-    packingWeight: "10,000",
-    totalQty: "85,000",
-  },
-  {
-    id: 3,
-    date: "09/09/2024",
-    lineTank: "1-3",
-    grade: "SAF",
-    productName: "B120",
-    shippingType: "PL (Outspec)",
-    class: "F",
-    lotNo: "412CD8",
-    packingWeight: "500",
-    totalQty: "10,000",
+    productName: "B72J",
+    production1: "15,000",
+    ekinen: "15,000",
+    total1: "30,000",
+    production2: "0",
+    warmup: "0",
+    prepeat: "0",
+    drying: "0",
+    liquid: "0",
+    oilSprayCheck: "0",
+    totalMixingVolumn: "0",
+    dischargenVolumn: "0",
+    kohMixing: "0",
+    naohConsumption: "0",
+    recycleHopperLevel: "3",
+    tank: "2-1,2-2",
   },
 ]);
 
