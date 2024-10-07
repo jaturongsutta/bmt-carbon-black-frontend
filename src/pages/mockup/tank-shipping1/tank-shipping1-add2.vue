@@ -9,7 +9,7 @@
         <v-form @submit.prevent="onSave" ref="frmInfo">
           <v-row>
             <v-col md="6">
-              <v-row no-gutters="true">
+              <v-row no-gutters>
                 <v-col md="3">
                   <label class="require-field">Date</label>
                   <n-date
@@ -43,8 +43,8 @@
                 </v-col>
               </v-row>
             </v-col>
-            <v-col md="6">
-              <v-row no-gutters="true">
+            <v-col md="6" class="pa-0">
+              <v-row no-gutters>
                 <v-col md="4">
                   <label class="require-field">Shipping Type</label>
                   <v-select
@@ -78,7 +78,7 @@
             </v-col>
 
             <v-col md="6"
-              ><v-row no-gutters="true">
+              ><v-row no-gutters>
                 <v-col md="3">
                   <label class="require-field">Packing Weight (Kg.)</label>
                   <v-select
@@ -110,7 +110,7 @@
                 </v-col> </v-row
             ></v-col>
             <v-col md="6"
-              ><v-row no-gutters="true">
+              ><v-row no-gutters>
                 <v-col md="4">
                   <label>Adjust Value</label>
                   <v-text-field
@@ -126,7 +126,7 @@
                 </v-col> </v-row
             ></v-col>
             <v-col md="6">
-              <v-row no-gutters="true">
+              <v-row no-gutters>
                 <v-col md="3">
                   <label>Empty</label>
                   <v-checkbox v-model="form.empty" label="Yes"></v-checkbox>

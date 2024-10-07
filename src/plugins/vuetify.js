@@ -65,7 +65,7 @@ export default createVuetify({
       class: "pa-3",
     },
     VCol: {
-      class: "pa-0 ps-3 pe-3",
+      class: "py-0 px-3",
     },
   },
 });
