@@ -14,6 +14,12 @@
       @click="homeClick"
     />
     <v-spacer></v-spacer>
+    <v-icon
+      icon="mdi mdi-account"
+      class="me-2"
+      color="white"
+      size="large"
+    ></v-icon>
     <label class="text-h6 me-2">Admin Test</label>
 
     <v-btn icon="mdi-logout" variant="text" @click="logoutClick"></v-btn>
