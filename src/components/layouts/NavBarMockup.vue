@@ -4,7 +4,6 @@
     :rail="miniMenu"
     permanent
     class="position-fixed"
-    v-if="authStore.isLoggedIn"
     :width="270"
   >
     <v-divider></v-divider>

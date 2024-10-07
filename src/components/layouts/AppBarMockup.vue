@@ -1,7 +1,6 @@
 <template>
   <v-app-bar
     class="elevation-1 position-fixed bridgestone-top-bar"
-    v-if="isShow"
     density="compact"
   >
     <v-app-bar-nav-icon
