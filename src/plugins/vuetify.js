@@ -57,15 +57,15 @@ export default createVuetify({
     //   itemsPerPage: 25,
     //   hover: true,
     // },
-    // VCard: {
-    //   rounded: "lg",
-    //   elevation: "5",
-    // },
-    // VCardText: {
-    //   class: "pa-3",
-    // },
+    VCard: {
+      // rounded: "lg",
+      // elevation: "5",
+    },
+    VCardText: {
+      class: "pa-3",
+    },
     VCol: {
-      class: "pa-0 ps-2 pe-2",
+      class: "pa-0 ps-3 pe-3",
     },
   },
 });
