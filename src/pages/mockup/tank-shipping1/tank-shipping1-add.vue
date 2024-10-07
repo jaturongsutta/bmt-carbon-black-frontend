@@ -96,11 +96,8 @@
             <v-text-field v-model="form.adjestValue" readonly></v-text-field>
           </v-col>
           <v-col md="3">
-            <label class="require-field">Additional Adjustment</label>
-            <v-text-field
-              v-model="form.additionnalAdjestmant"
-              :rules="[rules.required]"
-            ></v-text-field>
+            <label>Additional Adjustment</label>
+            <v-text-field v-model="form.additionnalAdjestmant"></v-text-field>
           </v-col>
           <v-col md="3">
             <label>Empty</label>

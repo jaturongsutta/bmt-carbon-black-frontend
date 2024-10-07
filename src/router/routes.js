@@ -113,6 +113,12 @@ const routes = [
         component: () =>
           import("@/pages/mockup/tank-shipping1/tank-shipping1-add.vue"),
       },
+      {
+        path: "/tank-shipping1-add2",
+        name: "tank-shipping1-add2",
+        component: () =>
+          import("@/pages/mockup/tank-shipping1/tank-shipping1-add2.vue"),
+      },
     ],
   },
 ];

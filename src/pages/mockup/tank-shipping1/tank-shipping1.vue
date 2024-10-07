@@ -45,6 +45,17 @@
           prepend-icon="mdi mdi-plus-circle-outline"
           color="primary"
           class="float-right mb-3"
+          @click="onAdd2"
+        >
+          <template v-slot:prepend>
+            <v-icon color="white" size="large"></v-icon>
+          </template>
+          Add 2
+        </v-btn>
+        <v-btn
+          prepend-icon="mdi mdi-plus-circle-outline"
+          color="primary"
+          class="float-right mb-3 mr-3"
           @click="onAdd"
         >
           <template v-slot:prepend>
@@ -187,6 +198,10 @@ const onReset = () => {
 
 const onAdd = () => {
   router.push({ name: "tank-shipping1-add" });
+};
+
+const onAdd2 = () => {
+  router.push({ name: "tank-shipping1-add2" });
 };
 
 const onEdit = (id) => {
