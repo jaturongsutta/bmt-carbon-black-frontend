@@ -110,3 +110,15 @@
   opacity: 0.4;
   background-color: #e9ecef;
 }
+
+
+
+.require-field {
+  position: relative;
+}
+
+.require-field::after {
+  content: "*";
+  color: red;
+  margin-left: 2px; /* Adjust spacing as needed */
+}
