@@ -6,6 +6,9 @@ const routes = [
     path: "/",
     name: "/",
     component: tankShipping1,
+    meta: {
+      requireAuth: false,
+    },
   },
   {
     path: "/login",
