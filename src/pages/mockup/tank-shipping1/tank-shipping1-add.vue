@@ -56,11 +56,10 @@
             </v-col>
             <v-col md="3">
               <label class="require-field">Lot No.</label>
-              <v-select
+              <v-text-field
                 v-model="form.lotNo"
-                :items="['412CD8']"
                 :rules="[rules.required]"
-              ></v-select>
+              ></v-text-field>
             </v-col>
 
             <v-col md="3">
