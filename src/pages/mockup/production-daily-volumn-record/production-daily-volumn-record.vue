@@ -12,11 +12,14 @@
           </v-col>
           <v-col>
             <label>Line</label>
-            <n-select v-model="form.field2" :items="['1', '2', '3']"></n-select>
+            <n-select
+              v-model="form.field2"
+              :items="['All', '1', '2', '3']"
+            ></n-select>
           </v-col>
           <v-col>
             <label>Grade</label>
-            <n-select v-model="form.grade" :items="['SAF']"></n-select>
+            <n-select v-model="form.grade" :items="['All', 'SAF']"></n-select>
           </v-col>
           <v-col>
             <label>Product Name</label>
