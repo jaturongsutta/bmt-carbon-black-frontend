@@ -64,8 +64,8 @@ export default createVuetify({
     // VCardText: {
     //   class: "pa-3",
     // },
-    // VCol: {
-    //   class: "pa-0  ps-3 pe-3",
-    // },
+    VCol: {
+      class: "pa-0 ps-2 pe-2",
+    },
   },
 });

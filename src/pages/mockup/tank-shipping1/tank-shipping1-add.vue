@@ -4,7 +4,7 @@
       <h5>Add Tank Shipping</h5>
     </v-card-title>
 
-    <v-card-text>
+    <v-container>
       <v-form @submit.prevent="onSave" ref="frmInfo">
         <v-row>
           <v-col md="3">
@@ -131,7 +131,7 @@
         </v-row>
         <n-loading :loading="isLoading" />
       </v-form>
-    </v-card-text>
+    </v-container>
   </v-card>
 </template>
 
