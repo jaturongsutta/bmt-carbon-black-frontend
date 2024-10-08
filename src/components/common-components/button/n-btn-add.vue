@@ -23,9 +23,9 @@ const authStore = useAuthStore();
 const props = defineProps({
   label: String,
 
-  permission: {
+  noPermission: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 });
 
@@ -33,8 +33,7 @@ let canAccess = ref(false);
 
 onMounted(() => {
   const { meta } = route;
-
-  if (props.permission) {
+  if (props.noPermission === false) {
     if (meta.menuNo) {
       const access = authStore.permission.filter(
         (item) => item.Menu_No === meta.menuNo
@@ -58,6 +57,8 @@ onMounted(() => {
       canAccess.value = false;
       console.warn("Menu No missing in route meta");
     }
+  } else {
+    canAccess.value = true;
   }
 });
 </script>
