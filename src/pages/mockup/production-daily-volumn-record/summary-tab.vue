@@ -1,9 +1,9 @@
 <template>
   <div>
     <v-row>
-      <v-col md="3" class="d-flex align-center">
+      <!-- <v-col md="3" class="d-flex align-center">
         <label>Shift 1, Shift 2, Shift 3</label>
-      </v-col>
+      </v-col> -->
       <v-col md="3">
         <label>Total Operating Time(h)</label>
         <v-text-field value="24" readonly></v-text-field>
