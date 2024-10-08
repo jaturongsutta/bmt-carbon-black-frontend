@@ -77,7 +77,9 @@
               <th rowspan="3">Line</th>
               <th rowspan="3">Grade</th>
               <th rowspan="3">Product Name</th>
-              <th colspan="15" style="height: 35px">Shift1</th>
+              <th colspan="15" style="height: 35px">Shift 1</th>
+              <th colspan="15" style="height: 35px">Shift 2</th>
+              <th colspan="15" style="height: 35px">Shift 3</th>
             </tr>
             <tr>
               <th colspan="3">Feedstock Oil</th>
@@ -87,8 +89,48 @@
               <th rowspan="2">NaOH Consumption</th>
               <th rowspan="2">Recyde Hopper Level</th>
               <th rowspan="2">Tank</th>
+
+              <th colspan="3">Feedstock Oil</th>
+              <th colspan="6">Fuel</th>
+              <th colspan="2">Summarize Carbon</th>
+              <th rowspan="2">KOH Mixing</th>
+              <th rowspan="2">NaOH Consumption</th>
+              <th rowspan="2">Recyde Hopper Level</th>
+              <th rowspan="2">Tank</th>
+
+              <th colspan="3">Feedstock Oil</th>
+              <th colspan="6">Fuel</th>
+              <th colspan="2">Summarize Carbon</th>
+              <th rowspan="2">KOH Mixing</th>
+              <th rowspan="2">NaOH Consumption</th>
+              <th rowspan="2">Recyde Hopper Level</th>
+              <th rowspan="2">Tank</th>
             </tr>
             <tr>
+              <th>Production</th>
+              <th>EKINEN</th>
+              <th>Total</th>
+              <th>Production</th>
+              <th>Warm up</th>
+              <th>Prepeat</th>
+              <th>Drying</th>
+              <th>Liquid</th>
+              <th>Oil spray check</th>
+              <th>Total Mixing Volumn</th>
+              <th>Dischargen Volumn</th>
+
+              <th>Production</th>
+              <th>EKINEN</th>
+              <th>Total</th>
+              <th>Production</th>
+              <th>Warm up</th>
+              <th>Prepeat</th>
+              <th>Drying</th>
+              <th>Liquid</th>
+              <th>Oil spray check</th>
+              <th>Total Mixing Volumn</th>
+              <th>Dischargen Volumn</th>
+
               <th>Production</th>
               <th>EKINEN</th>
               <th>Total</th>
@@ -154,21 +196,53 @@ const headers = [
   { title: "Line", key: "line" },
   { title: "Grade", key: "grade" },
   { title: "Product Name", key: "productName" },
-  { title: "Production", key: "production1" },
-  { title: "EKINEN", key: "ekinen" },
+  { title: "Production", key: "production1_1" },
+  { title: "EKINEN", key: "ekinen1" },
   { title: "Total", key: "total1" },
-  { title: "Production", key: "production2" },
-  { title: "Warm up", key: "warmup" },
-  { title: "Prepeat", key: "prepeat" },
-  { title: "Drying", key: "drying" },
-  { title: "Liquid", key: "liquid" },
-  { title: "Oil spray check", key: "oilSprayCheck" },
-  { title: "Total Mixing Volumn", key: "totalMixingVolumn" },
-  { title: "Dischargen Volumn", key: "dischargenVolumn" },
-  { title: "KOH Mixing", key: "kohMixing" },
-  { title: "NaOH Consumption", key: "naohConsumption" },
-  { title: "Recycle Hopper Level", key: "recycleHopperLevel" },
-  { title: "Tank", key: "tank" },
+  { title: "Production", key: "production1_2" },
+  { title: "Warm up", key: "warmup1" },
+  { title: "Prepeat", key: "prepeat1" },
+  { title: "Drying", key: "drying1" },
+  { title: "Liquid", key: "liquid1" },
+  { title: "Oil spray check", key: "oilSprayCheck1" },
+  { title: "Total Mixing Volumn", key: "totalMixingVolumn1" },
+  { title: "Dischargen Volumn", key: "dischargenVolumn1" },
+  { title: "KOH Mixing", key: "kohMixing1" },
+  { title: "NaOH Consumption", key: "naohConsumption1" },
+  { title: "Recycle Hopper Level", key: "recycleHopperLevel1" },
+  { title: "Tank", key: "tank1" },
+
+  { title: "Production", key: "production2_1" },
+  { title: "EKINEN", key: "ekinen2" },
+  { title: "Total", key: "total2" },
+  { title: "Production", key: "production2_2" },
+  { title: "Warm up", key: "warmup2" },
+  { title: "Prepeat", key: "prepeat2" },
+  { title: "Drying", key: "drying2" },
+  { title: "Liquid", key: "liquid2" },
+  { title: "Oil spray check", key: "oilSprayCheck2" },
+  { title: "Total Mixing Volumn", key: "totalMixingVolumn2" },
+  { title: "Dischargen Volumn", key: "dischargenVolumn2" },
+  { title: "KOH Mixing", key: "kohMixing2" },
+  { title: "NaOH Consumption", key: "naohConsumption2" },
+  { title: "Recycle Hopper Level", key: "recycleHopperLevel2" },
+  { title: "Tank", key: "tank2" },
+
+  { title: "Production", key: "production3_1" },
+  { title: "EKINEN", key: "ekinen3" },
+  { title: "Total", key: "total3" },
+  { title: "Production", key: "production3_2" },
+  { title: "Warm up", key: "warmup3" },
+  { title: "Prepeat", key: "prepeat3" },
+  { title: "Drying", key: "drying3" },
+  { title: "Liquid", key: "liquid3" },
+  { title: "Oil spray check", key: "oilSprayCheck3" },
+  { title: "Total Mixing Volumn", key: "totalMixingVolumn3" },
+  { title: "Dischargen Volumn", key: "dischargenVolumn3" },
+  { title: "KOH Mixing", key: "kohMixing3" },
+  { title: "NaOH Consumption", key: "naohConsumption3" },
+  { title: "Recycle Hopper Level", key: "recycleHopperLevel3" },
+  { title: "Tank", key: "tank3" },
 ];
 let items = ref([
   {
@@ -177,21 +251,53 @@ let items = ref([
     line: "1",
     grade: "SAF",
     productName: "B120",
-    production1: "24,249",
-    ekinen: "5,760",
+    production1_1: "24,249",
+    ekinen1: "5,760",
     total1: "30,250",
-    production2: "0",
-    warmup: "0",
-    prepeat: "0",
-    drying: "0",
-    liquid: "0",
-    oilSprayCheck: "0",
-    totalMixingVolumn: "0",
-    dischargenVolumn: "0",
-    kohMixing: "0",
-    naohConsumption: "0",
-    recycleHopperLevel: "3",
-    tank: "1-1,1-2",
+    production1_2: "0",
+    warmup1: "0",
+    prepeat1: "0",
+    drying1: "0",
+    liquid1: "0",
+    oilSprayCheck1: "0",
+    totalMixingVolumn1: "0",
+    dischargenVolumn1: "0",
+    kohMixing1: "0",
+    naohConsumption1: "0",
+    recycleHopperLevel1: "3",
+    tank1: "1-1,1-2",
+
+    production2_1: "24,000",
+    ekinen2: "5,760",
+    total2: "30,160",
+    production2_2: "0",
+    warmup2: "0",
+    prepeat2: "0",
+    drying2: "0",
+    liquid2: "0",
+    oilSprayCheck2: "0",
+    totalMixingVolumn2: "0",
+    dischargenVolumn2: "0",
+    kohMixing2: "0",
+    naohConsumption2: "0",
+    recycleHopperLevel2: "3",
+    tank2: "2-1,2-2",
+
+    production3_1: "24,470",
+    ekinen3: "5,760",
+    total3: "30,230",
+    production3_2: "0",
+    warmup3: "0",
+    prepeat3: "0",
+    drying3: "0",
+    liquid3: "0",
+    oilSprayCheck3: "0",
+    totalMixingVolumn3: "0",
+    dischargenVolumn3: "0",
+    kohMixing3: "0",
+    naohConsumption3: "0",
+    recycleHopperLevel3: "3",
+    tank3: "3-1,3-2",
   },
   {
     id: 2,
@@ -199,21 +305,53 @@ let items = ref([
     line: "1",
     grade: "SAF",
     productName: "B72J",
-    production1: "15,000",
-    ekinen: "15,000",
-    total1: "30,000",
-    production2: "0",
-    warmup: "0",
-    prepeat: "0",
-    drying: "0",
-    liquid: "0",
-    oilSprayCheck: "0",
-    totalMixingVolumn: "0",
-    dischargenVolumn: "0",
-    kohMixing: "0",
-    naohConsumption: "0",
-    recycleHopperLevel: "3",
-    tank: "2-1,2-2",
+    production1_1: "15,000",
+    ekinen1: "15,000",
+    total1: "15,000",
+    production1_2: "0",
+    warmup1: "0",
+    prepeat1: "0",
+    drying1: "0",
+    liquid1: "0",
+    oilSprayCheck1: "0",
+    totalMixingVolumn1: "0",
+    dischargenVolumn1: "0",
+    kohMixing1: "0",
+    naohConsumption1: "0",
+    recycleHopperLevel1: "3",
+    tank1: "1-1,1-2",
+
+    production2_1: "0",
+    ekinen2: "0",
+    total2: "0",
+    production2_2: "0",
+    warmup2: "0",
+    prepeat2: "0",
+    drying2: "0",
+    liquid2: "0",
+    oilSprayCheck2: "0",
+    totalMixingVolumn2: "0",
+    dischargenVolumn2: "0",
+    kohMixing2: "0",
+    naohConsumption2: "0",
+    recycleHopperLevel2: "3",
+    tank2: "2-1,2-2",
+
+    production3_1: "0",
+    ekinen3: "0",
+    total3: "0",
+    production3_2: "0",
+    warmup3: "0",
+    prepeat3: "0",
+    drying3: "0",
+    liquid3: "0",
+    oilSprayCheck3: "0",
+    totalMixingVolumn3: "0",
+    dischargenVolumn3: "0",
+    kohMixing3: "0",
+    naohConsumption3: "0",
+    recycleHopperLevel3: "3",
+    tank3: "3-1,3-2",
   },
 ]);
 
