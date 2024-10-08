@@ -155,10 +155,6 @@
       <v-col class="d-flex align-end">
         <h5 class="float-start">Storange Tank</h5>
       </v-col>
-      <v-col class="d-flex justify-end">
-        <n-btn-add no-permission label="Add Tank" @click="dialog = true">
-        </n-btn-add>
-      </v-col>
     </v-row>
 
     <v-row>
