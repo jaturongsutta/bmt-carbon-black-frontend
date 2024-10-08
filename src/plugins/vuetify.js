@@ -48,10 +48,10 @@ export default createVuetify({
     //   density: "compact",
     //   variant: "outlined",
     // },
-    // VBtn: {
-    //   // rounded: "lg",
-    //   class: "text-none font-weight-bold ",
-    // },
+    VBtn: {
+      // rounded: "lg",
+      class: "text-none font-weight-bold ",
+    },
     // VDataTable: {
     //   itemsPerPageOptions: [20, 25, 100],
     //   itemsPerPage: 25,

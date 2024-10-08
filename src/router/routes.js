@@ -2,6 +2,7 @@ import Home from "@/pages/home.vue";
 import Login from "@/pages/login.vue";
 import tankShipping1 from "@/pages/mockup/tank-shipping1/tank-shipping1.vue";
 import productionDailyVolumnRecord from "@/pages/mockup/production-daily-volumn-record/production-daily-volumn-record.vue";
+import productionDailyVolumnRecordAdd from "@/pages/mockup/production-daily-volumn-record/production-daily-volumn-record-add.vue";
 const routes = [
   {
     path: "/",
@@ -138,10 +139,9 @@ const routes = [
         component: productionDailyVolumnRecord,
       },
       {
-        path: "/tank-shipping1-info/:id?",
-        name: "tank-shipping1-info",
-        component: () =>
-          import("@/pages/mockup/tank-shipping1/tank-shipping1-info.vue"),
+        path: "/production-daily-volumn-record-add",
+        name: "production-daily-volumn-record-add",
+        component: productionDailyVolumnRecordAdd,
       },
     ],
   },

@@ -77,7 +77,7 @@
               <th rowspan="3">Line</th>
               <th rowspan="3">Grade</th>
               <th rowspan="3">Product Name</th>
-              <th colspan="15">Shift1</th>
+              <th colspan="15" style="height: 35px">Shift1</th>
             </tr>
             <tr>
               <th colspan="3">Feedstock Oil</th>
@@ -243,15 +243,14 @@ const onReset = () => {
 };
 
 const onAdd = () => {
-  router.push({ name: "tank-shipping1-add" });
-};
-
-const onAdd2 = () => {
-  router.push({ name: "tank-shipping1-add2" });
+  router.push({ name: "production-daily-volumn-record-add" });
 };
 
 const onEdit = (id) => {
-  router.push({ name: `tank-shipping1-info`, params: { id: id } });
+  router.push({
+    name: `production-daily-volumn-record-add`,
+    params: { id: id },
+  });
 };
 
 const onDelete = (id) => {

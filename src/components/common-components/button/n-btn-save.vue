@@ -23,9 +23,9 @@ const authStore = useAuthStore();
 const props = defineProps({
   label: String,
 
-  permission: {
+  noPermission: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 
   add: {
@@ -44,7 +44,7 @@ let canAccess = ref(false);
 onMounted(() => {
   const { meta } = route;
 
-  if (props.permission) {
+  if (props.noPermission === false) {
     if (meta.menuNo) {
       const access = authStore.permission.filter(
         (item) => item.Menu_No === meta.menuNo
