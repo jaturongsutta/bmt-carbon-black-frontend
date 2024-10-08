@@ -265,7 +265,7 @@ let items = ref([
     kohMixing1: "0",
     naohConsumption1: "0",
     recycleHopperLevel1: "3",
-    tank1: "1-1,1-2",
+    tank1: "1-1, 1-2",
 
     production2_1: "24,000",
     ekinen2: "5,760",
@@ -281,7 +281,7 @@ let items = ref([
     kohMixing2: "0",
     naohConsumption2: "0",
     recycleHopperLevel2: "3",
-    tank2: "2-1,2-2",
+    tank2: "2-1, 2-2",
 
     production3_1: "24,470",
     ekinen3: "5,760",
@@ -297,7 +297,7 @@ let items = ref([
     kohMixing3: "0",
     naohConsumption3: "0",
     recycleHopperLevel3: "3",
-    tank3: "3-1,3-2",
+    tank3: "3-1, 3-2",
   },
   {
     id: 2,
@@ -319,7 +319,7 @@ let items = ref([
     kohMixing1: "0",
     naohConsumption1: "0",
     recycleHopperLevel1: "3",
-    tank1: "1-1,1-2",
+    tank1: "1-1, 1-2",
 
     production2_1: "0",
     ekinen2: "0",
@@ -335,7 +335,7 @@ let items = ref([
     kohMixing2: "0",
     naohConsumption2: "0",
     recycleHopperLevel2: "3",
-    tank2: "2-1,2-2",
+    tank2: "2-1, 2-2",
 
     production3_1: "0",
     ekinen3: "0",
@@ -351,7 +351,7 @@ let items = ref([
     kohMixing3: "0",
     naohConsumption3: "0",
     recycleHopperLevel3: "3",
-    tank3: "3-1,3-2",
+    tank3: "3-1, 3-2",
   },
 ]);
 

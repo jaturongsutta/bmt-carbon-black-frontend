@@ -1,9 +1,6 @@
 <template>
   <div>
     <v-row>
-      <v-col md="3" class="d-flex align-center">
-        <label>{{ props.shiftName }}</label>
-      </v-col>
       <v-col md="3">
         <label>Operating Time(h)</label>
         <v-text-field value="8" readonly></v-text-field>
