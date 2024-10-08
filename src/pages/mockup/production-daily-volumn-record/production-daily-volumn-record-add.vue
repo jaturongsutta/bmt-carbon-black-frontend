@@ -40,14 +40,25 @@
 
           <v-row>
             <v-col>
-              <label class="require-field">Upload</label>
-              <v-file-input
+              <label>Upload</label>
+              <!-- <v-file-input
                 variant="outlined"
                 density="compact"
                 accept="image/*"
                 prepend-icon
                 append-icon="mdi mdi-paperclip"
-              ></v-file-input>
+              ></v-file-input> -->
+              <v-text-field
+                v-model="filenameTxt"
+                placeholder="Please choose file to upload"
+                readonly
+                :rules="[validateUploadFile]"
+                validate-on="submit"
+              >
+                <template v-slot:append>
+                  <n-btn-upload @click="uplaodFileClick"></n-btn-upload>
+                </template>
+              </v-text-field>
             </v-col>
           </v-row>
 
