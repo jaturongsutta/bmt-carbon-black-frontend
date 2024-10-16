@@ -5,6 +5,7 @@
       <nav-bar></nav-bar>
       <v-main class="main">
         <router-view class="pa-5"></router-view>
+        <notifications />
       </v-main>
     </v-layout>
   </v-app>

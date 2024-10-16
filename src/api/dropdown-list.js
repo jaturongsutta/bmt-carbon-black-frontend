@@ -10,7 +10,8 @@ export const getPredefine = async (args) => {
 
 export const lineTank = async () => {
   try {
-    return await axios.get(`dropdown-list/line-tank`);
+    const { data } = await axios.get(`dropdown-list/line-tank`);
+    return data;
   } catch (error) {
     throw error;
   }
@@ -18,7 +19,9 @@ export const lineTank = async () => {
 
 export const product = async () => {
   try {
-    return await axios.get(`dropdown-list/product`);
+    const { data } = await axios.get(`dropdown-list/product`);
+
+    return data;
   } catch (error) {
     throw error;
   }

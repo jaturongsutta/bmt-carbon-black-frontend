@@ -5,6 +5,12 @@ const rules = {
     }
     return true;
   },
+  integer: function (val) {
+    if (!Number.isInteger(Number(val))) {
+      return "This field must be an integer";
+    }
+    return true;
+  },
 };
 
 export default rules;

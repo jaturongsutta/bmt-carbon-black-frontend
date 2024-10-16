@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@kyvg/vue3-notification':
+        specifier: ^3.4.0
+        version: 3.4.0(vue@3.5.4)
       '@mdi/font':
         specifier: 7.4.47
         version: 7.4.47
@@ -370,6 +373,11 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
+
+  '@kyvg/vue3-notification@3.4.0':
+    resolution: {integrity: sha512-SFa5jPMVySj118LVGMFkPLpZVfFpLR/aTXJM90paS2LJZpwFqJnh9asJYPZ+wfJc1kXm3aOlluLoGw1OP4BnoA==}
+    peerDependencies:
+      vue: ^3.0.0
 
   '@mdi/font@7.4.47':
     resolution: {integrity: sha512-43MtGpd585SNzHZPcYowu/84Vz2a2g31TvPMTm9uTiCSWzaheQySUcSyUH/46fPnuPQWof2yd0pGBtzee/IQWw==}
@@ -2259,6 +2267,10 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
+
+  '@kyvg/vue3-notification@3.4.0(vue@3.5.4)':
+    dependencies:
+      vue: 3.5.4
 
   '@mdi/font@7.4.47': {}
 

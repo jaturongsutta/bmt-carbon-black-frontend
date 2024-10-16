@@ -49,11 +49,7 @@
                   <label class="require-field">Shipping Type</label>
                   <v-select
                     v-model="form.shippingType"
-                    :items="[
-                      'FC (Cleaning)',
-                      'FC (Outspec)',
-                      'PL (Pallet less)',
-                    ]"
+                    :items="shippingTypeList"
                     :rules="[rules.required]"
                   ></v-select>
                 </v-col>
@@ -62,7 +58,7 @@
                   <label class="require-field">Class</label>
                   <v-select
                     v-model="form.class"
-                    :items="['C', 'F', 'X']"
+                    :items="classList"
                     :rules="[rules.required]"
                   ></v-select>
                 </v-col>
@@ -80,17 +76,18 @@
               ><v-row no-gutters>
                 <v-col md="3">
                   <label class="require-field">Packing Weight (Kg.)</label>
-                  <v-select
+                  <v-text-field
                     v-model="form.packingWeight"
-                    :items="['500', '750', '1000']"
-                    :rules="[rules.required]"
-                  ></v-select>
+                    :rules="[rules.required, rules.integer]"
+                    type="number"
+                  ></v-text-field>
                 </v-col>
                 <v-col md="3">
                   <label class="require-field">Total Q'ty (Kg.)</label>
                   <v-text-field
                     v-model="form.totalQty"
-                    :rules="[rules.required]"
+                    :rules="[rules.required, , rules.integer]"
+                    type="number"
                   ></v-text-field>
                 </v-col>
                 <v-col md="3">
@@ -98,6 +95,7 @@
                   <v-text-field
                     v-model="form.workingTimeStart"
                     :rules="[rules.required]"
+                    type="time"
                   ></v-text-field>
                 </v-col>
                 <v-col md="3">
@@ -105,6 +103,7 @@
                   <v-text-field
                     v-model="form.workingTimeStop"
                     :rules="[rules.required]"
+                    type="time"
                   ></v-text-field>
                 </v-col> </v-row
             ></v-col>
@@ -132,7 +131,10 @@
                 </v-col>
                 <v-col md="3">
                   <label>Empty Time</label>
-                  <v-text-field v-model="form.emptyTime"></v-text-field>
+                  <v-text-field
+                    v-model="form.emptyTime"
+                    type="time"
+                  ></v-text-field>
                 </v-col>
               </v-row>
             </v-col>
@@ -197,21 +199,30 @@ const lineTankList = ref([]);
 const gradeList = ref([]);
 const productList = ref([]);
 
+const classList = ref([]);
+const shippingTypeList = ref([]);
+
 const isLoading = ref(false);
 
 onMounted(() => {
-  console.log("TankShippingInfo setup");
-  ddlApi.lineTank().then((data) => {
-    console.log("lineTankList", data);
-    lineTankList.value = data;
+  ddlApi.lineTank().then((res) => {
+    lineTankList.value = res;
   });
 
-  ddlApi.getPredefine("Grade").then((data) => {
-    gradeList.value = data;
+  ddlApi.getPredefine("Grade").then((res) => {
+    gradeList.value = res;
   });
 
-  ddlApi.product().then((data) => {
-    productList.value = data;
+  ddlApi.product().then((res) => {
+    productList.value = res;
+  });
+
+  ddlApi.getPredefine("Class").then((res) => {
+    classList.value = res;
+  });
+
+  ddlApi.getPredefine("Shipping_Type").then((res) => {
+    shippingTypeList.value = res;
   });
 
   if (route.query.date) {
@@ -226,6 +237,7 @@ onMounted(() => {
 const loadData = async (id) => {};
 
 const onSave = async () => {
+  console.log("onSave  form", form.value);
   const { valid } = await frmInfo.value.validate();
 
   console.log("valid", valid);

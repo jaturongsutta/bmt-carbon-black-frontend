@@ -2,7 +2,9 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useAuthStore } from "@/stores/auth";
 import { refreshToken } from "@/api/authentication.js";
+import { useNotification } from "@kyvg/vue3-notification";
 
+const { notify } = useNotification();
 console.log("VITE_API_URL", import.meta.env.VITE_API_URL);
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
@@ -61,6 +63,17 @@ axios.interceptors.response.use(
       );
 
       window.location.href = "/login";
+    } else {
+      console.error("axios error", error);
+      notify({
+        type: "error",
+        text: error.message,
+      });
+      // Swal.fire({
+      //   position: "top-end",
+      //   text: error.message,
+      //   timer: 1500,
+      // });
     }
 
     return Promise.reject(error);
