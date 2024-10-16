@@ -93,7 +93,6 @@ const routes = [
       },
     ],
   },
-
   {
     path: "/tank-shipping",
     meta: {
@@ -107,7 +106,7 @@ const routes = [
       },
 
       {
-        path: "/tank-shipping-info/:id?",
+        path: "tank-shipping-info/:id?",
         name: "tank-shipping-info",
         component: () => import("@/pages/tank-shipping/tank-shipping-info.vue"),
       },

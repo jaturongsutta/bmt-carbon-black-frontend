@@ -24,7 +24,6 @@ router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
   const requireAuth =
     to.meta && to.meta.requireAuth !== undefined ? to.meta.requireAuth : true;
-  console.log("to", to);
   if (requireAuth === true && authStore.isLoggedIn === false) {
     await Swal.fire(
       "Session Expired1",

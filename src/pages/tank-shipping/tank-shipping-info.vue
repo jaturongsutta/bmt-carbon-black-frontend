@@ -2,7 +2,7 @@
   <div>
     <v-card>
       <v-card-title class="pl-2 mb-2">
-        <h4>Add Tank Shipping</h4>
+        <h4>{{ mode }} Tank Shipping</h4>
       </v-card-title>
 
       <v-card-text>
@@ -21,7 +21,7 @@
                   <label class="require-field">Link-Tank</label>
                   <v-select
                     v-model="form.linkTank"
-                    :items="['1-1', '1-2', '1-3', '2-1', '2-2']"
+                    :items="lineTankList"
                     :rules="[rules.required]"
                   ></v-select>
                 </v-col>
@@ -29,7 +29,7 @@
                   <label class="require-field">Grade</label>
                   <v-select
                     v-model="form.grade"
-                    :items="['SAF']"
+                    :items="gradeList"
                     :rules="[rules.required]"
                   ></v-select>
                 </v-col>
@@ -37,7 +37,7 @@
                   <label class="require-field">Product Name</label>
                   <v-select
                     v-model="form.productName"
-                    :items="['B120', 'B72J', 'B97', 'N550', 'N550G']"
+                    :items="productList"
                     :rules="[rules.required]"
                   ></v-select>
                 </v-col>
@@ -166,41 +166,64 @@
 import { onMounted, ref, inject } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import rules from "@/utils/rules";
-
+import * as api from "@/api/tank-shipping.js";
+import * as ddlApi from "@/api/dropdown-list.js";
 const frmInfo = ref(null);
-
 const Alert = inject("Alert");
 const route = useRoute();
-
 const router = useRouter();
+
+const mode = ref("Add");
+
 const form = ref({
-  date: "2024-09-09",
-  linkTank: "1-1",
-  grade: "SAF",
-  productName: "B120",
-  shippingType: "FC (Cleaning)",
-  class: "C",
-  lotNo: "412CD8",
-  packingWeight: "500",
-  totalQty: "1000",
-  workingTimeStart: "08:00",
-  workingTimeStop: "16:00",
-  adjestValue: "40",
-  additionnalAdjestmant: "",
+  date: null,
+  linkTank: null,
+  grade: null,
+  productName: null,
+  shippingType: null,
+  class: null,
+  lotNo: null,
+  packingWeight: null,
+  totalQty: null,
+  workingTimeStart: null,
+  workingTimeStop: null,
+  adjestValue: null,
+  additionnalAdjestmant: null,
   empty: false,
-  emptyTime: "08:12",
+  emptyTime: null,
 });
+
+const lineTankList = ref([]);
+const gradeList = ref([]);
+const productList = ref([]);
 
 const isLoading = ref(false);
 
 onMounted(() => {
+  console.log("TankShippingInfo setup");
+  ddlApi.lineTank().then((data) => {
+    console.log("lineTankList", data);
+    lineTankList.value = data;
+  });
+
+  ddlApi.getPredefine("Grade").then((data) => {
+    gradeList.value = data;
+  });
+
+  ddlApi.product().then((data) => {
+    productList.value = data;
+  });
+
   if (route.query.date) {
     form.value.date = route.query.date;
   }
   if (route.params.id) {
-    const id = route.params.id;
+    mode.value = "Edit";
+    loadData(route.params.id);
   }
 });
+
+const loadData = async (id) => {};
 
 const onSave = async () => {
   const { valid } = await frmInfo.value.validate();

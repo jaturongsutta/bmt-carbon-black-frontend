@@ -93,7 +93,7 @@
 
 <script setup>
 import { onMounted, ref, inject } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import * as api from "@/api/tank-shipping.js";
 import * as ddlApi from "@/api/dropdown-list.js";
 import { getPaging } from "@/utils/utils.js";
