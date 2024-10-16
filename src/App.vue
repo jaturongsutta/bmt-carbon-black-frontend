@@ -15,7 +15,6 @@ import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import { authLogout, refreshToken } from "@/api/authentication";
 import { useAuthStore } from "@/stores/auth";
-
 import { useRoute } from "vue-router";
 export default {
   name: "App",
@@ -35,18 +34,18 @@ export default {
   created() {
     console.log("App created");
 
-    // // Clear all intervals
-    // for (let i = 1; i < 99; i++) {
-    //   clearInterval(i);
-    // }
-    // if (!this.tokenCheckInterval) {
-    //   this.tokenCheckInterval = setInterval(this.checkTokenExpire, 1000); // Check every 10 seconds
-    // }
-    // const isLoggedIn = sessionStorage.getItem("isLogin") ?? false;
-    // this.authStore.isLoggedIn = isLoggedIn;
-    // if (!isLoggedIn) {
-    //   this.$router.push({ name: "login" });
-    // }
+    // Clear all intervals
+    for (let i = 1; i < 99; i++) {
+      clearInterval(i);
+    }
+    if (!this.tokenCheckInterval) {
+      this.tokenCheckInterval = setInterval(this.checkTokenExpire, 1000); // Check every 10 seconds
+    }
+    const isLoggedIn = sessionStorage.getItem("isLogin") ?? false;
+    this.authStore.isLoggedIn = isLoggedIn;
+    if (!isLoggedIn) {
+      this.$router.push({ name: "login" });
+    }
   },
   methods: {
     checkTokenExpire() {

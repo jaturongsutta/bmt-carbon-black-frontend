@@ -8,15 +8,21 @@
         <v-row>
           <v-col>
             <label>Date</label>
-            <n-date v-model="form.field1"></n-date>
+            <n-date v-model="form.date"></n-date>
           </v-col>
           <v-col>
             <label>Line Tank</label>
-            <n-select v-model="form.field2" :items="tankList"></n-select>
+            <n-select
+              v-model="form.line"
+              :items="[{ text: 'All', value: null }, ...lineTankList]"
+            ></n-select>
           </v-col>
           <v-col>
             <label>Product Name</label>
-            <n-select v-model="form.field3" :items="ProductList"></n-select>
+            <n-select
+              v-model="form.product"
+              :items="[{ text: 'All', value: null }, ...productList]"
+            ></n-select>
           </v-col>
         </v-row>
 
@@ -41,17 +47,6 @@
 
     <v-card class="mt-3">
       <v-card-text>
-        <v-btn
-          prepend-icon="mdi mdi-plus-circle-outline"
-          color="primary"
-          class="float-right mb-3"
-          @click="onAdd2"
-        >
-          <template v-slot:prepend>
-            <v-icon color="white" size="large"></v-icon>
-          </template>
-          Add 2
-        </v-btn>
         <v-btn
           prepend-icon="mdi mdi-plus-circle-outline"
           color="primary"
@@ -99,79 +94,34 @@
 <script setup>
 import { onMounted, ref, inject } from "vue";
 import { useRoute, useRouter } from "vue-router";
-
+import * as api from "@/api/tank-shipping.js";
+import * as ddlApi from "@/api/dropdown-list.js";
+import { getPaging } from "@/utils/utils.js";
 const router = useRouter();
 const Alert = inject("Alert");
-let form = ref({});
+let form = ref({
+  date: null,
+  line: null,
+  product: null,
+});
 
-let tankList = ref([
-  { text: "1-1", value: "A" },
-  { text: "1-2", value: "I" },
-  { text: "1-3", value: "P" },
-  { text: "2-1", value: "R" },
-  { text: "2-2", value: "C" },
-  { text: "All", value: null },
-]);
+const lineTankList = ref([]);
 
-let ProductList = ref([
-  { text: "B120", value: "A" },
-  { text: "B72J", value: "I" },
-  { text: "B97", value: "P" },
-  { text: "N550", value: "R" },
-  { text: "N550G", value: "C" },
-  { text: "All", value: null },
-]);
+let productList = ref([]);
 
 const headers = [
   { title: "", key: "action", width: "100px", sortable: false },
-  { title: "Date", key: "date" },
-  { title: "Line-Tank", key: "lineTank" },
-  { title: "Grade", key: "grade" },
-  { title: "Product Name", key: "productName" },
-  { title: "Shipping Type", key: "shippingType" },
-  { title: "Class", key: "class" },
-  { title: "Lot No.", key: "lotNo" },
-  { title: "Packing Weight(Kg.)", key: "packingWeight" },
-  { title: "Total Qty (Kg.)", key: "totalQty" },
+  { title: "Date", key: "date", sortable: false },
+  { title: "Line-Tank", key: "lineTank", sortable: false },
+  { title: "Grade", key: "grade", sortable: false },
+  { title: "Product Name", key: "productName", sortable: false },
+  { title: "Shipping Type", key: "shippingType", sortable: false },
+  { title: "Class", key: "class", sortable: false },
+  { title: "Lot No.", key: "lotNo", sortable: false },
+  { title: "Packing Weight(Kg.)", key: "packingWeight", sortable: false },
+  { title: "Total Qty (Kg.)", key: "totalQty", sortable: false },
 ];
-let items = ref([
-  {
-    id: 1,
-    date: "09/09/2024",
-    lineTank: "1-1",
-    grade: "SAF",
-    productName: "B120",
-    shippingType: "FC (Outspec)",
-    class: "C",
-    lotNo: "412CD8",
-    packingWeight: "750",
-    totalQty: "60,000",
-  },
-  {
-    id: 2,
-    date: "09/09/2024",
-    lineTank: "1-2",
-    grade: "SAF",
-    productName: "B120",
-    shippingType: "FC (Cleaning)",
-    class: "X",
-    lotNo: "412CD8",
-    packingWeight: "10,000",
-    totalQty: "85,000",
-  },
-  {
-    id: 3,
-    date: "09/09/2024",
-    lineTank: "1-3",
-    grade: "SAF",
-    productName: "B120",
-    shippingType: "PL (Outspec)",
-    class: "F",
-    lotNo: "412CD8",
-    packingWeight: "500",
-    totalQty: "10,000",
-  },
-]);
+let items = ref([]);
 
 let isLoading = ref(false);
 let currentPage = ref(1);
@@ -179,31 +129,60 @@ let pageSize = ref(20);
 let totalItems = ref(3);
 
 onMounted(() => {
-  setTimeout(() => {
-    isLoading.value = false;
-  }, 1000);
+  ddlApi.lineTank().then((res) => {
+    lineTankList.value = res.data;
+  });
+
+  ddlApi.product().then((res) => {
+    productList.value = res.data;
+  });
 });
 
-const onSearch = () => {
-  isLoading.value = true;
-  setTimeout(() => {
-    isLoading.value = false;
-  }, 1000);
+const loadData = async (paginate) => {
+  const { page, itemsPerPage } = paginate;
+
+  const searchOptions = getPaging({ page, itemsPerPage });
+
+  try {
+    isLoading.value = true;
+    const data = {
+      ...form.value,
+      searchOptions,
+    };
+
+    const response = await api.search(data);
+
+    items.value = response.data;
+    totalItems.value = response.total_record;
+  } catch (error) {
+    console.error("Error fetching API:", error);
+    items.value = [];
+    totalItems.value = 0;
+  }
+  isLoading.value = false;
+};
+
+const onSearch = async () => {
+  currentPage.value = 1;
+  loadData({ page: currentPage.value, itemsPerPage: pageSize.value });
 };
 
 const onReset = () => {
-  form.value = {};
-  setTimeout(() => {
-    isLoading.value = false;
-  }, 1000);
+  form.value = {
+    date: null,
+    line: null,
+    product: null,
+  };
+  onSearch();
 };
 
 const onAdd = () => {
-  router.push({ name: "tank-shipping1-add" });
-};
-
-const onAdd2 = () => {
-  router.push({ name: "tank-shipping1-add2" });
+  router.push({
+    name: "tank-shipping-info",
+    query: {
+      date: form.value.date,
+    },
+  });
 };
 
 const onEdit = (id) => {

@@ -1,14 +1,30 @@
 import axios from "@/utils/axios";
 
-export default {
-  getPredefine: async (args) => {
-    if (typeof args === "string") {
-      return getPredefineByGroup(args);
-    } else if (typeof args === "object") {
-      return getPredefineJson(args);
-    }
-  },
+export const getPredefine = async (args) => {
+  if (typeof args === "string") {
+    return getPredefineByGroup(args);
+  } else if (typeof args === "object") {
+    return getPredefineJson(args);
+  }
 };
+
+export const lineTank = async () => {
+  try {
+    return await axios.get(`dropdown-list/line-tank`);
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const product = async () => {
+  try {
+    return await axios.get(`dropdown-list/product`);
+  } catch (error) {
+    throw error;
+  }
+};
+
+/// private function ///
 
 const getPredefineByGroup = async (group) => {
   try {

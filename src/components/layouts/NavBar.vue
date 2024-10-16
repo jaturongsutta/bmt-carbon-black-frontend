@@ -9,49 +9,58 @@
   >
     <v-divider></v-divider>
     <v-list v-if="miniMenu" density="compact">
-      <div v-for="menuItem in mainMenu" v-bind:key="menuItem.Menu_No">
-        <v-list-item
-          v-if="menuItem.IS_MainMenu !== 'Main Menu'"
-          :to="hd.URL"
-          link
-        >
-          <v-icon>mdi mdi-form-select1</v-icon>
-          <!-- <v-list-item-title>{{ hd.Menu_Name }}</v-list-item-title> -->
-        </v-list-item>
-        <v-menu v-else open-on-hover location="end">
-          <template v-slot:activator="{ props }">
-            <v-list-item link v-bind="props">
-              <v-icon>mdi mdi-form-select</v-icon>
+      <template v-for="menuItem in mainMenu" v-bind:key="menuItem.Menu_No">
+        <template v-if="menuItem.URL === null">
+          <v-list-item
+            v-if="menuItem.IS_MainMenu !== 'Main Menu'"
+            :to="hd.URL"
+            link
+          >
+            <v-icon>mdi mdi-form-select1</v-icon>
+            <!-- <v-list-item-title>{{ hd.Menu_Name }}</v-list-item-title> -->
+          </v-list-item>
+          <v-menu v-else open-on-hover location="end">
+            <template v-slot:activator="{ props }">
+              <v-list-item link v-bind="props">
+                <v-icon>mdi mdi-form-select</v-icon>
 
-              <!-- <v-list-item-title class="text-h6">
+                <!-- <v-list-item-title class="text-h6">
                 {{ hd.Menu_Name }}</v-list-item-title
               > -->
-            </v-list-item>
-          </template>
-
-          <v-card class="rounded-0">
-            <v-card-title>{{ menuItem.Menu_Name }}</v-card-title>
-            <v-divider></v-divider>
-            <v-list>
-              <v-list-item
-                v-for="menu in allMenu.filter(
-                  (menu) => menu.Menu_Group === menuItem.Menu_No
-                )"
-                :key="menu.Menu_No"
-                :to="menu.URL"
-                link
-              >
-                <v-list-item-title class="title-sub-menu">{{
-                  menu.Menu_Name
-                }}</v-list-item-title>
-                <v-icon v-if="menu.Menu_Icon != ''">{{
-                  menu.Menu_Icon
-                }}</v-icon>
               </v-list-item>
-            </v-list>
-          </v-card>
-        </v-menu>
-      </div>
+            </template>
+
+            <v-card class="rounded-0">
+              <v-card-title>{{ menuItem.Menu_Name }}</v-card-title>
+              <v-divider></v-divider>
+              <v-list>
+                <v-list-item
+                  v-for="menu in allMenu.filter(
+                    (menu) => menu.Menu_Group === menuItem.Menu_No
+                  )"
+                  :key="menu.Menu_No"
+                  :to="menu.URL"
+                  link
+                >
+                  <v-list-item-title class="title-sub-menu">{{
+                    menu.Menu_Name
+                  }}</v-list-item-title>
+                  <v-icon v-if="menu.Menu_Icon != ''">{{
+                    menu.Menu_Icon
+                  }}</v-icon>
+                </v-list-item>
+              </v-list>
+            </v-card>
+          </v-menu>
+        </template>
+        <v-list-item v-else :to="menuItem.URL" link>
+          <v-icon>{{
+            menuItem.Menu_Icon === null
+              ? "mdi mdi-form-select"
+              : menuItem.Menu_Icon
+          }}</v-icon>
+        </v-list-item>
+      </template>
     </v-list>
     <v-list
       v-else

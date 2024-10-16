@@ -7,7 +7,7 @@ const routes = [
   {
     path: "/",
     name: "/",
-    component: tankShipping1,
+    component: tankShipping,
     // meta: {
     //   requireAuth: false,
     // },
@@ -107,9 +107,9 @@ const routes = [
       },
 
       {
-        path: "/tank-shipping-add",
-        name: "tank-shipping-add",
-        component: () => import("@/pages/tank-shipping/tank-shipping-add.vue"),
+        path: "/tank-shipping-info/:id?",
+        name: "tank-shipping-info",
+        component: () => import("@/pages/tank-shipping/tank-shipping-info.vue"),
       },
     ],
   },
