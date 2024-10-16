@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <v-layout class="rounded rounded-md">
-      <app-bar-mockup></app-bar-mockup>
-      <nav-bar-mockup></nav-bar-mockup>
+      <app-bar></app-bar>
+      <nav-bar></nav-bar>
       <v-main class="main">
         <router-view class="pa-5"></router-view>
       </v-main>

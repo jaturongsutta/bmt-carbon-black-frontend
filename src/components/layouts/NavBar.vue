@@ -59,37 +59,46 @@
       open-strategy="single"
       density="comfortable"
     >
-      <v-list-group
-        :value="menuItem.Menu_Name"
-        v-for="menuItem in mainMenu"
-        :key="menuItem.Menu_No"
-      >
-        <template v-slot:activator="{ props }">
+      <template v-for="menuItem in mainMenu" :key="menuItem.Menu_No">
+        <v-list-group :value="menuItem.Menu_Name" v-if="menuItem.URL === null">
+          <template v-slot:activator="{ props }">
+            <v-list-item
+              v-bind="props"
+              prepend-icon="mdi mdi-form-select"
+              :title="menuItem.Menu_Name"
+              link
+            ></v-list-item>
+          </template>
+
           <v-list-item
-            v-bind="props"
-            prepend-icon="mdi mdi-form-select"
-            :title="menuItem.Menu_Name"
+            v-for="subMenuItem in allMenu.filter(
+              (menu) => menu.Menu_Group === menuItem.Menu_No
+            )"
+            :key="subMenuItem.Menu_No"
+            :value="subMenuItem.Menu_No"
+            :to="subMenuItem.URL"
             link
+            :subtitle="subMenuItem.Menu_Name"
           ></v-list-item>
-        </template>
+        </v-list-group>
 
         <v-list-item
-          v-for="subMenuItem in allMenu.filter(
-            (menu) => menu.Menu_Group === menuItem.Menu_No
-          )"
-          :key="subMenuItem.Menu_No"
-          :value="subMenuItem.Menu_No"
-          :to="subMenuItem.URL"
+          v-else
+          :to="menuItem.URL"
           link
-          :subtitle="subMenuItem.Menu_Name"
-        ></v-list-item>
-      </v-list-group>
+          :prepend-icon="
+            menuItem.Menu_Icon === null ? 'mdi-form-select' : menuItem.Menu_Icon
+          "
+        >
+          <v-list-item-title>{{ menuItem.Menu_Name }}</v-list-item-title>
+        </v-list-item>
+      </template>
     </v-list>
   </v-navigation-drawer>
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useAuthStore } from "@/stores/auth";
 
 import { useAppStore } from "@/stores/app";
@@ -104,10 +113,29 @@ const authStore = useAuthStore();
 const appStore = useAppStore();
 
 onMounted(() => {
-  api.getMenuPermissionByUserId().then((res) => {
-    authStore.setPermission(res.data);
-  });
+  console.log("NavBar mounted");
+  console.log("authStore.isLoggedIn", authStore.isLoggedIn);
+
+  if (authStore.isLoggedIn) {
+    api.getMenuPermissionByUserId().then((res) => {
+      authStore.setPermission(res.data);
+    });
+  }
 });
+
+watch(
+  () => authStore.isLoggedIn,
+  (value) => {
+    console.log("watch isLoggedIn", value);
+    if (value) {
+      api.getMenuPermissionByUserId().then((res) => {
+        authStore.setPermission(res.data);
+      });
+    } else {
+      authStore.setPermission([]);
+    }
+  }
+);
 
 const allMenu = computed(() => {
   return authStore.permission == null

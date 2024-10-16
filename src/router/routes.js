@@ -1,6 +1,6 @@
 import Home from "@/pages/home.vue";
 import Login from "@/pages/login.vue";
-import tankShipping1 from "@/pages/mockup/tank-shipping1/tank-shipping1.vue";
+import tankShipping from "@/pages/tank-shipping/tank-shipping.vue";
 import productionDailyVolumnRecord from "@/pages/mockup/production-daily-volumn-record/production-daily-volumn-record.vue";
 import productionDailyVolumnRecordAdd from "@/pages/mockup/production-daily-volumn-record/production-daily-volumn-record-add.vue";
 const routes = [
@@ -8,9 +8,9 @@ const routes = [
     path: "/",
     name: "/",
     component: tankShipping1,
-    meta: {
-      requireAuth: false,
-    },
+    // meta: {
+    //   requireAuth: false,
+    // },
   },
   {
     path: "/login",
@@ -94,35 +94,22 @@ const routes = [
     ],
   },
 
-  /// Mockup
   {
-    path: "/tank-shipping1",
+    path: "/tank-shipping",
     meta: {
       requireAuth: false,
     },
     children: [
       {
         path: "",
-        name: "tank-shipping1",
-        component: tankShipping1,
+        name: "tank-shipping",
+        component: tankShipping,
       },
+
       {
-        path: "/tank-shipping1-info/:id?",
-        name: "tank-shipping1-info",
-        component: () =>
-          import("@/pages/mockup/tank-shipping1/tank-shipping1-info.vue"),
-      },
-      {
-        path: "/tank-shipping1-add",
-        name: "tank-shipping1-add",
-        component: () =>
-          import("@/pages/mockup/tank-shipping1/tank-shipping1-add.vue"),
-      },
-      {
-        path: "/tank-shipping1-add2",
-        name: "tank-shipping1-add2",
-        component: () =>
-          import("@/pages/mockup/tank-shipping1/tank-shipping1-add2.vue"),
+        path: "/tank-shipping-add",
+        name: "tank-shipping-add",
+        component: () => import("@/pages/tank-shipping/tank-shipping-add.vue"),
       },
     ],
   },
