@@ -5,8 +5,9 @@ export const authLogin = async (username, password) => {
   try {
     const response = await axios.post("/auth/login", { username, password });
     const data = response.data;
-    if (data.result.status == 2) {
-      return { status: 2 };
+    console.log("data", data);
+    if (data.result.status !== 0) {
+      return data;
     }
 
     localStorage.setItem("jwt", data.token);

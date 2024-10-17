@@ -89,7 +89,7 @@ const handleSubmit = async () => {
 
         router.push("/");
       } else {
-        console.log("Login failed");
+        Alert.warning(login.result.message);
       }
     }
   } catch (error) {
