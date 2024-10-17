@@ -40,7 +40,7 @@ const logoutClick = () => {
     if (c.isConfirmed) {
       authStore.logout();
       // window.location.reload();
-      router.push({ path: "/login" });
+      router.push({ name: "login" });
     }
   });
 };
