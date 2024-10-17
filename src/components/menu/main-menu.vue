@@ -68,7 +68,7 @@
 import { onMounted, ref, inject } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
-import ddlApi from "@/api/dropdown-list.js";
+import * as ddlApi from "@/api/dropdown-list.js";
 import { getMenuById, saveAdd, saveEdit } from "@/api/common-master/menu.js";
 
 import rules from "@/utils/rules.js";

@@ -41,7 +41,7 @@
 import { onMounted, ref, inject } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import * as api from "@/api/common-master/user.js";
-import ddlApi from "@/api/dropdown-list.js";
+import * as ddlApi from "@/api/dropdown-list.js";
 const Alert = inject("Alert");
 const route = useRoute();
 

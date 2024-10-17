@@ -69,7 +69,7 @@
 import { onMounted, ref, inject } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { getPaging } from "@/utils/utils.js";
-import ddlApi from "@/api/dropdown-list.js";
+import * as ddlApi from "@/api/dropdown-list.js";
 import * as api from "@/api/common-master/user.js";
 import moment from "moment";
 const Alert = inject("Alert");

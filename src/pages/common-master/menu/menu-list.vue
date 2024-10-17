@@ -63,7 +63,7 @@
 import { onMounted, ref, inject } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
-import ddlApi from "@/api/dropdown-list.js";
+import * as ddlApi from "@/api/dropdown-list.js";
 import { getSearch } from "@/api/common-master/menu.js";
 
 const router = useRouter();
