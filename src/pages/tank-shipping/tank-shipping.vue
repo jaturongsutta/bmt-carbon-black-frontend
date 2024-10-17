@@ -12,17 +12,17 @@
           </v-col>
           <v-col>
             <label>Line Tank</label>
-            <n-select
-              v-model="form.line"
-              :items="[{ text: 'All', value: null }, ...lineTankList]"
-            ></n-select>
+            <v-select
+              v-model="form.tank"
+              :items="[{ title: 'All', value: null }, ...lineTankList]"
+            ></v-select>
           </v-col>
           <v-col>
             <label>Product Name</label>
-            <n-select
+            <v-select
               v-model="form.product"
-              :items="[{ text: 'All', value: null }, ...productList]"
-            ></n-select>
+              :items="[{ title: 'All', value: null }, ...productList]"
+            ></v-select>
           </v-col>
         </v-row>
 
@@ -69,11 +69,11 @@
         >
           <template v-slot:[`item.action`]="{ item }">
             <n-gbtn-edit
-              @click="onEdit(item.id)"
+              @click="onEdit(item.Tank_Shipping_Id)"
               :permission="false"
             ></n-gbtn-edit>
             <n-gbtn-delete
-              @click="onDelete(item.id)"
+              @click="onDelete(item.Tank_Shipping_Id)"
               :permission="false"
             ></n-gbtn-delete>
           </template>
@@ -94,6 +94,7 @@
 <script setup>
 import { onMounted, ref, inject } from "vue";
 import { useRouter } from "vue-router";
+import moment from "moment";
 import * as api from "@/api/tank-shipping.js";
 import * as ddlApi from "@/api/dropdown-list.js";
 import { getPaging } from "@/utils/utils.js";
@@ -111,15 +112,21 @@ let productList = ref([]);
 
 const headers = [
   { title: "", key: "action", width: "100px", sortable: false },
-  { title: "Date", key: "date", sortable: false },
-  { title: "Line-Tank", key: "lineTank", sortable: false },
-  { title: "Grade", key: "grade", sortable: false },
-  { title: "Product Name", key: "productName", sortable: false },
-  { title: "Shipping Type", key: "shippingType", sortable: false },
-  { title: "Class", key: "class", sortable: false },
-  { title: "Lot No.", key: "lotNo", sortable: false },
-  { title: "Packing Weight(Kg.)", key: "packingWeight", sortable: false },
-  { title: "Total Qty (Kg.)", key: "totalQty", sortable: false },
+  {
+    title: "Date",
+    key: "Date",
+    sortable: false,
+    value: (item) =>
+      item.Date ? moment.utc(item.Date).format("DD/MM/YYYY") : "",
+  },
+  { title: "Line-Tank", key: "Tank", sortable: false },
+  { title: "Grade", key: "Grade", sortable: false },
+  { title: "Product Name", key: "Product_Name", sortable: false },
+  { title: "Shipping Type", key: "Shipping_Name", sortable: false },
+  { title: "Class", key: "Class", sortable: false },
+  { title: "Lot No.", key: "Lot_No", sortable: false },
+  { title: "Packing Weight(Kg.)", key: "Packing_Weight", sortable: false },
+  { title: "Total Qty (Kg.)", key: "Total_Qty", sortable: false },
 ];
 let items = ref([]);
 
@@ -130,12 +137,14 @@ let totalItems = ref(3);
 
 onMounted(() => {
   ddlApi.lineTank().then((res) => {
-    lineTankList.value = res.data;
+    lineTankList.value = res;
   });
 
   ddlApi.product().then((res) => {
-    productList.value = res.data;
+    productList.value = res;
   });
+
+  onSearch();
 });
 
 const loadData = async (paginate) => {
@@ -158,6 +167,7 @@ const loadData = async (paginate) => {
     console.error("Error fetching API:", error);
     items.value = [];
     totalItems.value = 0;
+    Alert.error(error.message);
   }
   isLoading.value = false;
 };
@@ -186,12 +196,27 @@ const onAdd = () => {
 };
 
 const onEdit = (id) => {
-  router.push({ name: `tank-shipping1-info`, params: { id: id } });
+  router.push({ name: `tank-shipping-info`, params: { id: id } });
 };
 
 const onDelete = (id) => {
-  Alert.confirm("Are you sure you want to delete this item?").then(() => {
-    console.log("Delete", id);
+  Alert.confirm("Are you sure you want to delete this tank ?").then(() => {
+    api
+      .remove(id)
+      .then((res) => {
+        if (res.status === 0) {
+          Alert.success("Delete successfully");
+          onSearch();
+        } else if (res.status === 1) {
+          Alert.warning(res.message);
+        } else {
+          Alert.error(res.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching API:", error);
+        Alert.error(error.message);
+      });
   });
 };
 </script>

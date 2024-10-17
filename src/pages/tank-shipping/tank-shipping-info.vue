@@ -7,138 +7,159 @@
 
       <v-card-text>
         <v-form @submit.prevent="onSave" ref="frmInfo">
-          <v-row>
-            <v-col md="6">
-              <v-row no-gutters>
-                <v-col md="3">
-                  <label class="require-field">Date</label>
-                  <n-date
-                    v-model="form.date"
-                    :rules="[rules.required]"
-                  ></n-date>
-                </v-col>
-                <v-col md="3">
-                  <label class="require-field">Link-Tank</label>
-                  <v-select
-                    v-model="form.linkTank"
-                    :items="lineTankList"
-                    :rules="[rules.required]"
-                  ></v-select>
-                </v-col>
-                <v-col md="3">
-                  <label class="require-field">Grade</label>
-                  <v-select
-                    v-model="form.grade"
-                    :items="gradeList"
-                    :rules="[rules.required]"
-                  ></v-select>
-                </v-col>
-                <v-col md="3">
-                  <label class="require-field">Product Name</label>
-                  <v-select
-                    v-model="form.productName"
-                    :items="productList"
-                    :rules="[rules.required]"
-                  ></v-select>
-                </v-col>
-              </v-row>
-            </v-col>
-            <v-col md="6" class="pa-0">
-              <v-row no-gutters>
-                <v-col md="4">
-                  <label class="require-field">Shipping Type</label>
-                  <v-select
-                    v-model="form.shippingType"
-                    :items="shippingTypeList"
-                    :rules="[rules.required]"
-                  ></v-select>
-                </v-col>
+          <v-container class="px-0">
+            <v-row no-gutters>
+              <v-col md="6">
+                <v-row>
+                  <v-col md="3">
+                    <label class="require-field">Date</label>
+                    <n-date
+                      v-model="form.date"
+                      :rules="[rules.required]"
+                      :readonly="mode === 'Edit'"
+                    ></n-date>
+                  </v-col>
+                  <v-col md="3">
+                    <label class="require-field">Link-Tank</label>
+                    <v-select
+                      v-model="form.linkTank"
+                      :items="lineTankList"
+                      :rules="[rules.required]"
+                      :readonly="mode === 'Edit'"
+                    ></v-select>
+                  </v-col>
+                  <v-col md="3">
+                    <label class="require-field">Grade</label>
+                    <v-select
+                      v-model="form.grade"
+                      :items="gradeList"
+                      :rules="[rules.required]"
+                      :readonly="mode === 'Edit'"
+                    ></v-select>
+                  </v-col>
+                  <v-col md="3">
+                    <label class="require-field">Product Name</label>
+                    <v-select
+                      v-model="form.productName"
+                      :items="productList"
+                      :rules="[rules.required]"
+                      :readonly="mode === 'Edit'"
+                    ></v-select>
+                  </v-col>
+                </v-row>
+              </v-col>
+              <v-col md="6">
+                <v-row>
+                  <v-col md="4">
+                    <label class="require-field">Shipping Type</label>
+                    <v-select
+                      v-model="form.shippingType"
+                      :items="shippingTypeList"
+                      :rules="[rules.required]"
+                    ></v-select>
+                  </v-col>
 
-                <v-col md="4">
-                  <label class="require-field">Class</label>
-                  <v-select
-                    v-model="form.class"
-                    :items="classList"
-                    :rules="[rules.required]"
-                  ></v-select>
-                </v-col>
-                <v-col md="4">
-                  <label class="require-field">Lot No.</label>
-                  <v-text-field
-                    v-model="form.lotNo"
-                    :rules="[rules.required]"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-            </v-col>
+                  <v-col md="4">
+                    <label class="require-field">Class</label>
+                    <v-select
+                      v-model="form.class"
+                      :items="classList"
+                      :rules="[rules.required]"
+                    ></v-select>
+                  </v-col>
+                  <v-col md="4">
+                    <label class="require-field">Lot No.</label>
+                    <v-text-field
+                      v-model="form.lotNo"
+                      :rules="[rules.required]"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
+          </v-container>
+          <v-container class="px-0">
+            <v-row no-gutters>
+              <v-col md="6"
+                ><v-row>
+                  <v-col md="3">
+                    <label class="require-field">Packing Weight (Kg.)</label>
+                    <v-text-field
+                      v-model="form.packingWeight"
+                      :rules="[rules.required, rules.integer]"
+                      type="number"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col md="3">
+                    <label class="require-field">Total Q'ty (Kg.)</label>
+                    <v-text-field
+                      v-model="form.totalQty"
+                      :rules="[rules.required, , rules.integer]"
+                      type="number"
+                      @input="totalQtyChange"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col md="3">
+                    <label class="require-field">Working Time Start</label>
+                    <v-text-field
+                      v-model="form.workingTimeStart"
+                      :rules="[rules.required]"
+                      type="time"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col md="3">
+                    <label class="require-field">Working Time Stop</label>
+                    <v-text-field
+                      v-model="form.workingTimeStop"
+                      :rules="[rules.required]"
+                      type="time"
+                    ></v-text-field>
+                  </v-col> </v-row
+              ></v-col>
 
-            <v-col md="6"
-              ><v-row no-gutters>
-                <v-col md="3">
-                  <label class="require-field">Packing Weight (Kg.)</label>
-                  <v-text-field
-                    v-model="form.packingWeight"
-                    :rules="[rules.required, rules.integer]"
-                    type="number"
-                  ></v-text-field>
-                </v-col>
-                <v-col md="3">
-                  <label class="require-field">Total Q'ty (Kg.)</label>
-                  <v-text-field
-                    v-model="form.totalQty"
-                    :rules="[rules.required, , rules.integer]"
-                    type="number"
-                  ></v-text-field>
-                </v-col>
-                <v-col md="3">
-                  <label class="require-field">Working Time Start</label>
-                  <v-text-field
-                    v-model="form.workingTimeStart"
-                    :rules="[rules.required]"
-                    type="time"
-                  ></v-text-field>
-                </v-col>
-                <v-col md="3">
-                  <label class="require-field">Working Time Stop</label>
-                  <v-text-field
-                    v-model="form.workingTimeStop"
-                    :rules="[rules.required]"
-                    type="time"
-                  ></v-text-field>
-                </v-col> </v-row
-            ></v-col>
-            <v-col md="6"
-              ><v-row no-gutters>
-                <v-col md="4">
-                  <label>Adjust Value</label>
-                  <v-text-field
-                    v-model="form.adjestValue"
-                    readonly
-                  ></v-text-field>
-                </v-col>
-                <v-col md="4">
-                  <label>Additional Adjustment</label>
-                  <v-text-field
-                    v-model="form.additionnalAdjestmant"
-                  ></v-text-field>
-                </v-col> </v-row
-            ></v-col>
-            <v-col md="6">
-              <v-row no-gutters>
-                <v-col md="3">
-                  <label>Empty</label>
-                  <v-checkbox v-model="form.empty" label="Yes"></v-checkbox>
-                </v-col>
-                <v-col md="3">
-                  <label>Empty Time</label>
-                  <v-text-field
-                    v-model="form.emptyTime"
-                    type="time"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-            </v-col>
-          </v-row>
+              <v-col md="6"
+                ><v-row>
+                  <v-col md="4">
+                    <label>Adjust Value</label>
+                    <v-text-field
+                      v-model="form.adjValue"
+                      readonly
+                    ></v-text-field>
+                  </v-col>
+                  <v-col md="4">
+                    <label>Additional Adjustment</label>
+                    <v-text-field
+                      v-model="form.additionalAdj"
+                      :rules="[rules.required, , rules.integer]"
+                      type="number"
+                    ></v-text-field>
+                  </v-col> </v-row
+              ></v-col>
+            </v-row>
+          </v-container>
+          <v-container class="px-0">
+            <v-row no-gutters>
+              <v-col md="6">
+                <v-row no-gutters>
+                  <v-col md="3">
+                    <label>Empty</label>
+                    <v-checkbox
+                      v-model="form.empty"
+                      value="Y"
+                      label="Yes"
+                    ></v-checkbox>
+                  </v-col>
+                  <v-col md="3">
+                    <label>Empty Time</label>
+                    <v-text-field
+                      v-model="form.emptyTime"
+                      type="time"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
+          </v-container>
 
           <v-row>
             <v-col>
@@ -165,9 +186,10 @@
 </template>
 
 <script setup>
-import { onMounted, ref, inject } from "vue";
+import { onMounted, ref, inject, readonly } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import rules from "@/utils/rules";
+import moment from "moment";
 import * as api from "@/api/tank-shipping.js";
 import * as ddlApi from "@/api/dropdown-list.js";
 const frmInfo = ref(null);
@@ -189,9 +211,9 @@ const form = ref({
   totalQty: null,
   workingTimeStart: null,
   workingTimeStop: null,
-  adjestValue: null,
-  additionnalAdjestmant: null,
-  empty: false,
+  adjValue: null,
+  additionalAdj: null,
+  empty: "N",
   emptyTime: null,
 });
 
@@ -225,16 +247,38 @@ onMounted(() => {
     shippingTypeList.value = res;
   });
 
-  if (route.query.date) {
-    form.value.date = route.query.date;
-  }
   if (route.params.id) {
     mode.value = "Edit";
     loadData(route.params.id);
+  } else {
+    // Add Mode
+    if (route.query.date) {
+      form.value.date = route.query.date;
+    }
   }
 });
 
-const loadData = async (id) => {};
+const loadData = (id) => {
+  api
+    .getById(id)
+    .then((res) => {
+      console.log("res", res);
+      if (res.status === 2) {
+        Alert.error(res.message);
+      } else {
+        form.value = res;
+
+        form.value.shippingType = res.shippingType
+          ? res.shippingType.toString()
+          : null;
+      }
+      form.value = res;
+    })
+    .catch((error) => {
+      console.error("Error fetching API:", error);
+      Alert.error(error.message);
+    });
+};
 
 const onSave = async () => {
   console.log("onSave  form", form.value);
@@ -242,12 +286,41 @@ const onSave = async () => {
 
   console.log("valid", valid);
   if (valid) {
-    isLoading.value = true;
+    try {
+      isLoading.value = true;
+      let res = null;
+      if (mode.value === "Add") {
+        res = await api.add(form.value);
+      } else {
+        res = await api.update(route.params.id, form.value);
+      }
 
-    setTimeout(() => {
+      console.log("res", res);
+
       isLoading.value = false;
-      Alert.success();
-    }, 1000);
+
+      if (res.status === 0) {
+        Alert.success(res.message);
+        router.go(-1);
+      } else if (res.status === 1) {
+        Alert.warning(res.message);
+      } else {
+        Alert.error(res.message);
+      }
+    } catch (error) {
+      console.error("Error fetching API:", error);
+      isLoading.value = false;
+      Alert.error(error.message);
+    }
   }
+};
+
+const totalQtyChange = (e) => {
+  console.log("totalQtyChange", e);
+  api.getAdjectValue(form.value.totalQty).then((res) => {
+    if (res.status === 0) {
+      form.value.adjValue = res.data;
+    }
+  });
 };
 </script>
