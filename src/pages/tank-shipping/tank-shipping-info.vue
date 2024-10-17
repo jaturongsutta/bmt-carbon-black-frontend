@@ -259,10 +259,11 @@ onMounted(() => {
 });
 
 const loadData = (id) => {
+  isLoading.value = true;
   api
     .getById(id)
     .then((res) => {
-      console.log("res", res);
+      isLoading.value = false;
       if (res.status === 2) {
         Alert.error(res.message);
       } else {
@@ -275,6 +276,7 @@ const loadData = (id) => {
       form.value = res;
     })
     .catch((error) => {
+      isLoading.value = false;
       console.error("Error fetching API:", error);
       Alert.error(error.message);
     });
