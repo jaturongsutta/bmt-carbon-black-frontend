@@ -1,19 +1,16 @@
 import Home from "@/pages/home.vue";
 import Login from "@/pages/login.vue";
 import tankShipping from "@/pages/tank-shipping/tank-shipping.vue";
-import productionDailyVolumnRecord from "@/pages/mockup/production-daily-volumn-record/production-daily-volumn-record.vue";
-import productionDailyVolumnRecordAdd from "@/pages/mockup/production-daily-volumn-record/production-daily-volumn-record-add.vue";
-
 import failedManagement from "@/pages/failed-management/failed-management.vue";
 import failedManagementInfo from "@/pages/failed-management/failed-management-info.vue";
+import productionDailyVolumnRecord from "@/pages/production-daily-volumn-record/production-daily-volumn-record.vue";
+import productionDailyVolumnRecordAdd from "@/pages/production-daily-volumn-record/production-daily-volumn-record-add.vue";
+
 const routes = [
   {
     path: "/",
     name: "/",
-    component: tankShipping,
-    // meta: {
-    //   requireAuth: false,
-    // },
+    component: Home,
   },
   {
     path: "/login",
@@ -116,25 +113,6 @@ const routes = [
     ],
   },
   {
-    path: "/production-daily-volumn-record",
-    meta: {
-      requireAuth: false,
-    },
-    children: [
-      {
-        path: "",
-        name: "production-daily-volumn-record",
-        component: productionDailyVolumnRecord,
-      },
-      {
-        path: "/production-daily-volumn-record-add",
-        name: "production-daily-volumn-record-add",
-        component: productionDailyVolumnRecordAdd,
-      },
-    ],
-  },
-
-  {
     path: "/failed-management",
     meta: {
       menuNo: "M2002",
@@ -149,6 +127,25 @@ const routes = [
         path: "/failed-management-info/:id?",
         name: "failed-management-info",
         component: failedManagementInfo,
+      },
+    ],
+  },
+  {
+    path: "/production-daily-volumn-record",
+    meta: {
+      requireAuth: false,
+      menuNo: "M2003",
+    },
+    children: [
+      {
+        path: "",
+        name: "production-daily-volumn-record",
+        component: productionDailyVolumnRecord,
+      },
+      {
+        path: "/production-daily-volumn-record-add",
+        name: "production-daily-volumn-record-add",
+        component: productionDailyVolumnRecordAdd,
       },
     ],
   },

@@ -160,6 +160,7 @@
           </div>
         </v-card>
       </v-form>
+      <n-loading :loading="isLoadingPopup" />
     </v-dialog>
 
     <n-loading :loading="isLoading" />
@@ -218,6 +219,7 @@ const headers = [
 let items = ref([]);
 
 let isLoading = ref(false);
+let isLoadingPopup = ref(false);
 let currentPage = ref(1);
 let pageSize = ref(20);
 let totalItems = ref(0);
@@ -347,6 +349,7 @@ const saveClick = async () => {
       ...form.value,
       items: itemsInfo.value,
     };
+    isLoadingPopup.value = true;
     if (mode.value === "Add") {
       console.log("Add");
       res = await api.saveAdd(data);
@@ -354,6 +357,7 @@ const saveClick = async () => {
       console.log("Edit");
       res = await api.saveEdit(data.roleId, data);
     }
+    isLoadingPopup.value = false;
 
     if (res.status === 0) {
       Alert.success();
@@ -363,6 +367,7 @@ const saveClick = async () => {
       Alert.warning(res.message);
     }
   } catch (error) {
+    isLoadingPopup.value = false;
     Alert.error(error.message);
   }
 };
