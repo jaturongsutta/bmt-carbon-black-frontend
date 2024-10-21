@@ -3,6 +3,9 @@ import Login from "@/pages/login.vue";
 import tankShipping from "@/pages/tank-shipping/tank-shipping.vue";
 import productionDailyVolumnRecord from "@/pages/mockup/production-daily-volumn-record/production-daily-volumn-record.vue";
 import productionDailyVolumnRecordAdd from "@/pages/mockup/production-daily-volumn-record/production-daily-volumn-record-add.vue";
+
+import failedManagement from "@/pages/failed-management/failed-management.vue";
+
 const routes = [
   {
     path: "/",
@@ -95,9 +98,6 @@ const routes = [
   },
   {
     path: "/tank-shipping",
-    meta: {
-      requireAuth: false,
-    },
     children: [
       {
         path: "",
@@ -112,7 +112,6 @@ const routes = [
       },
     ],
   },
-
   {
     path: "/production-daily-volumn-record",
     meta: {
@@ -127,6 +126,22 @@ const routes = [
       {
         path: "/production-daily-volumn-record-add",
         name: "production-daily-volumn-record-add",
+        component: productionDailyVolumnRecordAdd,
+      },
+    ],
+  },
+
+  {
+    path: "/failed-management",
+    children: [
+      {
+        path: "",
+        name: "failed-management",
+        component: failedManagement,
+      },
+      {
+        path: "/failed-management-info",
+        name: "failed-management-info",
         component: productionDailyVolumnRecordAdd,
       },
     ],

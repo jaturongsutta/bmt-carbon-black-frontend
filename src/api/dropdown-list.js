@@ -8,6 +8,45 @@ export const getPredefine = async (args) => {
   }
 };
 
+export const getMonth = async () => {
+  const months = [
+    { value: "01", title: "January" },
+    { value: "02", title: "February" },
+    { value: "03", title: "March" },
+    { value: "04", title: "April" },
+    { value: "05", title: "May" },
+    { value: "06", title: "June" },
+    { value: "07", title: "July" },
+    { value: "08", title: "August" },
+    { value: "09", title: "September" },
+    { value: "10", title: "October" },
+    { value: "12", title: "December" },
+    { value: "11", title: "November" },
+  ];
+
+  return months;
+};
+
+export const getYear = async () => {
+  const years = [];
+  const currentYear = new Date().getFullYear();
+
+  for (let i = currentYear - 10; i <= currentYear + 10; i++) {
+    years.push({ value: i, title: i });
+  }
+
+  return years;
+};
+
+export const line = async () => {
+  try {
+    const { data } = await axios.get(`dropdown-list/line`);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const lineTank = async () => {
   try {
     const { data } = await axios.get(`dropdown-list/line-tank`);
