@@ -54,7 +54,7 @@
           </v-menu>
         </template>
         <v-list-item v-else :to="menuItem.URL" link>
-          <v-icon>{{
+          <v-icon v-tooltip:end="menuItem.Menu_Name">{{
             menuItem.Menu_Icon === null
               ? "mdi mdi-form-select"
               : menuItem.Menu_Icon
