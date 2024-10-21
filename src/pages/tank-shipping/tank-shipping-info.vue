@@ -100,7 +100,7 @@
                     <label class="require-field">Total Q'ty (Kg.)</label>
                     <v-text-field
                       v-model="form.totalQty"
-                      :rules="[rules.required, , rules.integer]"
+                      :rules="[rules.required, rules.integer]"
                       type="number"
                       @input="totalQtyChange"
                     ></v-text-field>
@@ -295,10 +295,8 @@ const loadData = (id) => {
 };
 
 const onSave = async () => {
-  console.log("onSave  form", form.value);
   const { valid } = await frmInfo.value.validate();
 
-  console.log("valid", valid);
   if (valid) {
     try {
       isLoading.value = true;
@@ -308,8 +306,6 @@ const onSave = async () => {
       } else {
         res = await api.update(route.params.id, form.value);
       }
-
-      console.log("res", res);
 
       isLoading.value = false;
 
@@ -330,10 +326,12 @@ const onSave = async () => {
 };
 
 const totalQtyChange = (e) => {
-  console.log("totalQtyChange", e);
   api.getAdjectValue(form.value.totalQty).then((res) => {
     if (res.status === 0) {
       form.value.adjValue = res.data;
+    } else {
+      form.value.adjValue = null;
+      Alert.error(res.message);
     }
   });
 };

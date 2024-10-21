@@ -14,7 +14,7 @@
             ></v-select>
           </v-col>
           <v-col>
-            <label>yaear</label>
+            <label>Year</label>
             <v-select
               v-model="form.year"
               :items="[{ title: 'All', value: null }, ...yearList]"
@@ -79,11 +79,11 @@
         >
           <template v-slot:[`item.action`]="{ item }">
             <n-gbtn-edit
-              @click="onEdit(item.Tank_Shipping_Id)"
+              @click="onEdit(item.Failed_Id)"
               :permission="false"
             ></n-gbtn-edit>
             <n-gbtn-delete
-              @click="onDelete(item.Tank_Shipping_Id)"
+              @click="onDelete(item.Failed_Id)"
               :permission="false"
             ></n-gbtn-delete>
           </template>
@@ -138,9 +138,27 @@ const headers = [
   },
   { title: "Line", key: "Line", sortable: false },
   { title: "Product Name", key: "Product_Name", sortable: false },
-  { title: "Production Weight #2 ", key: "Prod_Weight_2", sortable: false },
-  { title: "Failed Value", key: "Failed_Value", sortable: false },
-  { title: "Final Production #2", key: "Final_Prod_2", sortable: false },
+  {
+    title: "Production Weight #2 ",
+    key: "Prod_Weight_2",
+    sortable: false,
+    value: (item) =>
+      item.Prod_Weight_2 ? numeral(item.Prod_Weight_2).format("0,0") : "",
+  },
+  {
+    title: "Failed Value",
+    key: "Failed_Value",
+    sortable: false,
+    value: (item) =>
+      item.Failed_Value ? numeral(item.Failed_Value).format("0,0") : "",
+  },
+  {
+    title: "Final Production #2",
+    key: "Final_Prod_2",
+    sortable: false,
+    value: (item) =>
+      item.Final_Prod_2 ? numeral(item.Final_Prod_2).format("0,0") : "",
+  },
   {
     title: "Created By",
     key: "Created_By",
@@ -227,6 +245,10 @@ const onReset = () => {
 const onAdd = () => {
   router.push({
     name: "failed-management-info",
+    query: {
+      month: form.value.month,
+      year: form.value.year,
+    },
   });
 };
 

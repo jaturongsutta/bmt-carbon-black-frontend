@@ -5,7 +5,7 @@ import productionDailyVolumnRecord from "@/pages/mockup/production-daily-volumn-
 import productionDailyVolumnRecordAdd from "@/pages/mockup/production-daily-volumn-record/production-daily-volumn-record-add.vue";
 
 import failedManagement from "@/pages/failed-management/failed-management.vue";
-
+import failedManagementInfo from "@/pages/failed-management/failed-management-info.vue";
 const routes = [
   {
     path: "/",
@@ -98,6 +98,9 @@ const routes = [
   },
   {
     path: "/tank-shipping",
+    meta: {
+      menuNo: "M2001",
+    },
     children: [
       {
         path: "",
@@ -133,6 +136,9 @@ const routes = [
 
   {
     path: "/failed-management",
+    meta: {
+      menuNo: "M2002",
+    },
     children: [
       {
         path: "",
@@ -140,9 +146,9 @@ const routes = [
         component: failedManagement,
       },
       {
-        path: "/failed-management-info",
+        path: "/failed-management-info/:id?",
         name: "failed-management-info",
-        component: productionDailyVolumnRecordAdd,
+        component: failedManagementInfo,
       },
     ],
   },
