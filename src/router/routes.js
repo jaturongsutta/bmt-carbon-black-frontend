@@ -143,7 +143,7 @@ const routes = [
         component: productionDailyVolumnRecord,
       },
       {
-        path: "/production-daily-volumn-record-add",
+        path: "/production-daily-volumn-record-add/:id?",
         name: "production-daily-volumn-record-add",
         component: productionDailyVolumnRecordAdd,
       },

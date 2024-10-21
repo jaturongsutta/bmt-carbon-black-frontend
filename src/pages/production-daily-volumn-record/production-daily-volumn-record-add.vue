@@ -13,10 +13,10 @@
               <n-date v-model="form.date" :rules="[rules.required]"></n-date>
             </v-col>
             <v-col md="3">
-              <label class="require-field">Link-Tank</label>
+              <label class="require-field">Link</label>
               <v-select
-                v-model="form.linkTank"
-                :items="['1-1', '1-2', '1-3', '2-1', '2-2']"
+                v-model="form.line"
+                :items="lineList"
                 :rules="[rules.required]"
               ></v-select>
             </v-col>
@@ -24,7 +24,7 @@
               <label class="require-field">Grade</label>
               <v-select
                 v-model="form.grade"
-                :items="['SAF']"
+                :items="gradeList"
                 :rules="[rules.required]"
               ></v-select>
             </v-col>
@@ -32,7 +32,7 @@
               <label class="require-field">Product Name</label>
               <v-select
                 v-model="form.productName"
-                :items="['B120', 'B72J', 'B97', 'N550', 'N550G']"
+                :items="productList"
                 :rules="[rules.required]"
               ></v-select>
             </v-col>
@@ -41,13 +41,7 @@
           <v-row>
             <v-col>
               <label>Upload</label>
-              <!-- <v-file-input
-                variant="outlined"
-                density="compact"
-                accept="image/*"
-                prepend-icon
-                append-icon="mdi mdi-paperclip"
-              ></v-file-input> -->
+
               <v-text-field
                 v-model="filenameTxt"
                 placeholder="Please choose file to upload"
@@ -126,6 +120,10 @@ import { useRoute, useRouter } from "vue-router";
 import rules from "@/utils/rules";
 import detailTab from "./detail-tab.vue";
 import summaryTab from "./summary-tab.vue";
+
+import * as ddlApi from "@/api/dropdown-list.js";
+import * as api from "@/api/production-daily-volumn-record.js";
+import * as dateUtils from "@/utils/date.js";
 const tab = ref(1);
 const frmInfo = ref(null);
 
@@ -133,29 +131,30 @@ const Alert = inject("Alert");
 const route = useRoute();
 
 const router = useRouter();
-const form = ref({
-  date: "2024-09-09",
-  linkTank: "1-1",
-  grade: "SAF",
-  productName: "B120",
-  shippingType: "FC (Cleaning)",
-  class: "C",
-  lotNo: "412CD8",
-  packingWeight: "500",
-  totalQty: "1000",
-  workingTimeStart: "08:00",
-  workingTimeStop: "16:00",
-  adjestValue: "40",
-  additionnalAdjestmant: "",
-  empty: false,
-  emptyTime: "08:12",
-});
+const form = ref({});
+
+const gradeList = ref([]);
+const lineList = ref([]);
+const productList = ref([]);
 
 const isLoading = ref(false);
 
 onMounted(() => {
+  ddlApi.getPredefine("Grade").then((res) => {
+    gradeList.value = res;
+  });
+  ddlApi.line().then((res) => {
+    lineList.value = res;
+  });
+
+  ddlApi.product().then((res) => {
+    productList.value = res;
+  });
+
   if (route.params.id) {
     const id = route.params.id;
+  } else {
+    form.value.date = dateUtils.getToday();
   }
 });
 

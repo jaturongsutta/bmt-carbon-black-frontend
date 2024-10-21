@@ -8,22 +8,28 @@
         <v-row>
           <v-col>
             <label>Date</label>
-            <n-date v-model="form.field1"></n-date>
+            <n-date v-model="form.date"></n-date>
           </v-col>
           <v-col>
             <label>Line</label>
-            <n-select
+            <v-select
               v-model="form.field2"
-              :items="['All', '1', '2', '3']"
-            ></n-select>
+              :items="[{ title: 'All', value: null }, ...lineList]"
+            ></v-select>
           </v-col>
           <v-col>
             <label>Grade</label>
-            <n-select v-model="form.grade" :items="['All', 'SAF']"></n-select>
+            <v-select
+              v-model="form.grade"
+              :items="[{ title: 'All', value: null }, ...gradeList]"
+            ></v-select>
           </v-col>
           <v-col>
             <label>Product Name</label>
-            <n-select v-model="form.field3" :items="ProductList"></n-select>
+            <v-select
+              v-model="form.field3"
+              :items="[{ title: 'All', value: null }, ...productList]"
+            ></v-select>
           </v-col>
         </v-row>
 
@@ -166,194 +172,124 @@
 
 <script setup>
 import { onMounted, ref, inject } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
+import moment from "moment";
+import * as api from "@/api/production-daily-volumn-record.js";
+import * as ddlApi from "@/api/dropdown-list.js";
+import { getPaging } from "@/utils/utils.js";
+import numeral from "numeral";
+
+import * as dateUtils from "@/utils/date.js";
 
 const router = useRouter();
 const Alert = inject("Alert");
 let form = ref({});
 
-let tankList = ref([
-  { text: "1-1", value: "A" },
-  { text: "1-2", value: "I" },
-  { text: "1-3", value: "P" },
-  { text: "2-1", value: "R" },
-  { text: "2-2", value: "C" },
-  { text: "All", value: null },
-]);
+let gradeList = ref([]);
+let lineList = ref([]);
 
-let ProductList = ref([
-  { text: "B120", value: "A" },
-  { text: "B72J", value: "I" },
-  { text: "B97", value: "P" },
-  { text: "N550", value: "R" },
-  { text: "N550G", value: "C" },
-  { text: "All", value: null },
-]);
+let productList = ref([]);
 
 const headers = [
   { title: "", key: "action", sortable: false },
-  { title: "Date", key: "date" },
-  { title: "Line", key: "line" },
-  { title: "Grade", key: "grade" },
-  { title: "Product Name", key: "productName" },
-  { title: "Production", key: "production1_1" },
-  { title: "EKINEN", key: "ekinen1" },
-  { title: "Total", key: "total1" },
-  { title: "Production", key: "production1_2" },
-  { title: "Warm up", key: "warmup1" },
-  { title: "Prepeat", key: "prepeat1" },
-  { title: "Drying", key: "drying1" },
-  { title: "Liquid", key: "liquid1" },
-  { title: "Oil spray check", key: "oilSprayCheck1" },
-  { title: "Total Mixing Volumn", key: "totalMixingVolumn1" },
-  { title: "Dischargen Volumn", key: "dischargenVolumn1" },
-  { title: "KOH Mixing", key: "kohMixing1" },
-  { title: "NaOH Consumption", key: "naohConsumption1" },
-  { title: "Recycle Hopper Level", key: "recycleHopperLevel1" },
-  { title: "Tank", key: "tank1" },
+  {
+    title: "Date",
+    key: "Date",
+    value: (item) => {
+      return item.Date ? moment(item.Date).utc().format("DD/MM/YYYY") : "";
+    },
+  },
+  { title: "Line", key: "Line" },
+  { title: "Grade", key: "Grade" },
+  { title: "Product Name", key: "Product_Name" },
 
-  { title: "Production", key: "production2_1" },
-  { title: "EKINEN", key: "ekinen2" },
-  { title: "Total", key: "total2" },
-  { title: "Production", key: "production2_2" },
-  { title: "Warm up", key: "warmup2" },
-  { title: "Prepeat", key: "prepeat2" },
-  { title: "Drying", key: "drying2" },
-  { title: "Liquid", key: "liquid2" },
-  { title: "Oil spray check", key: "oilSprayCheck2" },
-  { title: "Total Mixing Volumn", key: "totalMixingVolumn2" },
-  { title: "Dischargen Volumn", key: "dischargenVolumn2" },
-  { title: "KOH Mixing", key: "kohMixing2" },
-  { title: "NaOH Consumption", key: "naohConsumption2" },
-  { title: "Recycle Hopper Level", key: "recycleHopperLevel2" },
-  { title: "Tank", key: "tank2" },
+  //** Shift 1 */
+  { title: "Production", key: "S1_1_Production_Prod_Total" },
+  { title: "EKINEN", key: "S1_1_EKINEN_EKN_Total" },
+  { title: "Total", key: "S1_1_EKINEN_FS_Oil_All_Total" },
+  { title: "Production", key: "S1_2_NG_Production" },
+  { title: "Warm up", key: "S1_2_NG_Warm_up" },
+  { title: "Prepeat", key: "S1_2_NG_Preheat" },
+  { title: "Drying", key: "S1_2_NG_Drying" },
+  {
+    title: "Liquid",
+    key: "liquid1",
+    value: (item) => {
+      return (
+        parseInt(item.S1_2_FCC_Preheat) +
+        parseInt(item.S1_2_EBO_Preheat) +
+        parseInt(item.S1_2_CBO_Preheat)
+      );
+    },
+  },
+  { title: "Oil spray check", key: "S1_2_NG_Oil_Spray_checking" },
+  { title: "Total Mixing Volumn", key: "S1_3_Total_Mixing_Volume_Other" },
+  { title: "Dischargen Volumn", key: "S1_3_Discharged_Volume_Other" },
+  { title: "KOH Mixing", key: "S1_3_KOH_Mixing_Other" },
+  { title: "NaOH Consumption", key: "S1_3_NaOH_Consumption_Other" },
+  { title: "Recycle Hopper Level", key: "S1_3_Recycle_Hopper_Level_Other" },
+  { title: "Tank", key: "S1_4_Tank" },
 
-  { title: "Production", key: "production3_1" },
-  { title: "EKINEN", key: "ekinen3" },
-  { title: "Total", key: "total3" },
-  { title: "Production", key: "production3_2" },
-  { title: "Warm up", key: "warmup3" },
-  { title: "Prepeat", key: "prepeat3" },
-  { title: "Drying", key: "drying3" },
-  { title: "Liquid", key: "liquid3" },
-  { title: "Oil spray check", key: "oilSprayCheck3" },
-  { title: "Total Mixing Volumn", key: "totalMixingVolumn3" },
-  { title: "Dischargen Volumn", key: "dischargenVolumn3" },
-  { title: "KOH Mixing", key: "kohMixing3" },
-  { title: "NaOH Consumption", key: "naohConsumption3" },
-  { title: "Recycle Hopper Level", key: "recycleHopperLevel3" },
-  { title: "Tank", key: "tank3" },
+  //** Shift 2 */
+  { title: "Production", key: "S2_1_Production_Prod_Total" },
+  { title: "EKINEN", key: "S2_1_EKINEN_EKN_Total" },
+  { title: "Total", key: "S2_1_EKINEN_FS_Oil_All_Total" },
+  { title: "Production", key: "S2_2_NG_Production" },
+  { title: "Warm up", key: "S2_2_NG_Warm_up" },
+  { title: "Prepeat", key: "S2_2_NG_Preheat" },
+  { title: "Drying", key: "S2_2_NG_Drying" },
+  {
+    title: "Liquid",
+    key: "liquid2",
+    value: (item) => {
+      return (
+        parseInt(item.S2_2_FCC_Preheat) +
+        parseInt(item.S2_2_EBO_Preheat) +
+        parseInt(item.S2_2_CBO_Preheat)
+      );
+    },
+  },
+  { title: "Oil spray check", key: "S2_2_NG_Oil_Spray_checking" },
+  { title: "Total Mixing Volumn", key: "S2_3_Total_Mixing_Volume_Other" },
+  { title: "Dischargen Volumn", key: "S2_3_Discharged_Volume_Other" },
+  { title: "KOH Mixing", key: "S2_3_KOH_Mixing_Other" },
+  { title: "NaOH Consumption", key: "S2_3_NaOH_Consumption_Other" },
+  { title: "Recycle Hopper Level", key: "S2_3_Recycle_Hopper_Level_Other" },
+  { title: "Tank", key: "S2_4_Tank" },
+
+  // { title: "Production", key: "production2_1" },
+  // { title: "EKINEN", key: "ekinen2" },
+  // { title: "Total", key: "total2" },
+  // { title: "Production", key: "production2_2" },
+  // { title: "Warm up", key: "warmup2" },
+  // { title: "Prepeat", key: "prepeat2" },
+  // { title: "Drying", key: "drying2" },
+  // { title: "Liquid", key: "liquid2" },
+  // { title: "Oil spray check", key: "oilSprayCheck2" },
+  // { title: "Total Mixing Volumn", key: "totalMixingVolumn2" },
+  // { title: "Dischargen Volumn", key: "dischargenVolumn2" },
+  // { title: "KOH Mixing", key: "kohMixing2" },
+  // { title: "NaOH Consumption", key: "naohConsumption2" },
+  // { title: "Recycle Hopper Level", key: "recycleHopperLevel2" },
+  // { title: "Tank", key: "tank2" },
+
+  // { title: "Production", key: "production3_1" },
+  // { title: "EKINEN", key: "ekinen3" },
+  // { title: "Total", key: "total3" },
+  // { title: "Production", key: "production3_2" },
+  // { title: "Warm up", key: "warmup3" },
+  // { title: "Prepeat", key: "prepeat3" },
+  // { title: "Drying", key: "drying3" },
+  // { title: "Liquid", key: "liquid3" },
+  // { title: "Oil spray check", key: "oilSprayCheck3" },
+  // { title: "Total Mixing Volumn", key: "totalMixingVolumn3" },
+  // { title: "Dischargen Volumn", key: "dischargenVolumn3" },
+  // { title: "KOH Mixing", key: "kohMixing3" },
+  // { title: "NaOH Consumption", key: "naohConsumption3" },
+  // { title: "Recycle Hopper Level", key: "recycleHopperLevel3" },
+  // { title: "Tank", key: "tank3" },
 ];
-let items = ref([
-  {
-    id: 1,
-    date: "09/09/2024",
-    line: "1",
-    grade: "SAF",
-    productName: "B120",
-    production1_1: "24,249",
-    ekinen1: "5,760",
-    total1: "30,250",
-    production1_2: "0",
-    warmup1: "0",
-    prepeat1: "0",
-    drying1: "0",
-    liquid1: "0",
-    oilSprayCheck1: "0",
-    totalMixingVolumn1: "0",
-    dischargenVolumn1: "0",
-    kohMixing1: "0",
-    naohConsumption1: "0",
-    recycleHopperLevel1: "3",
-    tank1: "1-1, 1-2",
-
-    production2_1: "24,000",
-    ekinen2: "5,760",
-    total2: "30,160",
-    production2_2: "0",
-    warmup2: "0",
-    prepeat2: "0",
-    drying2: "0",
-    liquid2: "0",
-    oilSprayCheck2: "0",
-    totalMixingVolumn2: "0",
-    dischargenVolumn2: "0",
-    kohMixing2: "0",
-    naohConsumption2: "0",
-    recycleHopperLevel2: "3",
-    tank2: "2-1, 2-2",
-
-    production3_1: "24,470",
-    ekinen3: "5,760",
-    total3: "30,230",
-    production3_2: "0",
-    warmup3: "0",
-    prepeat3: "0",
-    drying3: "0",
-    liquid3: "0",
-    oilSprayCheck3: "0",
-    totalMixingVolumn3: "0",
-    dischargenVolumn3: "0",
-    kohMixing3: "0",
-    naohConsumption3: "0",
-    recycleHopperLevel3: "3",
-    tank3: "3-1, 3-2",
-  },
-  {
-    id: 2,
-    date: "09/09/2024",
-    line: "1",
-    grade: "SAF",
-    productName: "B72J",
-    production1_1: "15,000",
-    ekinen1: "15,000",
-    total1: "15,000",
-    production1_2: "0",
-    warmup1: "0",
-    prepeat1: "0",
-    drying1: "0",
-    liquid1: "0",
-    oilSprayCheck1: "0",
-    totalMixingVolumn1: "0",
-    dischargenVolumn1: "0",
-    kohMixing1: "0",
-    naohConsumption1: "0",
-    recycleHopperLevel1: "3",
-    tank1: "1-1, 1-2",
-
-    production2_1: "0",
-    ekinen2: "0",
-    total2: "0",
-    production2_2: "0",
-    warmup2: "0",
-    prepeat2: "0",
-    drying2: "0",
-    liquid2: "0",
-    oilSprayCheck2: "0",
-    totalMixingVolumn2: "0",
-    dischargenVolumn2: "0",
-    kohMixing2: "0",
-    naohConsumption2: "0",
-    recycleHopperLevel2: "3",
-    tank2: "2-1, 2-2",
-
-    production3_1: "0",
-    ekinen3: "0",
-    total3: "0",
-    production3_2: "0",
-    warmup3: "0",
-    prepeat3: "0",
-    drying3: "0",
-    liquid3: "0",
-    oilSprayCheck3: "0",
-    totalMixingVolumn3: "0",
-    dischargenVolumn3: "0",
-    kohMixing3: "0",
-    naohConsumption3: "0",
-    recycleHopperLevel3: "3",
-    tank3: "3-1, 3-2",
-  },
-]);
+let items = ref([]);
 
 let isLoading = ref(false);
 let currentPage = ref(1);
@@ -361,16 +297,49 @@ let pageSize = ref(20);
 let totalItems = ref(3);
 
 onMounted(() => {
-  setTimeout(() => {
-    isLoading.value = false;
-  }, 1000);
+  ddlApi.getPredefine("Grade").then((res) => {
+    gradeList.value = res;
+  });
+  ddlApi.line().then((res) => {
+    lineList.value = res;
+  });
+
+  ddlApi.product().then((res) => {
+    productList.value = res;
+  });
+
+  form.value.date = dateUtils.getToday();
+  onSearch();
 });
 
-const onSearch = () => {
-  isLoading.value = true;
-  setTimeout(() => {
-    isLoading.value = false;
-  }, 1000);
+const loadData = async (paginate) => {
+  const { page, itemsPerPage } = paginate;
+
+  const searchOptions = getPaging({ page, itemsPerPage });
+
+  try {
+    isLoading.value = true;
+    const data = {
+      ...form.value,
+      searchOptions,
+    };
+
+    const response = await api.search(data);
+
+    items.value = response.data;
+    totalItems.value = response.total_record;
+  } catch (error) {
+    console.error("Error fetching API:", error);
+    items.value = [];
+    totalItems.value = 0;
+    Alert.error(error.message);
+  }
+  isLoading.value = false;
+};
+
+const onSearch = async () => {
+  currentPage.value = 1;
+  loadData({ page: currentPage.value, itemsPerPage: pageSize.value });
 };
 
 const onReset = () => {
@@ -388,12 +357,6 @@ const onEdit = (id) => {
   router.push({
     name: `production-daily-volumn-record-add`,
     params: { id: id },
-  });
-};
-
-const onDelete = (id) => {
-  Alert.confirm("Are you sure you want to delete this item?").then(() => {
-    console.log("Delete", id);
   });
 };
 </script>
