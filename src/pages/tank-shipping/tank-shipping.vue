@@ -11,7 +11,7 @@
             <n-date v-model="form.date"></n-date>
           </v-col>
           <v-col>
-            <label>Line Tank</label>
+            <label>Line-Tank</label>
             <v-select
               v-model="form.tank"
               :items="[{ title: 'All', value: null }, ...lineTankList]"
@@ -98,6 +98,7 @@ import moment from "moment";
 import * as api from "@/api/tank-shipping.js";
 import * as ddlApi from "@/api/dropdown-list.js";
 import { getPaging } from "@/utils/utils.js";
+import numeral from "numeral";
 const router = useRouter();
 const Alert = inject("Alert");
 let form = ref({
@@ -125,8 +126,20 @@ const headers = [
   { title: "Shipping Type", key: "Shipping_Name", sortable: false },
   { title: "Class", key: "Class", sortable: false },
   { title: "Lot No.", key: "Lot_No", sortable: false },
-  { title: "Packing Weight(Kg.)", key: "Packing_Weight", sortable: false },
-  { title: "Total Qty (Kg.)", key: "Total_Qty", sortable: false },
+  {
+    title: "Packing Weight(Kg.)",
+    key: "Packing_Weight",
+    sortable: false,
+    value: (item) =>
+      item.Packing_Weight ? numeral(item.Packing_Weight).format("0,0") : "",
+  },
+  {
+    title: "Total Qty (Kg.)",
+    key: "Total_Qty",
+    sortable: false,
+    value: (item) =>
+      item.Packing_Weight ? numeral(item.Packing_Weight).format("0,0") : "",
+  },
 ];
 let items = ref([]);
 

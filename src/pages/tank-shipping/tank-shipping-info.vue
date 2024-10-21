@@ -84,11 +84,17 @@
                 ><v-row>
                   <v-col md="3">
                     <label class="require-field">Packing Weight (Kg.)</label>
-                    <v-text-field
+                    <!-- <v-text-field
                       v-model="form.packingWeight"
                       :rules="[rules.required, rules.integer]"
                       type="number"
-                    ></v-text-field>
+                    ></v-text-field> -->
+
+                    <v-select
+                      :items="packingWeightList"
+                      v-model="form.packingWeight"
+                      :rules="[rules.required]"
+                    ></v-select>
                   </v-col>
                   <v-col md="3">
                     <label class="require-field">Total Q'ty (Kg.)</label>
@@ -130,7 +136,7 @@
                     <label>Additional Adjustment</label>
                     <v-text-field
                       v-model="form.additionalAdj"
-                      :rules="[rules.required, , rules.integer]"
+                      :rules="[rules.integer]"
                       type="number"
                     ></v-text-field>
                   </v-col> </v-row
@@ -221,6 +227,8 @@ const lineTankList = ref([]);
 const gradeList = ref([]);
 const productList = ref([]);
 
+const packingWeightList = ref([]);
+
 const classList = ref([]);
 const shippingTypeList = ref([]);
 
@@ -245,6 +253,10 @@ onMounted(() => {
 
   ddlApi.getPredefine("Shipping_Type").then((res) => {
     shippingTypeList.value = res;
+  });
+
+  ddlApi.getPredefine("Packing_Weight").then((res) => {
+    packingWeightList.value = res;
   });
 
   if (route.params.id) {
