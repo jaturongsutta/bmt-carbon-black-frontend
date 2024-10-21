@@ -3,15 +3,15 @@
     <v-row>
       <v-col md="3">
         <label>Operating Time(h)</label>
-        <v-text-field value="8" readonly></v-text-field>
+        <v-text-field v-model="form.operatingTime" readonly></v-text-field>
       </v-col>
       <v-col md="3">
         <label>Shift Start</label>
-        <v-text-field v-model="form.shippingType"></v-text-field>
+        <v-text-field v-model="form.Shift_Start"></v-text-field>
       </v-col>
       <v-col md="3">
         <label>Shift End</label>
-        <v-text-field v-model="form.shippingType"></v-text-field>
+        <v-text-field v-model="form.Shift_End"></v-text-field>
       </v-col>
     </v-row>
     <v-row>
@@ -31,35 +31,59 @@
             <tr>
               <td>PRODUCTION</td>
               <td>
-                <v-text-field hide-details value="7,347"></v-text-field>
+                <v-text-field
+                  hide-details
+                  type="number"
+                  v-model="form.T1_Production_EBO"
+                ></v-text-field>
               </td>
               <td>
-                <v-text-field hide-details value="0"></v-text-field>
+                <v-text-field
+                  hide-details
+                  type="number"
+                  v-model="form.T1_Production_CBO"
+                ></v-text-field>
               </td>
               <td>
-                <v-text-field hide-details value="17,143"></v-text-field>
+                <v-text-field
+                  hide-details
+                  type="number"
+                  v-model="form.T1_Production_FCO"
+                ></v-text-field>
               </td>
-              <td>24,249</td>
+              <td>{{ form.T1_Production_Prod_Total }}</td>
             </tr>
             <tr>
               <td>EKINEN</td>
               <td>
-                <v-text-field hide-details value="5,760"></v-text-field>
+                <v-text-field
+                  hide-details
+                  type="number"
+                  v-model="form.T1_EKINEN_EBO"
+                ></v-text-field>
               </td>
               <td>
-                <v-text-field hide-details value="0"></v-text-field>
+                <v-text-field
+                  hide-details
+                  type="number"
+                  v-model="form.T1_EKINEN_CBO"
+                ></v-text-field>
               </td>
               <td>
-                <v-text-field hide-details value="0"></v-text-field>
+                <v-text-field
+                  hide-details
+                  type="number"
+                  v-model="form.T1_EKINEN_FCC"
+                ></v-text-field>
               </td>
-              <td>24,249</td>
+              <td>{{ form.T1_EKINEN_EKN_Total }}</td>
             </tr>
             <tr>
               <td>Production + EKINEN</td>
-              <td>13,107</td>
-              <td>0</td>
-              <td>17,143</td>
-              <td>30,250</td>
+              <td>{{ form.T1_EKINEN_FS_Oil_All_CBO }}</td>
+              <td>{{ form.T1_EKINEN_FS_Oil_All_EBO }}</td>
+              <td>{{ form.T1_EKINEN_FS_Oil_All_FCC }}</td>
+              <td>{{ form.T1_EKINEN_FS_Oil_All_Total }}</td>
             </tr>
           </tbody>
         </v-table>
@@ -83,17 +107,25 @@
             <tr>
               <td>Production</td>
               <td>
-                <v-text-field hide-details value="0"></v-text-field>
+                <v-text-field
+                  hide-details
+                  type="number"
+                  v-model="form.T2_NG_Production"
+                ></v-text-field>
               </td>
               <td></td>
               <td></td>
               <td></td>
-              <td>0</td>
+              <td>{{ form.T2_NG_Production_Total }}</td>
             </tr>
             <tr>
               <td>Warm up</td>
               <td>
-                <v-text-field hide-details value="0"></v-text-field>
+                <v-text-field
+                  hide-details
+                  type="number"
+                  v-model="form.T2_NG_Warm_up"
+                ></v-text-field>
               </td>
               <td></td>
               <td></td>
@@ -103,23 +135,43 @@
             <tr>
               <td>Preheat</td>
               <td>
-                <v-text-field hide-details value="0"></v-text-field>
+                <v-text-field
+                  hide-details
+                  type="number"
+                  v-model="form.T2_NG_Preheat"
+                ></v-text-field>
               </td>
               <td>
-                <v-text-field hide-details value="0"></v-text-field>
+                <v-text-field
+                  hide-details
+                  type="number"
+                  v-model="form.T2_EBO_Preheat"
+                ></v-text-field>
               </td>
               <td>
-                <v-text-field hide-details value="0"></v-text-field>
+                <v-text-field
+                  hide-details
+                  type="number"
+                  v-model="form.T2_CBO_Preheat"
+                ></v-text-field>
               </td>
               <td>
-                <v-text-field hide-details value="0"></v-text-field>
+                <v-text-field
+                  hide-details
+                  type="number"
+                  v-model="form.T2_FCC_Preheat"
+                ></v-text-field>
               </td>
-              <td>0</td>
+              <td>{{ form.T2_Preheat_Total }}</td>
             </tr>
             <tr>
               <td>Drying</td>
               <td>
-                <v-text-field hide-details value="0"></v-text-field>
+                <v-text-field
+                  hide-details
+                  type="number"
+                  value="0"
+                ></v-text-field>
               </td>
               <td></td>
               <td></td>
@@ -129,7 +181,11 @@
             <tr>
               <td>Oil Spray checking</td>
               <td>
-                <v-text-field hide-details value="0"></v-text-field>
+                <v-text-field
+                  hide-details
+                  type="number"
+                  value="0"
+                ></v-text-field>
               </td>
               <td></td>
               <td></td>
@@ -159,15 +215,35 @@
           </thead>
           <tbody>
             <tr>
-              <td><v-text-field hide-details value="0"></v-text-field></td>
               <td>
-                <v-text-field hide-details value="700"></v-text-field>
+                <v-text-field
+                  hide-details
+                  type="number"
+                  value="0"
+                ></v-text-field>
               </td>
               <td>
-                <v-text-field hide-details value="0"></v-text-field>
+                <v-text-field
+                  hide-details
+                  type="number"
+                  value="700"
+                ></v-text-field>
+              </td>
+              <td>
+                <v-text-field
+                  hide-details
+                  type="number"
+                  value="0"
+                ></v-text-field>
               </td>
               <td>700</td>
-              <td><v-text-field hide-details value="0"></v-text-field></td>
+              <td>
+                <v-text-field
+                  hide-details
+                  type="number"
+                  value="0"
+                ></v-text-field>
+              </td>
             </tr>
           </tbody>
         </v-table>
@@ -213,16 +289,42 @@
           <tbody>
             <tr>
               <td>
-                <v-select hide-details value="1-1" :items="['1-1']"></v-select>
+                <v-select
+                  hide-details
+                  type="number"
+                  value="1-1"
+                  :items="['1-1']"
+                ></v-select>
               </td>
               <td>
-                <v-text-field hide-details value="00:00"></v-text-field>
+                <v-text-field
+                  hide-details
+                  type="number"
+                  value="00:00"
+                ></v-text-field>
               </td>
               <td>
-                <v-text-field hide-details value="08:00"></v-text-field>
+                <v-text-field
+                  hide-details
+                  type="number"
+                  value="08:00"
+                ></v-text-field>
               </td>
-              <td><v-text-field hide-details value=""></v-text-field></td>
-              <td><v-checkbox hide-details value="Y" checked></v-checkbox></td>
+              <td>
+                <v-text-field
+                  hide-details
+                  type="number"
+                  value=""
+                ></v-text-field>
+              </td>
+              <td>
+                <v-checkbox
+                  hide-details
+                  type="number"
+                  value="Y"
+                  checked
+                ></v-checkbox>
+              </td>
             </tr>
           </tbody> </v-table
       ></v-col>
@@ -277,18 +379,68 @@
 </template>
 
 <script setup>
-import { reactive, ref, defineProps } from "vue";
+import { reactive, ref, defineProps, defineEmits, watch } from "vue";
+
+// Define emits
+const emit = defineEmits(["update:modelValue"]);
+
+const form = reactive({
+  operatingTime: "",
+  shippingType: "",
+});
+
+const dialog = ref(false);
+
 // Define props
 const props = defineProps({
+  modelValue: {
+    type: Object,
+  },
   shiftName: {
     type: String,
     default: "",
   },
 });
 
-const form = reactive({
-  shippingType: "",
-});
+watch(
+  () => props.modelValue,
+  (newValue) => {
+    Object.assign(form, newValue);
+  },
+  { immediate: true }
+);
+watch(
+  form,
+  (newValue) => {
+    emit("update:modelValue", newValue);
+  },
+  { deep: true }
+);
 
-const dialog = ref(false);
+// Calculate total
+watch(
+  () => form.T2_NG_Production,
+  (newValue) => {
+    form.T2_NG_Production_Total = newValue;
+  }
+);
+watch(
+  () => form.T2_NG_Warm_up,
+  (newValue) => {
+    form.T2_NG_Warm_up_Total = newValue;
+  }
+);
+
+watch(
+  [
+    () => form.T2_NG_Preheat,
+    () => form.T2_EBO_Preheat,
+    () => form.T2_CBO_Preheat,
+    () => form.T2_FCC_Preheat,
+  ],
+  ([n1, n2, n3, n4]) => {
+    form.T2_Preheat_Total =
+      parseInt(n1) + parseInt(n2) + parseInt(n3) + parseInt(n4);
+  }
+);
 </script>

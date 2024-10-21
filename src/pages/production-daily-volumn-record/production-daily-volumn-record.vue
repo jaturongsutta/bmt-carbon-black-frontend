@@ -152,7 +152,7 @@
           </template>
           <template v-slot:[`item.action`]="{ item }">
             <n-gbtn-edit
-              @click="onEdit(item.id)"
+              @click="onEdit(item.Prod_Daily_Id)"
               :permission="false"
             ></n-gbtn-edit>
           </template>
@@ -256,6 +256,33 @@ const headers = [
   { title: "NaOH Consumption", key: "S2_3_NaOH_Consumption_Other" },
   { title: "Recycle Hopper Level", key: "S2_3_Recycle_Hopper_Level_Other" },
   { title: "Tank", key: "S2_4_Tank" },
+
+  //** Shift 3 */
+  { title: "Production", key: "S3_1_Production_Prod_Total" },
+  { title: "EKINEN", key: "S3_1_EKINEN_EKN_Total" },
+  { title: "Total", key: "S3_1_EKINEN_FS_Oil_All_Total" },
+  { title: "Production", key: "S3_2_NG_Production" },
+  { title: "Warm up", key: "S3_2_NG_Warm_up" },
+  { title: "Prepeat", key: "S3_2_NG_Preheat" },
+  { title: "Drying", key: "S3_2_NG_Drying" },
+  {
+    title: "Liquid",
+    key: "liquid3",
+    value: (item) => {
+      return (
+        parseInt(item.S3_2_FCC_Preheat) +
+        parseInt(item.S3_2_EBO_Preheat) +
+        parseInt(item.S3_2_CBO_Preheat)
+      );
+    },
+  },
+  { title: "Oil spray check", key: "S3_2_NG_Oil_Spray_checking" },
+  { title: "Total Mixing Volumn", key: "S3_3_Total_Mixing_Volume_Other" },
+  { title: "Dischargen Volumn", key: "S3_3_Discharged_Volume_Other" },
+  { title: "KOH Mixing", key: "S3_3_KOH_Mixing_Other" },
+  { title: "NaOH Consumption", key: "S3_3_NaOH_Consumption_Other" },
+  { title: "Recycle Hopper Level", key: "S3_3_Recycle_Hopper_Level_Other" },
+  { title: "Tank", key: "S3_4_Tank" },
 
   // { title: "Production", key: "production2_1" },
   // { title: "EKINEN", key: "ekinen2" },

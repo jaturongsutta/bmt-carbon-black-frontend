@@ -22,6 +22,14 @@ export const getById = async (id) => {
   }
 };
 
+export const uploadFile = async (data) => {
+  const response = await axios.post(
+    `/production-daily-volumn-record/upload-file`,
+    data
+  );
+  return response.data;
+};
+
 export const add = async (data) => {
   try {
     const response = await axios.post(
