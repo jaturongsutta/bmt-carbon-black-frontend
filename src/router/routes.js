@@ -149,6 +149,24 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/reports",
+    meta: {
+      menuNo: "M3000",
+    },
+    children: [
+      {
+        path: "daily-report",
+        name: "daily-report",
+        component: productionDailyVolumnRecordAdd,
+      },
+      {
+        path: "monthly-report",
+        name: "monthly-report",
+        component: productionDailyVolumnRecordAdd,
+      },
+    ],
+  },
 ];
 
 export default routes;
