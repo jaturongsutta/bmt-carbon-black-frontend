@@ -26,9 +26,13 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   (response) => {
-    if (["post", ["put", "delete"]].includes(response.config.method)) {
+    if (["post", "put", "delete"].includes(response.config.method)) {
       // Update Token
-      if (axios.defaults.headers.common["Authorization"]) {
+      const ignoreRefresh = ["/auth/"];
+      if (
+        axios.defaults.headers.common["Authorization"] &&
+        !ignoreRefresh.includes(response.config.url)
+      ) {
         refreshToken()
           .then((resUpdateToken) => {
             localStorage.setItem("jwt", resUpdateToken.data.accessToken);
