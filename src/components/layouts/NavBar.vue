@@ -73,7 +73,11 @@
           <template v-slot:activator="{ props }">
             <v-list-item
               v-bind="props"
-              prepend-icon="mdi mdi-form-select"
+              :prepend-icon="
+                menuItem.Menu_Icon === null
+                  ? 'mdi-form-select'
+                  : menuItem.Menu_Icon
+              "
               :title="menuItem.Menu_Name"
               link
             ></v-list-item>
