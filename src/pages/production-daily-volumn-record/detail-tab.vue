@@ -3,15 +3,15 @@
     <v-row>
       <v-col md="3">
         <label>Operating Time(h)</label>
-        <v-text-field v-model="form.operatingTime" readonly></v-text-field>
+        <v-text-field v-model="form.Shift_Oper_Time" readonly></v-text-field>
       </v-col>
       <v-col md="3">
         <label>Shift Start</label>
-        <v-text-field v-model="form.Shift_Start"></v-text-field>
+        <v-text-field v-model="form.Shift_Start" type="time"></v-text-field>
       </v-col>
       <v-col md="3">
         <label>Shift End</label>
-        <v-text-field v-model="form.Shift_End"></v-text-field>
+        <v-text-field v-model="form.Shift_End" type="time"></v-text-field>
       </v-col>
     </v-row>
     <v-row>
@@ -23,7 +23,7 @@
               <th></th>
               <th>EBO</th>
               <th>CBO</th>
-              <th>FCO</th>
+              <th>FCC</th>
               <th>Total</th>
             </tr>
           </thead>
@@ -48,7 +48,7 @@
                 <v-text-field
                   hide-details
                   type="number"
-                  v-model="form.T1_Production_FCO"
+                  v-model="form.T1_Production_FCC"
                 ></v-text-field>
               </td>
               <td>{{ form.T1_Production_Prod_Total }}</td>
@@ -80,8 +80,8 @@
             </tr>
             <tr>
               <td>Production + EKINEN</td>
-              <td>{{ form.T1_EKINEN_FS_Oil_All_CBO }}</td>
               <td>{{ form.T1_EKINEN_FS_Oil_All_EBO }}</td>
+              <td>{{ form.T1_EKINEN_FS_Oil_All_CBO }}</td>
               <td>{{ form.T1_EKINEN_FS_Oil_All_FCC }}</td>
               <td>{{ form.T1_EKINEN_FS_Oil_All_Total }}</td>
             </tr>
@@ -130,7 +130,7 @@
               <td></td>
               <td></td>
               <td></td>
-              <td>0</td>
+              <td>{{ form.T2_NG_Warm_up_Total }}</td>
             </tr>
             <tr>
               <td>Preheat</td>
@@ -170,13 +170,13 @@
                 <v-text-field
                   hide-details
                   type="number"
-                  value="0"
+                  v-model="form.T2_NG_Drying"
                 ></v-text-field>
               </td>
               <td></td>
               <td></td>
               <td></td>
-              <td>0</td>
+              <td>{{ form.T2_NG_Drying_Total }}</td>
             </tr>
             <tr>
               <td>Oil Spray checking</td>
@@ -184,13 +184,13 @@
                 <v-text-field
                   hide-details
                   type="number"
-                  value="0"
+                  v-model="form.T2_NG_Oil_Spray_checking"
                 ></v-text-field>
               </td>
               <td></td>
               <td></td>
               <td></td>
-              <td>0</td>
+              <td>{{ form.T2_NG_Oil_Spray_checking_Total }}</td>
             </tr>
           </tbody>
         </v-table>
@@ -219,29 +219,29 @@
                 <v-text-field
                   hide-details
                   type="number"
-                  value="0"
+                  v-model="form.T3_Mixing_Other"
                 ></v-text-field>
               </td>
               <td>
                 <v-text-field
                   hide-details
                   type="number"
-                  value="700"
+                  v-model="form.T3_Hoist_Other"
                 ></v-text-field>
               </td>
               <td>
                 <v-text-field
                   hide-details
                   type="number"
-                  value="0"
+                  v-model="form.T3_Kande_Other"
                 ></v-text-field>
               </td>
-              <td>700</td>
+              <td>{{ form.T3_Total_Mixing_Volume_Other }}</td>
               <td>
                 <v-text-field
                   hide-details
                   type="number"
-                  value="0"
+                  v-model="form.T3_Discharged_Volume_Other"
                 ></v-text-field>
               </td>
             </tr>
@@ -252,15 +252,27 @@
     <v-row>
       <v-col md="3">
         <label>KOH Mixing(Litres)</label>
-        <v-text-field value="0"></v-text-field>
+        <v-text-field
+          v-model="form.T3_KOH_Mixing_Other"
+          type="number"
+          hide-details
+        ></v-text-field>
       </v-col>
       <v-col md="3">
         <label>NaOH Consumption(Litres)</label>
-        <v-text-field value="0"></v-text-field>
+        <v-text-field
+          v-model="form.T3_NaOH_Consumption_Other"
+          type="number"
+          hide-details
+        ></v-text-field>
       </v-col>
       <v-col md="3">
         <label>Recycle Hopper Level(%)</label>
-        <v-text-field value="3"></v-text-field>
+        <v-text-field
+          v-model="form.T3_Recycle_Hopper_Level_Other"
+          type="number"
+          hide-details
+        ></v-text-field>
       </v-col>
     </v-row>
 
@@ -380,14 +392,11 @@
 
 <script setup>
 import { reactive, ref, defineProps, defineEmits, watch } from "vue";
-
+import moment from "moment";
 // Define emits
 const emit = defineEmits(["update:modelValue"]);
 
-const form = reactive({
-  operatingTime: "",
-  shippingType: "",
-});
+const form = reactive({});
 
 const dialog = ref(false);
 
@@ -400,6 +409,21 @@ const props = defineProps({
     type: String,
     default: "",
   },
+});
+
+const conertToInt = (value) => {
+  return value ? parseInt(value) : 0;
+};
+
+watch([() => form.Shift_Start, () => form.Shift_End], ([start, end]) => {
+  // Calculate the difference between Shift_Start and Shift_End
+  if (start && end) {
+    const shiftStart = moment(start, "HH:mm");
+    const shiftEnd = moment(end, "HH:mm");
+    const duration = moment.duration(shiftEnd.diff(shiftStart));
+    const hours = duration.asHours();
+    form.Shift_Oper_Time = hours.toFixed(2);
+  }
 });
 
 watch(
@@ -418,6 +442,50 @@ watch(
 );
 
 // Calculate total
+watch(
+  [
+    () => form.T1_Production_EBO,
+    () => form.T1_Production_CBO,
+    () => form.T1_Production_FCC,
+  ],
+  ([n1, n2, n3]) => {
+    form.T1_Production_Prod_Total =
+      conertToInt(n1) + conertToInt(n2) + conertToInt(n3);
+
+    form.T1_EKINEN_FS_Oil_All_EBO =
+      conertToInt(form.T1_Production_EBO) + conertToInt(form.T1_EKINEN_EBO);
+    form.T1_EKINEN_FS_Oil_All_CBO =
+      conertToInt(form.T1_Production_CBO) + conertToInt(form.T1_EKINEN_CBO);
+    form.T1_EKINEN_FS_Oil_All_FCC =
+      conertToInt(form.T1_Production_FCC) + conertToInt(form.T1_EKINEN_FCC);
+    form.T1_EKINEN_FS_Oil_All_Total =
+      conertToInt(form.T1_Production_Prod_Total) +
+      conertToInt(form.T1_EKINEN_EKN_Total);
+  }
+);
+
+watch(
+  [
+    () => form.T1_EKINEN_EBO,
+    () => form.T1_EKINEN_CBO,
+    () => form.T1_EKINEN_FCC,
+  ],
+  ([n1, n2, n3]) => {
+    form.T1_EKINEN_EKN_Total =
+      conertToInt(n1) + conertToInt(n2) + conertToInt(n3);
+
+    form.T1_EKINEN_FS_Oil_All_EBO =
+      conertToInt(form.T1_Production_EBO) + conertToInt(form.T1_EKINEN_EBO);
+    form.T1_EKINEN_FS_Oil_All_CBO =
+      conertToInt(form.T1_Production_CBO) + conertToInt(form.T1_EKINEN_CBO);
+    form.T1_EKINEN_FS_Oil_All_FCC =
+      conertToInt(form.T1_Production_FCC) + conertToInt(form.T1_EKINEN_FCC);
+    form.T1_EKINEN_FS_Oil_All_Total =
+      conertToInt(form.T1_Production_Prod_Total) +
+      conertToInt(form.T1_EKINEN_EKN_Total);
+  }
+);
+
 watch(
   () => form.T2_NG_Production,
   (newValue) => {
@@ -440,7 +508,20 @@ watch(
   ],
   ([n1, n2, n3, n4]) => {
     form.T2_Preheat_Total =
-      parseInt(n1) + parseInt(n2) + parseInt(n3) + parseInt(n4);
+      conertToInt(n1) + conertToInt(n2) + conertToInt(n3) + conertToInt(n4);
+  }
+);
+
+watch(
+  () => form.T2_NG_Drying,
+  (newValue) => {
+    form.T2_NG_Drying_Total = newValue;
+  }
+);
+watch(
+  () => form.T2_NG_Oil_Spray_checking,
+  (newValue) => {
+    form.T2_NG_Oil_Spray_checking_Total = newValue;
   }
 );
 </script>

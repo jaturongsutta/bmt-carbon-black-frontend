@@ -80,12 +80,14 @@
                 </v-tabs-window-item>
                 <v-tabs-window-item :value="2">
                   <v-container fluid>
-                    <detail-tab shift-name="Shift 2"> </detail-tab>
+                    <detail-tab shift-name="Shift 2" v-model="shiftData2">
+                    </detail-tab>
                   </v-container>
                 </v-tabs-window-item>
                 <v-tabs-window-item :value="3">
                   <v-container fluid>
-                    <detail-tab shift-name="Shift 3"> </detail-tab>
+                    <detail-tab shift-name="Shift 3" v-model="shiftData3">
+                    </detail-tab>
                   </v-container>
                 </v-tabs-window-item>
                 <v-tabs-window-item :value="4">
@@ -131,6 +133,8 @@ const route = useRoute();
 const router = useRouter();
 const form = ref({});
 const shiftData1 = ref({});
+const shiftData2 = ref({});
+const shiftData3 = ref({});
 
 let filedata = null;
 
@@ -170,10 +174,18 @@ const onSave = async () => {
     try {
       isLoading.value = true;
       let res = null;
+
+      const data = {
+        date: form.value.date,
+        line: form.value.line,
+        grade: form.value.grade,
+        productName: form.value.productName,
+        shifts: [shiftData1.value],
+      };
       if (mode.value === "Add") {
-        res = await api.add(form.value);
+        res = await api.add(data);
       } else {
-        res = await api.update(route.params.id, form.value);
+        res = await api.update(route.params.id, data);
       }
 
       isLoading.value = false;
@@ -216,6 +228,8 @@ const handleFileChange = (event) => {
         isLoading.value = false;
         if (res.result.status === 0) {
           shiftData1.value = res.shifts[0];
+          shiftData2.value = res.shifts[1];
+          shiftData3.value = res.shifts[2];
         } else {
           dataSave = [];
           items.value = [];
