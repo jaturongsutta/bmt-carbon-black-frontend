@@ -15,23 +15,12 @@ if (localStorage.getItem("jwt")) {
 
 axios.interceptors.request.use(
   function (config) {
-    // Do something before request is sent
-    return config;
-  },
-  function (error) {
-    // Do something with request error
-    return Promise.reject(error);
-  }
-);
-
-axios.interceptors.response.use(
-  (response) => {
-    if (["post", "put", "delete"].includes(response.config.method)) {
+    if (["post", "put", "delete"].includes(config.method)) {
       // Update Token
       const ignoreRefresh = ["/auth/"];
       if (
         axios.defaults.headers.common["Authorization"] &&
-        !ignoreRefresh.includes(response.config.url)
+        !ignoreRefresh.includes(config.url)
       ) {
         refreshToken()
           .then((resUpdateToken) => {
@@ -47,6 +36,16 @@ axios.interceptors.response.use(
       }
     }
 
+    return config;
+  },
+  function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  }
+);
+
+axios.interceptors.response.use(
+  (response) => {
     return response;
   },
   async (error) => {
