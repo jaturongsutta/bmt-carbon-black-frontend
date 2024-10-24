@@ -17,11 +17,9 @@ export const getById = async (id) => {
   }
 };
 
-export const getAdjectValue = async (totalQty) => {
+export const getAdjectValue = async (data) => {
   try {
-    const response = await axios.get(
-      `/tank-shipping/getAdjectValue/${totalQty}`
-    );
+    const response = await axios.post(`/tank-shipping/getAdjectValue`, data);
     return response.data;
   } catch (error) {
     throw error;

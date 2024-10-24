@@ -17,15 +17,17 @@
                       v-model="form.date"
                       :rules="[rules.required]"
                       :readonly="mode === 'Edit'"
+                      @update:model-value="totalQtyChange"
                     ></n-date>
                   </v-col>
                   <v-col md="3">
                     <label class="require-field">Link-Tank</label>
                     <v-select
-                      v-model="form.linkTank"
+                      v-model="form.lineTank"
                       :items="lineTankList"
                       :rules="[rules.required]"
                       :readonly="mode === 'Edit'"
+                      @update:model-value="totalQtyChange"
                     ></v-select>
                   </v-col>
                   <v-col md="3">
@@ -35,6 +37,7 @@
                       :items="gradeList"
                       :rules="[rules.required]"
                       :readonly="mode === 'Edit'"
+                      @update:model-value="totalQtyChange"
                     ></v-select>
                   </v-col>
                   <v-col md="3">
@@ -44,6 +47,7 @@
                       :items="productList"
                       :rules="[rules.required]"
                       :readonly="mode === 'Edit'"
+                      @update:model-value="totalQtyChange"
                     ></v-select>
                   </v-col>
                 </v-row>
@@ -195,7 +199,6 @@
 import { onMounted, ref, inject, readonly } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import rules from "@/utils/rules";
-import moment from "moment";
 import * as api from "@/api/tank-shipping.js";
 import * as ddlApi from "@/api/dropdown-list.js";
 const frmInfo = ref(null);
@@ -207,7 +210,7 @@ const mode = ref("Add");
 
 const form = ref({
   date: null,
-  linkTank: null,
+  lineTank: null,
   grade: null,
   productName: null,
   shippingType: null,
@@ -326,13 +329,20 @@ const onSave = async () => {
 };
 
 const totalQtyChange = (e) => {
-  api.getAdjectValue(form.value.totalQty).then((res) => {
-    if (res.status === 0) {
-      form.value.adjValue = res.data;
-    } else {
-      form.value.adjValue = null;
-      Alert.error(res.message);
-    }
-  });
+  if (
+    form.value.date !== null &&
+    form.value.lineTank !== null &&
+    form.value.grade !== null &&
+    form.value.productName !== null &&
+    form.value.totalQty !== null
+  )
+    api.getAdjectValue(form.value).then((res) => {
+      if (res.status === 0) {
+        form.value.adjValue = res.data;
+      } else {
+        form.value.adjValue = null;
+        Alert.error(res.message);
+      }
+    });
 };
 </script>
