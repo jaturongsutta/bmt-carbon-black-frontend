@@ -6,7 +6,7 @@
       </v-col> -->
       <v-col md="3">
         <label>Total Operating Time(h)</label>
-        <v-text-field value="24" readonly></v-text-field>
+        <v-text-field v-model="Total_Operating_Time" readonly></v-text-field>
       </v-col>
     </v-row>
     <v-row>
@@ -258,6 +258,14 @@ const convertToInteger = (value) => {
 };
 
 // calculate summary
+
+const Total_Operating_Time = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.Shift_Oper_Time) +
+      convertToInteger(formShift2.Shift_Oper_Time) +
+      convertToInteger(formShift3.Shift_Oper_Time)
+  ).format("0,0");
+});
 const T1_Production_EBO = computed(() => {
   return numeral(
     convertToInteger(formShift1.T1_Production_EBO) +
