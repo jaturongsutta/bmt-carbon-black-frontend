@@ -7,15 +7,15 @@
       <v-card-text>
         <v-row class="justify-center">
           <v-col cols="12" sm="3"><label>Report Name</label>
-            <v-select v-model="form.field1" :items="[{ title: 'All', value: null }, ...reportList]"></v-select>
+            <v-select v-model="form.reportName" :items="[{ title: 'All', value: null }, ...reportList]"></v-select>
           </v-col>
           <v-col cols="12" sm="3">
             <label>Month</label>
-            <v-select v-model="form.field2" :items="[{ title: 'All', value: null }, ...monthList]"></v-select>
+            <v-select v-model="form.dataMonth" :items="[{ title: 'All' , value: null }, ...monthList]"></v-select>
           </v-col>
           <v-col cols="12" sm="3">
             <label>Year</label>
-            <v-select v-model="form.field3" :items="[{ title: 'All', value: null }, ...yearList]"></v-select>
+            <v-select v-model="form.dataYear" :items="[{ title: 'All', value: null }, ...yearList]"></v-select>
           </v-col>
           <v-col cols="12" sm="1">
             <div class="mt-5">
@@ -37,25 +37,18 @@
 import { onMounted, ref, inject } from "vue";
 import { useRouter } from "vue-router";
 import * as dateUtils from "@/utils/date.js";
+import * as ddlApi from "@/api/dropdown-list.js";
 
 const router = useRouter();
 const Alert = inject("Alert");
 let form = ref({});
 
-let monthList = ref([{ title: 'January', value: '01' },
-{ title: 'February', value: '02' },
-{ title: 'March', value: '03' },
-{ title: 'April', value: '04' },
-{ title: 'May', value: '05' },
-{ title: 'June', value: '06' },
-{ title: 'July', value: '07' },
-{ title: 'August', value: '08' },
-{ title: 'September', value: '09' },
-{ title: 'October', value: '10' },
-{ title: 'November', value: '11' },
-{ title: 'December', value: '12' },
-]);
+let monthList = ref([]);
 let yearList = ref([]);
+
+let stringURL= ref("");
+let stringUsername= ref("");
+let stringPassword= ref("");
 
 let reportList = ref([
   { title: 'Operating Time Spread  Report', value: 1 },
@@ -70,25 +63,34 @@ let reportList = ref([
 ]);
 
 onMounted(() => {
-  form.value.date = dateUtils.getToday();
-  yearList.value = GenerateYearList()
-  console.log("form.value", form.value)
-  console.log("year", form.value.year)
+  ddlApi.getMonth().then((res) => {
+    monthList.value = res;
+  });
+
+  ddlApi.getYear().then((res) => {
+    yearList.value = res;
+  });
+
+  api.findbyType('REPORT_URL').then((res) => {
+    stringURL.value = res.data.paramValue
+  });
+  api.findbyType('REPORT_USERNAME').then((res) => {
+    stringUsername.value = res.data.paramValue
+  });
+  api.findbyType('REPORT_PASSWORD').then((res) => {
+    stringPassword.value = res.data.paramValue
+  });
 });
 
 const onSearch = async () => {
-  //open report
+  openReport();
 };
 
-
-const GenerateYearList = () => {
-  const currentYear = dateUtils.getCurrentYear(); // ปีปัจจุบัน
-  const startYear = currentYear - 10; // 10 ปีที่แล้ว
-  const endYear = currentYear + 10; // 10 ปีข้างหน้า
-  let list = [];
-  for (let count = startYear; count <= endYear; count++) {
-    list.push({ title: count.toString(), value: count });
-  }
-  return list
-}
+const openReport = async () => {
+  //open report
+  let login = `${stringUsername.value}:${stringPassword.value}@`;
+  let url = stringURL.value.replace("://","://"+login);
+  url = url+ '/ReportServer/Pages/ReportViewer.aspx?%2fBSCB+Report%2fMonthlyBgging&rs:Command=Render';
+  window.open(url, '_blank');
+};
 </script>
