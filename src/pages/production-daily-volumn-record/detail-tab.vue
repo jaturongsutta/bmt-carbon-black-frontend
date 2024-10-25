@@ -281,7 +281,7 @@
         <h5 class="float-start">Storage Tank</h5>
       </v-col>
       <v-col class="d-flex justify-end">
-        <n-btn-add no-permission label="Add Tank" @click="dialog = true">
+        <n-btn-add no-permission label="Add Tank" @click="addPopupTank">
         </n-btn-add>
       </v-col>
     </v-row>
@@ -341,41 +341,55 @@
       <v-card>
         <v-card-title> Add Tank </v-card-title>
         <v-card-text>
-          <v-row>
-            <v-col md="3">
-              <label class="require-field"> Tank</label>
-              <v-select :items="lineTankList" v-model="popupTank"></v-select>
-            </v-col>
+          <v-form ref="frmPopup">
+            <v-row>
+              <v-col md="3">
+                <label class="require-field"> Tank</label>
+                <v-select
+                  :items="lineTankList"
+                  v-model="popupTank"
+                  :rules="[rules.required]"
+                ></v-select>
+              </v-col>
 
-            <v-col md="3">
-              <label class="require-field">Start Time</label>
-              <v-text-field v-model="popupStartTime"></v-text-field>
-            </v-col>
+              <v-col md="3">
+                <label class="require-field">Start Time</label>
+                <v-text-field
+                  v-model="popupStartTime"
+                  :rules="[rules.required]"
+                  type="time"
+                ></v-text-field>
+              </v-col>
 
-            <v-col md="3">
-              <label class="require-field">Stop Time</label>
-              <v-text-field v-model="popupStopTime"></v-text-field>
-            </v-col>
+              <v-col md="3">
+                <label class="require-field">Stop Time</label>
+                <v-text-field
+                  v-model="popupStopTime"
+                  :rules="[rules.required]"
+                  type="time"
+                ></v-text-field>
+              </v-col>
 
-            <v-col md="3">
-              <label>Reason</label>
-              <v-text-field v-model="popupReasonTime"></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <v-checkbox
-                label="Full Tank"
-                value="Y"
-                v-model="popupFullTank"
-              ></v-checkbox>
-            </v-col>
-          </v-row>
+              <v-col md="3">
+                <label>Reason</label>
+                <v-text-field v-model="popupReason"></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-checkbox
+                  label="Full Tank"
+                  value="Y"
+                  v-model="popupFullTank"
+                ></v-checkbox>
+              </v-col>
+            </v-row>
+          </v-form>
         </v-card-text>
         <v-divider></v-divider>
         <div class="d-flex justify-center py-3">
           <n-btn-save
-            @click="dialog = false"
+            @click="savePopupTank"
             class="me-3"
             no-permission
           ></n-btn-save>
@@ -390,10 +404,13 @@
 import { reactive, ref, defineProps, defineEmits, watch, onMounted } from "vue";
 import moment from "moment";
 import * as ddlApi from "@/api/dropdown-list.js";
+import rules from "@/utils/rules";
 // Define emits
 const emit = defineEmits(["update:modelValue"]);
 
 const form = reactive({});
+
+const frmPopup = ref(null);
 
 const dialog = ref(false);
 
@@ -401,7 +418,7 @@ const lineTankList = ref([]);
 
 const popupTank = ref(null);
 const popupStartTime = ref(null);
-const popupEndTime = ref(null);
+const popupStopTime = ref(null);
 const popupReason = ref(null);
 const popupFullTank = ref(null);
 
@@ -421,6 +438,32 @@ onMounted(() => {
     lineTankList.value = res;
   });
 });
+
+const addPopupTank = () => {
+  dialog.value = true;
+  popupTank.value = null;
+  popupStartTime.value = null;
+  popupStopTime.value = null;
+  popupReason.value = null;
+  popupFullTank.value = null;
+};
+
+const savePopupTank = async () => {
+  const { valid } = await frmPopup.value.validate();
+  if (valid) {
+    if (form.storageTanks === undefined) {
+      form.storageTanks = [];
+    }
+    form.storageTanks.push({
+      Tank: popupTank.value,
+      Tank_Start_Time: popupStartTime.value,
+      Tank_Stop_Time: popupStopTime.value,
+      Reason: popupReason.value,
+      Full_Tank: popupFullTank.value,
+    });
+    dialog.value = false;
+  }
+};
 
 const conertToInt = (value) => {
   return value ? parseInt(value) : 0;
