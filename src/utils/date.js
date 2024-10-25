@@ -138,3 +138,8 @@ export function getLastDateOfMonth(dateString) {
   date.setDate(0);
   return moment(date).format("YYYY-MM-DD");
 }
+
+export function getCurrentYear() {
+  const currentYear = moment().utc().year();
+  return currentYear;
+}

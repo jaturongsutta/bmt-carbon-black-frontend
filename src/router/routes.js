@@ -158,12 +158,13 @@ const routes = [
       {
         path: "daily-report",
         name: "daily-report",
-        component: productionDailyVolumnRecordAdd,
+        component: () => import("@/pages/reports/daily-report/daily-report.vue"),
       },
       {
         path: "monthly-report",
         name: "monthly-report",
-        component: productionDailyVolumnRecordAdd,
+        component: () => import("@/pages/reports/monthly-report/monthly-report.vue"),
+
       },
     ],
   },
