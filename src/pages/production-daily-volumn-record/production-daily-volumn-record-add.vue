@@ -99,7 +99,12 @@
                 </v-tabs-window-item>
                 <v-tabs-window-item :value="4">
                   <v-container fluid>
-                    <summary-tab> </summary-tab>
+                    <summary-tab
+                      v-bind:model-value-shift1="shiftData1"
+                      v-bind:model-value-shift2="shiftData2"
+                      v-bind:model-value-shift3="shiftData3"
+                    >
+                    </summary-tab>
                   </v-container>
                 </v-tabs-window-item>
               </v-tabs-window>

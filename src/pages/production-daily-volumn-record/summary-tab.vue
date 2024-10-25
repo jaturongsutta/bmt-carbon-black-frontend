@@ -18,31 +18,31 @@
               <th></th>
               <th>EBO</th>
               <th>CBO</th>
-              <th>FCO</th>
+              <th>FCC</th>
               <th>Total</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>PRODUCTION</td>
-              <td>22,008</td>
-              <td>0</td>
-              <td>51,352</td>
-              <td>24,249</td>
+              <td>{{ T1_Production_EBO }}</td>
+              <td>{{ T1_Production_CBO }}</td>
+              <td>{{ T1_Production_FCC }}</td>
+              <td>{{ T1_Production_Prod_Total }}</td>
             </tr>
             <tr>
               <td>EKINEN</td>
-              <td>17,289</td>
-              <td>0</td>
-              <td>0</td>
-              <td></td>
+              <td>{{ T1_EKINEN_EBO }}</td>
+              <td>{{ T1_EKINEN_CBO }}</td>
+              <td>{{ T1_EKINEN_FCC }}</td>
+              <td>{{ T1_PRODUCTION_EKINEN_Total }}</td>
             </tr>
             <tr>
               <td>Production + EKINEN</td>
-              <td>30,250</td>
-              <td>30,160</td>
-              <td>30,230</td>
-              <td>90,640</td>
+              <td>{{ T1_PRODUCTION_EKINEN_EBO }}</td>
+              <td>{{ T1_PRODUCTION_EKINEN_CBO }}</td>
+              <td>{{ T1_PRODUCTION_EKINEN_FCC }}</td>
+              <td>{{ T1_PRODUCTION_EKINEN_EBO }}</td>
             </tr>
           </tbody>
         </v-table>
@@ -65,43 +65,43 @@
           <tbody>
             <tr>
               <td>Production</td>
-              <td>0</td>
+              <td>{{ T2_NG_Production }}</td>
               <td></td>
               <td></td>
               <td></td>
-              <td></td>
+              <td>{{ T2_NG_Production_Total }}</td>
             </tr>
             <tr>
               <td>Warm up</td>
-              <td>0</td>
+              <td>{{ T2_NG_Warm_up }}</td>
               <td></td>
               <td></td>
               <td></td>
-              <td></td>
+              <td>{{ T2_NG_Warm_up_Total }}</td>
             </tr>
             <tr>
               <td>Preheat</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
+              <td>{{ T2_NG_Preheat }}</td>
+              <td>{{ T2_EBO_Preheat }}</td>
+              <td>{{ T2_CBO_Preheat }}</td>
+              <td>{{ T2_FCC_Preheat }}</td>
+              <td>{{ T2_Preheat_Total }}</td>
             </tr>
             <tr>
               <td>Drying</td>
-              <td>0</td>
+              <td>{{ T2_NG_Drying }}</td>
               <td></td>
               <td></td>
               <td></td>
-              <td></td>
+              <td>{{ T2_NG_Drying_Total }}</td>
             </tr>
             <tr>
               <td>Oil Spray checking</td>
-              <td>0</td>
+              <td>{{ T2_NG_Oil_Spray_checking }}</td>
               <td></td>
               <td></td>
               <td></td>
-              <td></td>
+              <td>{{ T2_NG_Oil_Spray_checking_Total }}</td>
             </tr>
           </tbody>
         </v-table>
@@ -126,11 +126,11 @@
           </thead>
           <tbody>
             <tr>
-              <td>700</td>
-              <td>2,200</td>
-              <td>0</td>
-              <td>2,900</td>
-              <td>0</td>
+              <td>{{ T3_Mixing_Other }}</td>
+              <td>{{ T3_Hoist_Other }}</td>
+              <td>{{ T3_Kande_Other }}</td>
+              <td>{{ T3_Total_Mixing_Volume_Other }}</td>
+              <td>{{ T3_Discharged_Volume_Other }}</td>
             </tr>
           </tbody>
         </v-table>
@@ -139,15 +139,21 @@
     <v-row>
       <v-col md="3">
         <label>KOH Mixing(Litres)</label>
-        <v-text-field readonly value="0"></v-text-field>
+        <v-text-field readonly v-model="T3_KOH_Mixing_Other"></v-text-field>
       </v-col>
       <v-col md="3">
         <label>NaOH Consumption(Litres)</label>
-        <v-text-field readonly value="0"></v-text-field>
+        <v-text-field
+          readonly
+          v-model="T3_NaOH_Consumption_Other"
+        ></v-text-field>
       </v-col>
       <v-col md="3">
         <label>Recycle Hopper Level(%)</label>
-        <v-text-field readonly value="3"></v-text-field>
+        <v-text-field
+          readonly
+          v-model="T3_Recycle_Hopper_Level_Other"
+        ></v-text-field>
       </v-col>
     </v-row>
 
@@ -171,107 +177,346 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>1-2</td>
-              <td>00:00</td>
-              <td>08:00</td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>1-2</td>
-              <td>08:00</td>
-              <td>16:00</td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>1-2</td>
-              <td>16:00</td>
-              <td>17:55</td>
-              <td>Tank changing order</td>
+            <tr v-for="item in storageTanks">
+              <td>{{ item.Shift }}</td>
+              <td>{{ item.Tank }}</td>
+              <td>{{ item.Tank_Start_Time }}</td>
+              <td>{{ item.Tank_Stop_Time }}</td>
+              <td>{{ item.Reason }}</td>
               <td>
-                <v-checkbox readonly v-model="checked" value="Y"></v-checkbox>
+                <v-checkbox
+                  hide-details
+                  value="Y"
+                  v-model="item.Full_Tank"
+                ></v-checkbox>
               </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>1-3</td>
-              <td>18:00</td>
-              <td>24:00</td>
-              <td></td>
-              <td></td>
             </tr>
           </tbody> </v-table
       ></v-col>
     </v-row>
-
-    <v-dialog v-model="dialog" max-width="400px">
-      <v-card>
-        <v-card-title> Add Tank </v-card-title>
-        <v-card-text>
-          <v-row>
-            <v-col>
-              <label class="require-field"> Tank</label>
-              <v-select :items="['1-1']"></v-select>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <label class="require-field">Start Time</label>
-              <v-text-field></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <label class="require-field">Stop Time</label>
-              <v-text-field></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <label>Reason</label>
-              <v-text-field></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <v-checkbox label="Full Tank"></v-checkbox>
-            </v-col>
-          </v-row>
-        </v-card-text>
-        <v-divider></v-divider>
-        <div class="d-flex justify-center py-3">
-          <n-btn-save
-            @click="dialog = false"
-            class="me-3"
-            no-permission
-          ></n-btn-save>
-          <n-btn-cancel text @click="dialog = false"></n-btn-cancel>
-        </div>
-      </v-card>
-    </v-dialog>
   </div>
 </template>
 
 <script setup>
-import { reactive, ref, defineProps } from "vue";
+import { reactive, ref, defineProps, defineEmits, watch, computed } from "vue";
+import numeral from "numeral";
 // Define props
 const props = defineProps({
-  shiftName: {
-    type: String,
-    default: "",
+  modelValueShift1: {
+    type: Object,
+    default: () => ({}),
+  },
+  modelValueShift2: {
+    type: Object,
+    default: () => ({}),
+  },
+  modelValueShift3: {
+    type: Object,
+    default: () => ({}),
   },
 });
 
-const checked = ref("Y");
+// Define emits
+const emit = defineEmits([
+  "update:modelValueShift1",
+  "update:modelValueShift2",
+  "update:modelValueShift3",
+]);
 
-const form = reactive({
-  shippingType: "",
+// Reactive form objects for each shift
+const formShift1 = reactive(props.modelValueShift1);
+const formShift2 = reactive(props.modelValueShift2);
+const formShift3 = reactive(props.modelValueShift3);
+
+watch(
+  () => props.modelValueShift1,
+  (newValue) => {
+    Object.assign(formShift1, newValue);
+  },
+  { immediate: true }
+);
+
+watch(
+  () => props.modelValueShift2,
+  (newValue) => {
+    Object.assign(formShift2, newValue);
+  },
+  { immediate: true }
+);
+
+watch(
+  () => props.modelValueShift3,
+  (newValue) => {
+    Object.assign(formShift3, newValue);
+  },
+  { immediate: true }
+);
+
+const convertToInteger = (value) => {
+  return parseInt(value) || 0;
+};
+
+// calculate summary
+const T1_Production_EBO = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T1_Production_EBO) +
+      convertToInteger(formShift2.T1_Production_EBO) +
+      convertToInteger(formShift3.T1_Production_EBO)
+  ).format("0,0");
 });
 
-const dialog = ref(false);
+const T1_Production_CBO = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T1_Production_CBO) +
+      convertToInteger(formShift2.T1_Production_CBO) +
+      convertToInteger(formShift3.T1_Production_CBO)
+  ).format("0,0");
+});
+
+const T1_Production_FCC = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T1_Production_FCC) +
+      convertToInteger(formShift2.T1_Production_FCC) +
+      convertToInteger(formShift3.T1_Production_FCC)
+  ).format("0,0");
+});
+
+const T1_Production_Prod_Total = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T1_Production_Prod_Total) +
+      convertToInteger(formShift2.T1_Production_Prod_Total) +
+      convertToInteger(formShift3.T1_Production_Prod_Total)
+  ).format("0,0");
+});
+
+const T1_EKINEN_EBO = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T1_EKINEN_EBO) +
+      convertToInteger(formShift2.T1_EKINEN_EBO) +
+      convertToInteger(formShift3.T1_EKINEN_EBO)
+  ).format("0,0");
+});
+
+const T1_EKINEN_CBO = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T1_EKINEN_CBO) +
+      convertToInteger(formShift2.T1_EKINEN_CBO) +
+      convertToInteger(formShift3.T1_EKINEN_CBO)
+  ).format("0,0");
+});
+
+const T1_EKINEN_FCC = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T1_EKINEN_FCC) +
+      convertToInteger(formShift2.T1_EKINEN_FCC) +
+      convertToInteger(formShift3.T1_EKINEN_FCC)
+  ).format("0,0");
+});
+
+const T1_PRODUCTION_EKINEN_Total = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T1_PRODUCTION_EKINEN_Total) +
+      convertToInteger(formShift2.T1_PRODUCTION_EKINEN_Total) +
+      convertToInteger(formShift3.T1_PRODUCTION_EKINEN_Total)
+  ).format("0,0");
+});
+
+const T1_PRODUCTION_EKINEN_EBO = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T1_PRODUCTION_EKINEN_EBO) +
+      convertToInteger(formShift2.T1_PRODUCTION_EKINEN_EBO) +
+      convertToInteger(formShift3.T1_PRODUCTION_EKINEN_EBO)
+  ).format("0,0");
+});
+
+const T1_PRODUCTION_EKINEN_CBO = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T1_PRODUCTION_EKINEN_CBO) +
+      convertToInteger(formShift2.T1_PRODUCTION_EKINEN_CBO) +
+      convertToInteger(formShift3.T1_PRODUCTION_EKINEN_CBO)
+  ).format("0,0");
+});
+
+const T1_PRODUCTION_EKINEN_FCC = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T1_PRODUCTION_EKINEN_FCC) +
+      convertToInteger(formShift2.T1_PRODUCTION_EKINEN_FCC) +
+      convertToInteger(formShift3.T1_PRODUCTION_EKINEN_FCC)
+  ).format("0,0");
+});
+
+const T2_NG_Production = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T2_NG_Production) +
+      convertToInteger(formShift2.T2_NG_Production) +
+      convertToInteger(formShift3.T2_NG_Production)
+  ).format("0,0");
+});
+
+const T2_NG_Production_Total = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T2_NG_Production_Total) +
+      convertToInteger(formShift2.T2_NG_Production_Total) +
+      convertToInteger(formShift3.T2_NG_Production_Total)
+  ).format("0,0");
+});
+
+const T2_NG_Warm_up = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T2_NG_Warm_up) +
+      convertToInteger(formShift2.T2_NG_Warm_up) +
+      convertToInteger(formShift3.T2_NG_Warm_up)
+  ).format("0,0");
+});
+
+const T2_NG_Warm_up_Total = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T2_NG_Warm_up_Total) +
+      convertToInteger(formShift2.T2_NG_Warm_up_Total) +
+      convertToInteger(formShift3.T2_NG_Warm_up_Total)
+  ).format("0,0");
+});
+
+const T2_NG_Preheat = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T2_NG_Preheat) +
+      convertToInteger(formShift2.T2_NG_Preheat) +
+      convertToInteger(formShift3.T2_NG_Preheat)
+  ).format("0,0");
+});
+
+const T2_EBO_Preheat = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T2_EBO_Preheat) +
+      convertToInteger(formShift2.T2_EBO_Preheat) +
+      convertToInteger(formShift3.T2_EBO_Preheat)
+  ).format("0,0");
+});
+
+const T2_CBO_Preheat = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T2_CBO_Preheat) +
+      convertToInteger(formShift2.T2_CBO_Preheat) +
+      convertToInteger(formShift3.T2_CBO_Preheat)
+  ).format("0,0");
+});
+
+const T2_FCC_Preheat = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T2_FCC_Preheat) +
+      convertToInteger(formShift2.T2_FCC_Preheat) +
+      convertToInteger(formShift3.T2_FCC_Preheat)
+  ).format("0,0");
+});
+
+const T2_Preheat_Total = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T2_Preheat_Total) +
+      convertToInteger(formShift2.T2_Preheat_Total) +
+      convertToInteger(formShift3.T2_Preheat_Total)
+  ).format("0,0");
+});
+
+const T2_NG_Drying = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T2_NG_Drying) +
+      convertToInteger(formShift2.T2_NG_Drying) +
+      convertToInteger(formShift3.T2_NG_Drying)
+  ).format("0,0");
+});
+
+const T2_NG_Drying_Total = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T2_NG_Drying_Total) +
+      convertToInteger(formShift2.T2_NG_Drying_Total) +
+      convertToInteger(formShift3.T2_NG_Drying_Total)
+  ).format("0,0");
+});
+
+const T2_NG_Oil_Spray_checking = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T2_NG_Oil_Spray_checking) +
+      convertToInteger(formShift2.T2_NG_Oil_Spray_checking) +
+      convertToInteger(formShift3.T2_NG_Oil_Spray_checking)
+  ).format("0,0");
+});
+
+const T2_NG_Oil_Spray_checking_Total = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T2_NG_Oil_Spray_checking_Total) +
+      convertToInteger(formShift2.T2_NG_Oil_Spray_checking_Total) +
+      convertToInteger(formShift3.T2_NG_Oil_Spray_checking_Total)
+  ).format("0,0");
+});
+
+const T3_Mixing_Other = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T3_Mixing_Other) +
+      convertToInteger(formShift2.T3_Mixing_Other) +
+      convertToInteger(formShift3.T3_Mixing_Other)
+  ).format("0,0");
+});
+
+const T3_Hoist_Other = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T3_Hoist_Other) +
+      convertToInteger(formShift2.T3_Hoist_Other) +
+      convertToInteger(formShift3.T3_Hoist_Other)
+  ).format("0,0");
+});
+
+const T3_Kande_Other = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T3_Kande_Other) +
+      convertToInteger(formShift2.T3_Kande_Other) +
+      convertToInteger(formShift3.T3_Kande_Other)
+  ).format("0,0");
+});
+
+const T3_Total_Mixing_Volume_Other = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T3_Total_Mixing_Volume_Other) +
+      convertToInteger(formShift2.T3_Total_Mixing_Volume_Other) +
+      convertToInteger(formShift3.T3_Total_Mixing_Volume_Other)
+  ).format("0,0");
+});
+
+const T3_Discharged_Volume_Other = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T3_Discharged_Volume_Other) +
+      convertToInteger(formShift2.T3_Discharged_Volume_Other) +
+      convertToInteger(formShift3.T3_Discharged_Volume_Other)
+  ).format("0,0");
+});
+
+const T3_KOH_Mixing_Other = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T3_KOH_Mixing_Other) +
+      convertToInteger(formShift2.T3_KOH_Mixing_Other) +
+      convertToInteger(formShift3.T3_KOH_Mixing_Other)
+  ).format("0,0");
+});
+
+const T3_NaOH_Consumption_Other = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T3_NaOH_Consumption_Other) +
+      convertToInteger(formShift2.T3_NaOH_Consumption_Other) +
+      convertToInteger(formShift3.T3_NaOH_Consumption_Other)
+  ).format("0,0");
+});
+
+const T3_Recycle_Hopper_Level_Other = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T3_Recycle_Hopper_Level_Other) +
+      convertToInteger(formShift2.T3_Recycle_Hopper_Level_Other) +
+      convertToInteger(formShift3.T3_Recycle_Hopper_Level_Other)
+  ).format("0,0");
+});
+
+const storageTanks = computed(() => {
+  return formShift1.storageTanks.concat(
+    formShift2.storageTanks,
+    formShift3.storageTanks
+  );
+});
 </script>
