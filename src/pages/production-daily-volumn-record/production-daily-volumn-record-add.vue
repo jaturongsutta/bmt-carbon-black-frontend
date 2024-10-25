@@ -12,8 +12,8 @@
               <label class="require-field">Date</label>
               <n-date
                 v-model="form.date"
-                :rules="[rules.required]"
-                :readonly="mode === 'Edit'"
+                :rules="[rules.required, validateDate]"
+                :readonly="mode === 'Edit' || validFileSuccess"
               ></n-date>
             </v-col>
             <v-col md="3">
@@ -21,8 +21,8 @@
               <v-select
                 v-model="form.line"
                 :items="lineList"
-                :rules="[rules.required]"
-                :readonly="mode === 'Edit'"
+                :rules="[rules.required, validateLine]"
+                :readonly="mode === 'Edit' || validFileSuccess"
               ></v-select>
             </v-col>
             <v-col md="3">
@@ -30,8 +30,8 @@
               <v-select
                 v-model="form.grade"
                 :items="gradeList"
-                :rules="[rules.required]"
-                :readonly="mode === 'Edit'"
+                :rules="[rules.required, validateGrade]"
+                :readonly="mode === 'Edit' || validFileSuccess"
               ></v-select>
             </v-col>
             <v-col md="3">
@@ -39,8 +39,8 @@
               <v-select
                 v-model="form.productName"
                 :items="productList"
-                :rules="[rules.required]"
-                :readonly="mode === 'Edit'"
+                :rules="[rules.required, validateProductName]"
+                :readonly="mode === 'Edit' || validFileSuccess"
               ></v-select>
             </v-col>
           </v-row>
@@ -159,6 +159,12 @@ const productList = ref([]);
 
 const isLoading = ref(false);
 
+let dateExcel = null;
+let lineExcel = null;
+let gradeExcel = null;
+let productExcel = null;
+const validFileSuccess = ref(false);
+
 onMounted(() => {
   ddlApi.getPredefine("Grade").then((res) => {
     gradeList.value = res;
@@ -243,10 +249,13 @@ const onSave = async () => {
   }
 };
 
-const uplaodFileClick = () => {
-  console.log("upload file");
+const uplaodFileClick = async () => {
+  // const { valid } = await frmInfo.value.validate();
+
+  // if (valid) {
   fileInput.value.value = "";
   fileInput.value.click();
+  // }
 };
 
 const handleFileChange = (event) => {
@@ -261,19 +270,37 @@ const handleFileChange = (event) => {
     formData.append("file", file);
     isLoading.value = true;
     form.value.filename = null;
+    dateExcel = null;
+    lineExcel = null;
+    gradeExcel = null;
+    productExcel = null;
     api
       .uploadFile(formData)
       .then((res) => {
         isLoading.value = false;
         if (res.result.status === 0) {
+          dateExcel = res.date;
+          lineExcel = res.line;
+          gradeExcel = res.grade;
+          productExcel = res.productName;
+
           shiftData1.value = res.shifts[0];
           shiftData2.value = res.shifts[1];
           shiftData3.value = res.shifts[2];
+          validFileSuccess.value = true;
+          frmInfo.value.validate().then((frm) => {
+            // if (frm.valid) {
+            //   validFileSuccess.value = true;
+            // } else {
+            //   validFileSuccess.value = false;
+            // }
+          });
         } else {
           dataSave = [];
           items.value = [];
           totalItems.value = 0;
           Alert.warning(res.result.message);
+          validFileSuccess.value = false;
         }
       })
       .catch((err) => {
@@ -291,5 +318,36 @@ const handleFileChange = (event) => {
 
     reader.readAsDataURL(file);
   }
+};
+
+// validate
+const validateDate = (value) => {
+  if (dateExcel === null) {
+    return true;
+  }
+
+  return form.value.date != dateExcel ? "Date not match in file" : true;
+};
+
+const validateLine = (value) => {
+  if (lineExcel === null) {
+    return true;
+  }
+  return value != lineExcel ? "Line not match in file" : true;
+};
+
+const validateGrade = (value) => {
+  if (gradeExcel === null) {
+    return true;
+  }
+  const grade = gradeList.value.find((x) => x.value === value);
+  return value != grade.value ? "Grade not match in file" : true;
+};
+
+const validateProductName = (value) => {
+  if (productExcel === null) {
+    return true;
+  }
+  return value != productExcel ? "Product Name not match in file" : true;
 };
 </script>
