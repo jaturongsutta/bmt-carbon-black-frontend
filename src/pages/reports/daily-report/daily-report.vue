@@ -36,11 +36,14 @@
 import { onMounted, ref, inject } from "vue";
 import { useRouter } from "vue-router";
 import * as dateUtils from "@/utils/date.js";
+import * as api from "@/api/common-master/systemparams.js";
 
 const router = useRouter();
 const Alert = inject("Alert");
 let form = ref({});
-
+let stringURL= ref("");
+let stringUsername= ref("");
+let stringPassword= ref("");
 let reportList = ref([
         { title: 'Production Condition Table Report', value: 1 },
         { title: 'Tank Balance Report', value: 2 },
@@ -48,13 +51,30 @@ let reportList = ref([
       ]);
 
 onMounted(() => {
-  
   form.value.date = dateUtils.getToday();
+ 
+  api.findbyType('REPORT_URL').then((res) => {
+    stringURL.value = res.data.paramValue
+  });
+  api.findbyType('REPORT_USERNAME').then((res) => {
+    stringUsername.value = res.data.paramValue
+  });
+  api.findbyType('REPORT_PASSWORD').then((res) => {
+    stringPassword.value = res.data.paramValue
+  });
 
 });
 
 const onSearch = async () => {
+  openReport();
+};
+
+const openReport = async () => {
   //open report
+  let login = `${stringUsername.value}:${stringPassword.value}@`;
+  let url = stringURL.value.replace("://","://"+login);
+  url = url+ '/ReportServer/Pages/ReportViewer.aspx?%2fBSCB+Report%2fMonthlyBgging&rs:Command=Render';
+  window.open(url, '_blank');
 };
 
 </script>
