@@ -80,10 +80,10 @@
             </tr>
             <tr>
               <td>Production + EKINEN</td>
-              <td>{{ form.T1_EKINEN_FS_Oil_All_EBO }}</td>
-              <td>{{ form.T1_EKINEN_FS_Oil_All_CBO }}</td>
-              <td>{{ form.T1_EKINEN_FS_Oil_All_FCC }}</td>
-              <td>{{ form.T1_EKINEN_FS_Oil_All_Total }}</td>
+              <td>{{ form.T1_PRODUCTION_EKINEN_EBO }}</td>
+              <td>{{ form.T1_PRODUCTION_EKINEN_CBO }}</td>
+              <td>{{ form.T1_PRODUCTION_EKINEN_FCC }}</td>
+              <td>{{ form.T1_PRODUCTION_EKINEN_Total }}</td>
             </tr>
           </tbody>
         </v-table>
@@ -278,7 +278,7 @@
 
     <v-row>
       <v-col class="d-flex align-end">
-        <h5 class="float-start">Storange Tank</h5>
+        <h5 class="float-start">Storage Tank</h5>
       </v-col>
       <v-col class="d-flex justify-end">
         <n-btn-add no-permission label="Add Tank" @click="dialog = true">
@@ -299,41 +299,36 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr v-for="item in form.storageTanks">
               <td>
                 <v-select
                   hide-details
-                  type="number"
-                  value="1-1"
-                  :items="['1-1']"
+                  v-model="item.Tank"
+                  :items="lineTankList"
                 ></v-select>
               </td>
               <td>
                 <v-text-field
                   hide-details
-                  type="number"
-                  value="00:00"
+                  type="time"
+                  v-model="item.Tank_Start_Time"
                 ></v-text-field>
               </td>
               <td>
                 <v-text-field
                   hide-details
-                  type="number"
-                  value="08:00"
+                  type="time"
+                  v-model="item.Tank_Stop_Time"
                 ></v-text-field>
               </td>
               <td>
-                <v-text-field
-                  hide-details
-                  type="number"
-                  value=""
-                ></v-text-field>
+                <v-text-field hide-details v-model="item.Reason"></v-text-field>
               </td>
               <td>
                 <v-checkbox
                   hide-details
-                  type="number"
                   value="Y"
+                  v-model="item.Full_Tank"
                   checked
                 ></v-checkbox>
               </td>
@@ -342,37 +337,38 @@
       ></v-col>
     </v-row>
 
-    <v-dialog v-model="dialog" max-width="400px">
+    <v-dialog v-model="dialog" max-width="900px">
       <v-card>
         <v-card-title> Add Tank </v-card-title>
         <v-card-text>
           <v-row>
-            <v-col>
+            <v-col md="3">
               <label class="require-field"> Tank</label>
-              <v-select :items="['1-1']"></v-select>
+              <v-select :items="lineTankList" v-model="popupTank"></v-select>
             </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
+
+            <v-col md="3">
               <label class="require-field">Start Time</label>
-              <v-text-field></v-text-field>
+              <v-text-field v-model="popupStartTime"></v-text-field>
             </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
+
+            <v-col md="3">
               <label class="require-field">Stop Time</label>
-              <v-text-field></v-text-field>
+              <v-text-field v-model="popupStopTime"></v-text-field>
             </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
+
+            <v-col md="3">
               <label>Reason</label>
-              <v-text-field></v-text-field>
+              <v-text-field v-model="popupReasonTime"></v-text-field>
             </v-col>
           </v-row>
           <v-row>
             <v-col>
-              <v-checkbox label="Full Tank"></v-checkbox>
+              <v-checkbox
+                label="Full Tank"
+                value="Y"
+                v-model="popupFullTank"
+              ></v-checkbox>
             </v-col>
           </v-row>
         </v-card-text>
@@ -391,14 +387,23 @@
 </template>
 
 <script setup>
-import { reactive, ref, defineProps, defineEmits, watch } from "vue";
+import { reactive, ref, defineProps, defineEmits, watch, onMounted } from "vue";
 import moment from "moment";
+import * as ddlApi from "@/api/dropdown-list.js";
 // Define emits
 const emit = defineEmits(["update:modelValue"]);
 
 const form = reactive({});
 
 const dialog = ref(false);
+
+const lineTankList = ref([]);
+
+const popupTank = ref(null);
+const popupStartTime = ref(null);
+const popupEndTime = ref(null);
+const popupReason = ref(null);
+const popupFullTank = ref(null);
 
 // Define props
 const props = defineProps({
@@ -411,6 +416,12 @@ const props = defineProps({
   },
 });
 
+onMounted(() => {
+  ddlApi.lineTank().then((res) => {
+    lineTankList.value = res;
+  });
+});
+
 const conertToInt = (value) => {
   return value ? parseInt(value) : 0;
 };
@@ -418,8 +429,14 @@ const conertToInt = (value) => {
 watch([() => form.Shift_Start, () => form.Shift_End], ([start, end]) => {
   // Calculate the difference between Shift_Start and Shift_End
   if (start && end) {
-    const shiftStart = moment(start, "HH:mm");
-    const shiftEnd = moment(end, "HH:mm");
+    let shiftStart = moment(start, "HH:mm");
+    let shiftEnd = moment(end, "HH:mm");
+
+    // If start time is greater than end time, add one day to end time
+    if (shiftStart.isAfter(shiftEnd)) {
+      shiftEnd.add(1, "day");
+    }
+
     const duration = moment.duration(shiftEnd.diff(shiftStart));
     const hours = duration.asHours();
     form.Shift_Oper_Time = hours.toFixed(2);
@@ -452,13 +469,13 @@ watch(
     form.T1_Production_Prod_Total =
       conertToInt(n1) + conertToInt(n2) + conertToInt(n3);
 
-    form.T1_EKINEN_FS_Oil_All_EBO =
+    form.T1_PRODUCTION_EKINEN_EBO =
       conertToInt(form.T1_Production_EBO) + conertToInt(form.T1_EKINEN_EBO);
-    form.T1_EKINEN_FS_Oil_All_CBO =
+    form.T1_PRODUCTION_EKINEN_CBO =
       conertToInt(form.T1_Production_CBO) + conertToInt(form.T1_EKINEN_CBO);
-    form.T1_EKINEN_FS_Oil_All_FCC =
+    form.T1_PRODUCTION_EKINEN_FCC =
       conertToInt(form.T1_Production_FCC) + conertToInt(form.T1_EKINEN_FCC);
-    form.T1_EKINEN_FS_Oil_All_Total =
+    form.T1_PRODUCTION_EKINEN_Total =
       conertToInt(form.T1_Production_Prod_Total) +
       conertToInt(form.T1_EKINEN_EKN_Total);
   }
@@ -474,13 +491,13 @@ watch(
     form.T1_EKINEN_EKN_Total =
       conertToInt(n1) + conertToInt(n2) + conertToInt(n3);
 
-    form.T1_EKINEN_FS_Oil_All_EBO =
+    form.T1_PRODUCTION_EKINEN_EBO =
       conertToInt(form.T1_Production_EBO) + conertToInt(form.T1_EKINEN_EBO);
-    form.T1_EKINEN_FS_Oil_All_CBO =
+    form.T1_PRODUCTION_EKINEN_CBO =
       conertToInt(form.T1_Production_CBO) + conertToInt(form.T1_EKINEN_CBO);
-    form.T1_EKINEN_FS_Oil_All_FCC =
+    form.T1_PRODUCTION_EKINEN_FCC =
       conertToInt(form.T1_Production_FCC) + conertToInt(form.T1_EKINEN_FCC);
-    form.T1_EKINEN_FS_Oil_All_Total =
+    form.T1_PRODUCTION_EKINEN_Total =
       conertToInt(form.T1_Production_Prod_Total) +
       conertToInt(form.T1_EKINEN_EKN_Total);
   }

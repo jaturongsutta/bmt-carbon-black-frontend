@@ -216,9 +216,9 @@ const headers = [
     key: "liquid1",
     value: (item) => {
       return (
-        parseInt(item.S1_2_FCC_Preheat) +
-        parseInt(item.S1_2_EBO_Preheat) +
-        parseInt(item.S1_2_CBO_Preheat)
+        conertToInt(item.S1_2_FCC_Preheat) +
+        conertToInt(item.S1_2_EBO_Preheat) +
+        conertToInt(item.S1_2_CBO_Preheat)
       );
     },
   },
@@ -243,9 +243,9 @@ const headers = [
     key: "liquid2",
     value: (item) => {
       return (
-        parseInt(item.S2_2_FCC_Preheat) +
-        parseInt(item.S2_2_EBO_Preheat) +
-        parseInt(item.S2_2_CBO_Preheat)
+        conertToInt(item.S2_2_FCC_Preheat) +
+        conertToInt(item.S2_2_EBO_Preheat) +
+        conertToInt(item.S2_2_CBO_Preheat)
       );
     },
   },
@@ -270,9 +270,9 @@ const headers = [
     key: "liquid3",
     value: (item) => {
       return (
-        parseInt(item.S3_2_FCC_Preheat) +
-        parseInt(item.S3_2_EBO_Preheat) +
-        parseInt(item.S3_2_CBO_Preheat)
+        conertToInt(item.S3_2_FCC_Preheat) +
+        conertToInt(item.S3_2_EBO_Preheat) +
+        conertToInt(item.S3_2_CBO_Preheat)
       );
     },
   },
@@ -385,5 +385,9 @@ const onEdit = (id) => {
     name: `production-daily-volumn-record-add`,
     params: { id: id },
   });
+};
+
+const conertToInt = (value) => {
+  return value ? parseInt(value) : 0;
 };
 </script>

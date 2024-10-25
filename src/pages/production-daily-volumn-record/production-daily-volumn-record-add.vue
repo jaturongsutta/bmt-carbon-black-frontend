@@ -10,14 +10,19 @@
           <v-row>
             <v-col md="3">
               <label class="require-field">Date</label>
-              <n-date v-model="form.date" :rules="[rules.required]"></n-date>
+              <n-date
+                v-model="form.date"
+                :rules="[rules.required]"
+                :readonly="mode === 'Edit'"
+              ></n-date>
             </v-col>
             <v-col md="3">
-              <label class="require-field">Link</label>
+              <label class="require-field">Line</label>
               <v-select
                 v-model="form.line"
                 :items="lineList"
                 :rules="[rules.required]"
+                :readonly="mode === 'Edit'"
               ></v-select>
             </v-col>
             <v-col md="3">
@@ -26,6 +31,7 @@
                 v-model="form.grade"
                 :items="gradeList"
                 :rules="[rules.required]"
+                :readonly="mode === 'Edit'"
               ></v-select>
             </v-col>
             <v-col md="3">
@@ -34,6 +40,7 @@
                 v-model="form.productName"
                 :items="productList"
                 :rules="[rules.required]"
+                :readonly="mode === 'Edit'"
               ></v-select>
             </v-col>
           </v-row>
@@ -137,6 +144,7 @@ const shiftData2 = ref({});
 const shiftData3 = ref({});
 
 let filedata = null;
+let filenameTxt = ref(null);
 
 const mode = ref("Add");
 
@@ -159,13 +167,35 @@ onMounted(() => {
   });
 
   if (route.params.id) {
-    const id = route.params.id;
+    mode.value = "Edit";
+    loadData(route.params.id);
   } else {
     form.value.date = dateUtils.getToday();
   }
-
-  shiftData1.value.operatingTime = "00:00";
 });
+
+const loadData = (id) => {
+  isLoading.value = true;
+  api
+    .getById(id)
+    .then((res) => {
+      isLoading.value = false;
+      if (res.status === 2) {
+        Alert.error(res.message);
+      } else {
+        console.log(res);
+        form.value = res;
+        shiftData1.value = res.shifts[0];
+        shiftData2.value = res.shifts[1];
+        shiftData3.value = res.shifts[2];
+      }
+    })
+    .catch((error) => {
+      isLoading.value = false;
+      console.error("Error fetching API:", error);
+      Alert.error(error.message);
+    });
+};
 
 const onSave = async () => {
   const { valid } = await frmInfo.value.validate();
@@ -180,7 +210,9 @@ const onSave = async () => {
         line: form.value.line,
         grade: form.value.grade,
         productName: form.value.productName,
-        shifts: [shiftData1.value],
+        filename: filenameTxt.value,
+        filedata: filedata,
+        shifts: [shiftData1.value, shiftData2.value, shiftData3.value],
       };
       if (mode.value === "Add") {
         res = await api.add(data);
@@ -217,6 +249,8 @@ const handleFileChange = (event) => {
   if (event.target.files.length > 0) {
     const file = event.target.files[0];
     const filename = file.name;
+
+    filenameTxt.value = filename;
 
     const formData = new FormData();
     formData.append("file", file);
