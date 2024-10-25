@@ -16,13 +16,21 @@
             :to="hd.URL"
             link
           >
-            <v-icon>mdi mdi-form-select1</v-icon>
+            <!-- <v-icon>{{
+              menuItem.Menu_Icon === null
+                ? "mdi mdi-form-select"
+                : menuItem.Menu_Icon
+            }}</v-icon> -->
             <!-- <v-list-item-title>{{ hd.Menu_Name }}</v-list-item-title> -->
           </v-list-item>
           <v-menu v-else open-on-hover location="end">
             <template v-slot:activator="{ props }">
               <v-list-item link v-bind="props">
-                <v-icon>mdi mdi-form-select</v-icon>
+                <v-icon>{{
+                  menuItem.Menu_Icon === null
+                    ? "mdi mdi-form-select"
+                    : menuItem.Menu_Icon
+                }}</v-icon>
 
                 <!-- <v-list-item-title class="text-h6">
                 {{ hd.Menu_Name }}</v-list-item-title
