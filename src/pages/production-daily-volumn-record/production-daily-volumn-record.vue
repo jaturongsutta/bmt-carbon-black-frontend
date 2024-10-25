@@ -206,7 +206,7 @@ const headers = [
   //** Shift 1 */
   { title: "Production", key: "S1_1_Production_Prod_Total" },
   { title: "EKINEN", key: "S1_1_EKINEN_EKN_Total" },
-  { title: "Total", key: "S1_1_EKINEN_FS_Oil_All_Total" },
+  { title: "Total", key: "S1_1_PRODUCTION_EKINEN_Total" },
   { title: "Production", key: "S1_2_NG_Production" },
   { title: "Warm up", key: "S1_2_NG_Warm_up" },
   { title: "Prepeat", key: "S1_2_NG_Preheat" },
@@ -233,7 +233,7 @@ const headers = [
   //** Shift 2 */
   { title: "Production", key: "S2_1_Production_Prod_Total" },
   { title: "EKINEN", key: "S2_1_EKINEN_EKN_Total" },
-  { title: "Total", key: "S2_1_EKINEN_FS_Oil_All_Total" },
+  { title: "Total", key: "S2_1_PRODUCTION_EKINEN_Total" },
   { title: "Production", key: "S2_2_NG_Production" },
   { title: "Warm up", key: "S2_2_NG_Warm_up" },
   { title: "Prepeat", key: "S2_2_NG_Preheat" },
@@ -260,7 +260,7 @@ const headers = [
   //** Shift 3 */
   { title: "Production", key: "S3_1_Production_Prod_Total" },
   { title: "EKINEN", key: "S3_1_EKINEN_EKN_Total" },
-  { title: "Total", key: "S3_1_EKINEN_FS_Oil_All_Total" },
+  { title: "Total", key: "S3_1_PRODUCTION_EKINEN_Total" },
   { title: "Production", key: "S3_2_NG_Production" },
   { title: "Warm up", key: "S3_2_NG_Warm_up" },
   { title: "Prepeat", key: "S3_2_NG_Preheat" },
