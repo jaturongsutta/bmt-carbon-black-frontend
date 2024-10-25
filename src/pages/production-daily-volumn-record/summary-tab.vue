@@ -188,6 +188,7 @@
                   hide-details
                   value="Y"
                   v-model="item.Full_Tank"
+                  readonly
                 ></v-checkbox>
               </td>
             </tr>
