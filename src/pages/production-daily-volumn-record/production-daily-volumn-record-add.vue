@@ -7,44 +7,45 @@
 
       <v-card-text>
         <v-form @submit.prevent="onSave" ref="frmInfo">
-          <v-row>
-            <v-col md="3">
-              <label class="require-field">Date</label>
-              <n-date
-                v-model="form.date"
-                :rules="[rules.required, validateDate]"
-                :readonly="mode === 'Edit' || validFileSuccess"
-              ></n-date>
-            </v-col>
-            <v-col md="3">
-              <label class="require-field">Line</label>
-              <v-select
-                v-model="form.line"
-                :items="lineList"
-                :rules="[rules.required, validateLine]"
-                :readonly="mode === 'Edit' || validFileSuccess"
-              ></v-select>
-            </v-col>
-            <v-col md="3">
-              <label class="require-field">Grade</label>
-              <v-select
-                v-model="form.grade"
-                :items="gradeList"
-                :rules="[rules.required, validateGrade]"
-                :readonly="mode === 'Edit' || validFileSuccess"
-              ></v-select>
-            </v-col>
-            <v-col md="3">
-              <label class="require-field">Product Name</label>
-              <v-select
-                v-model="form.productName"
-                :items="productList"
-                :rules="[rules.required, validateProductName]"
-                :readonly="mode === 'Edit' || validFileSuccess"
-              ></v-select>
-            </v-col>
-          </v-row>
-
+          <v-form ref="frmMainInput">
+            <v-row>
+              <v-col md="3">
+                <label class="require-field">Date</label>
+                <n-date
+                  v-model="form.date"
+                  :rules="[rules.required]"
+                  :readonly="mode === 'Edit' || validFileSuccess"
+                ></n-date>
+              </v-col>
+              <v-col md="3">
+                <label class="require-field">Line</label>
+                <v-select
+                  v-model="form.line"
+                  :items="lineList"
+                  :rules="[rules.required]"
+                  :readonly="mode === 'Edit' || validFileSuccess"
+                ></v-select>
+              </v-col>
+              <v-col md="3">
+                <label class="require-field">Grade</label>
+                <v-select
+                  v-model="form.grade"
+                  :items="gradeList"
+                  :rules="[rules.required]"
+                  :readonly="mode === 'Edit' || validFileSuccess"
+                ></v-select>
+              </v-col>
+              <v-col md="3">
+                <label class="require-field">Product Name</label>
+                <v-select
+                  v-model="form.productName"
+                  :items="productList"
+                  :rules="[rules.required]"
+                  :readonly="mode === 'Edit' || validFileSuccess"
+                ></v-select>
+              </v-col>
+            </v-row>
+          </v-form>
           <v-row>
             <v-col>
               <label>Upload</label>
@@ -56,10 +57,11 @@
                 @change="handleFileChange"
               />
               <v-text-field
+                ref="fileInputTxt"
                 v-model="filenameTxt"
                 placeholder="Please choose file to upload"
                 readonly
-                :rules="[validateUploadFile]"
+                :rules="[validateFileUpload]"
                 validate-on="submit"
               >
                 <template v-slot:append>
@@ -138,7 +140,10 @@ import * as api from "@/api/production-daily-volumn-record.js";
 import * as dateUtils from "@/utils/date.js";
 const tab = ref(1);
 const frmInfo = ref(null);
+const frmMainInput = ref(null);
+
 const fileInput = ref(null);
+const fileInputTxt = ref(null);
 const Alert = inject("Alert");
 const route = useRoute();
 
@@ -209,7 +214,7 @@ const loadData = (id) => {
 };
 
 const onSave = async () => {
-  const { valid } = await frmInfo.value.validate();
+  const { valid } = await frmMainInput.value.validate();
 
   if (valid) {
     try {
@@ -250,12 +255,12 @@ const onSave = async () => {
 };
 
 const uplaodFileClick = async () => {
-  // const { valid } = await frmInfo.value.validate();
+  const { valid } = await frmMainInput.value.validate();
 
-  // if (valid) {
-  fileInput.value.value = "";
-  fileInput.value.click();
-  // }
+  if (valid) {
+    fileInput.value.value = "";
+    fileInput.value.click();
+  }
 };
 
 const handleFileChange = (event) => {
@@ -288,7 +293,7 @@ const handleFileChange = (event) => {
           shiftData2.value = res.shifts[1];
           shiftData3.value = res.shifts[2];
           validFileSuccess.value = true;
-          frmInfo.value.validate().then((frm) => {
+          fileInputTxt.value.validate().then((frm) => {
             // if (frm.valid) {
             //   validFileSuccess.value = true;
             // } else {
@@ -321,33 +326,57 @@ const handleFileChange = (event) => {
 };
 
 // validate
-const validateDate = (value) => {
-  if (dateExcel === null) {
-    return true;
-  }
+// const validateDate = (value) => {
+//   if (dateExcel === null) {
+//     return true;
+//   }
 
-  return form.value.date != dateExcel ? "Date not match in file" : true;
-};
+//   return form.value.date != dateExcel ? "Date not match in file" : true;
+// };
 
-const validateLine = (value) => {
-  if (lineExcel === null) {
-    return true;
-  }
-  return value != lineExcel ? "Line not match in file" : true;
-};
+// const validateLine = (value) => {
+//   if (lineExcel === null) {
+//     return true;
+//   }
+//   return value != lineExcel ? "Line not match in file" : true;
+// };
 
-const validateGrade = (value) => {
-  if (gradeExcel === null) {
-    return true;
-  }
-  const grade = gradeList.value.find((x) => x.value === value);
-  return value != grade.value ? "Grade not match in file" : true;
-};
+// const validateGrade = (value) => {
+//   if (gradeExcel === null) {
+//     return true;
+//   }
+//   const grade = gradeList.value.find((x) => x.value === value);
+//   return value != grade.value ? "Grade not match in file" : true;
+// };
 
-const validateProductName = (value) => {
-  if (productExcel === null) {
-    return true;
+// const validateProductName = (value) => {
+//   if (productExcel === null) {
+//     return true;
+//   }
+//   return value != productExcel ? "Product Name not match in file" : true;
+// };
+
+const validateFileUpload = (value) => {
+  console.log("validateFileUpload ", value);
+  if (value) {
+    if (form.value.date != dateExcel) {
+      return "Date not match in file";
+    }
+
+    if (form.value.line != lineExcel) {
+      return "Line not match in file";
+    }
+
+    const grade = gradeList.value.find((x) => x.value === form.value.grade);
+
+    if (form.value.grade != grade.value) {
+      return "Grade not match in file";
+    }
+
+    if (form.value.productName != productExcel) {
+      return "Product Name not match in file";
+    }
   }
-  return value != productExcel ? "Product Name not match in file" : true;
+  return true;
 };
 </script>
