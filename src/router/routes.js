@@ -1,11 +1,13 @@
 import Home from "@/pages/home.vue";
 import Login from "@/pages/login.vue";
 import tankShipping from "@/pages/tank-shipping/tank-shipping.vue";
+import tankShippingInfo from "@/pages/tank-shipping/tank-shipping-info";
 import failedManagement from "@/pages/failed-management/failed-management.vue";
 import failedManagementInfo from "@/pages/failed-management/failed-management-info.vue";
 import productionDailyVolumnRecord from "@/pages/production-daily-volumn-record/production-daily-volumn-record.vue";
 import productionDailyVolumnRecordAdd from "@/pages/production-daily-volumn-record/production-daily-volumn-record-add.vue";
-
+import dailyReport from "@/pages/reports/daily-report/daily-report.vue";
+import monthlyReport from "@/pages/reports/monthly-report/monthly-report.vue";
 const routes = [
   {
     path: "/",
@@ -108,7 +110,7 @@ const routes = [
       {
         path: "tank-shipping-info/:id?",
         name: "tank-shipping-info",
-        component: () => import("@/pages/tank-shipping/tank-shipping-info.vue"),
+        component: tankShippingInfo,
       },
     ],
   },
@@ -124,7 +126,7 @@ const routes = [
         component: failedManagement,
       },
       {
-        path: "/failed-management-info/:id?",
+        path: "failed-management-info/:id?",
         name: "failed-management-info",
         component: failedManagementInfo,
       },
@@ -143,7 +145,7 @@ const routes = [
         component: productionDailyVolumnRecord,
       },
       {
-        path: "/production-daily-volumn-record-add/:id?",
+        path: "production-daily-volumn-record-add/:id?",
         name: "production-daily-volumn-record-add",
         component: productionDailyVolumnRecordAdd,
       },
@@ -158,13 +160,12 @@ const routes = [
       {
         path: "daily-report",
         name: "daily-report",
-        component: () => import("@/pages/reports/daily-report/daily-report.vue"),
+        component: dailyReport,
       },
       {
         path: "monthly-report",
         name: "monthly-report",
-        component: () => import("@/pages/reports/monthly-report/monthly-report.vue"),
-
+        component: monthlyReport,
       },
     ],
   },
