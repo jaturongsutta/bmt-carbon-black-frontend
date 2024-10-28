@@ -157,6 +157,7 @@
                       v-model="form.empty"
                       value="Y"
                       label="Yes"
+                      @update:model-value="totalQtyChange"
                     ></v-checkbox>
                   </v-col>
                   <v-col md="3">
@@ -329,6 +330,7 @@ const onSave = async () => {
 };
 
 const totalQtyChange = (e) => {
+  console.log("totalQtyChange", form.value);
   if (
     form.value.date !== null &&
     form.value.lineTank !== null &&
