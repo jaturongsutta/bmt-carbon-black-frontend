@@ -7,13 +7,11 @@
 // Composables
 import { createRouter, createWebHashHistory } from "vue-router";
 import routes from "./routes.js";
-
 import { useAuthStore } from "@/stores/auth.js";
 import Swal from "sweetalert2";
 
-import { routes as r } from "vue-router/auto-routes";
-
-console.log("routes", r);
+// import { routes as r } from "vue-router/auto-routes";
+// console.log("routes", r);
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
