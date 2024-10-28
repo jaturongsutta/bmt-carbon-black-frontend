@@ -12,11 +12,11 @@
           </v-col>
           <v-col>
             <label>Line Tank</label>
-            <n-select v-model="form.field2" :items="tankList"></n-select>
+            <v-select v-model="form.field2" :items="tankList"></v-select>
           </v-col>
           <v-col>
             <label>Product Name</label>
-            <n-select v-model="form.field3" :items="ProductList"></n-select>
+            <v-select v-model="form.field3" :items="ProductList"></v-select>
           </v-col>
         </v-row>
 

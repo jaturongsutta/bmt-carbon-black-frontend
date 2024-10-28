@@ -17,10 +17,10 @@
 
           <v-col>
             <label>Status</label>
-            <n-select
+            <v-select
               v-model="formSearch.status"
-              :items="[{ text: 'All', value: '' }, ...statusList]"
-            ></n-select>
+              :items="[{ title: 'All', value: '' }, ...statusList]"
+            ></v-select>
           </v-col>
         </v-row>
 
@@ -90,11 +90,11 @@
 
                 <v-col cols="3">
                   <label>Status </label>
-                  <n-select
+                  <v-select
                     v-model="form.isActive"
                     :rules="[rules.required]"
                     :items="[...statusList]"
-                  ></n-select>
+                  ></v-select>
                 </v-col>
               </v-row>
 

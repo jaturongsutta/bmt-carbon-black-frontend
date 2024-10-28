@@ -20,7 +20,7 @@
         </v-col>
         <v-col>
           <label>Status</label>
-          <n-select v-model="form.isActive" :items="statusList"></n-select>
+          <v-select v-model="form.isActive" :items="statusList"></v-select>
         </v-col>
       </v-row>
 

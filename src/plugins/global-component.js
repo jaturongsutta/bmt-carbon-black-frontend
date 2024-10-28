@@ -19,7 +19,6 @@ import NBtnReset from "@/components/common-components/button/n-btn-reset.vue";
 import NBtnBack from "@/components/common-components/button/n-btn-back.vue";
 import NBtnApprove from "@/components/common-components/button/n-btn-approve.vue";
 import NBtnReject from "@/components/common-components/button/n-btn-reject.vue";
-import NSelect from "@/components/common-components/n-select.vue";
 import NDate from "@/components/common-components/n-date.vue";
 import NTime from "@/components/common-components/n-time.vue";
 import NBtnUpload from "@/components/common-components/button/n-btn-upload.vue";
@@ -47,7 +46,6 @@ export function registerGlobalComponents(app) {
     .component("n-gbtn-delete", NGbtnDelete)
     .component("n-gbtn-download", NGbtnDownload)
     .component("n-gbtn-export", NGbtnExport)
-    .component("n-select", NSelect)
     .component("n-input-number", NInputNumber)
     .component("n-date", NDate)
     .component("n-time", NTime)

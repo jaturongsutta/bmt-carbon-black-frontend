@@ -16,10 +16,10 @@
           </v-col>
           <v-col>
             <label>Status</label>
-            <n-select
+            <v-select
               v-model="form.status"
-              :items="[{ text: 'All', value: null }, ...statusList]"
-            ></n-select>
+              :items="[{ title: 'All', value: null }, ...statusList]"
+            ></v-select>
           </v-col>
         </v-row>
 

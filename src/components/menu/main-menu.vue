@@ -20,11 +20,11 @@
         </v-col>
         <v-col md="3">
           <label>Status</label>
-          <n-select
+          <v-select
             v-model="form.isActive"
             :items="statusList"
             :rules="[rules.isRequire]"
-          ></n-select>
+          ></v-select>
         </v-col>
         <v-col md="6">
           <label>Menu Name (EN)</label>
