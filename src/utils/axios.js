@@ -20,7 +20,7 @@ axios.interceptors.request.use(
       const ignoreRefresh = ["/auth/"];
       if (
         axios.defaults.headers.common["Authorization"] &&
-        ignoreRefresh.indexOf(config.url) === -1
+        !ignoreRefresh.some((prefix) => config.url.startsWith(prefix))
       ) {
         refreshToken()
           .then((resUpdateToken) => {
