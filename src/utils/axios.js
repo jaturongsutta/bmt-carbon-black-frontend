@@ -65,7 +65,8 @@ axios.interceptors.response.use(
         "warning"
       );
 
-      window.location.href = "/login";
+      // window.location.href = "/login";
+      window.location.reload();
     } else {
       console.error("axios error", error);
       notify({
