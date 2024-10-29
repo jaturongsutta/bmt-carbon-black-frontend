@@ -83,19 +83,19 @@
               <v-tabs-window v-model="tab">
                 <v-tabs-window-item :value="1">
                   <v-container fluid>
-                    <detail-tab shift-name="Shift 1" v-model="shiftData1">
+                    <detail-tab shift-name="1" v-model="shiftData1">
                     </detail-tab>
                   </v-container>
                 </v-tabs-window-item>
                 <v-tabs-window-item :value="2">
                   <v-container fluid>
-                    <detail-tab shift-name="Shift 2" v-model="shiftData2">
+                    <detail-tab shift-name="2" v-model="shiftData2">
                     </detail-tab>
                   </v-container>
                 </v-tabs-window-item>
                 <v-tabs-window-item :value="3">
                   <v-container fluid>
-                    <detail-tab shift-name="Shift 3" v-model="shiftData3">
+                    <detail-tab shift-name="3" v-model="shiftData3">
                     </detail-tab>
                   </v-container>
                 </v-tabs-window-item>

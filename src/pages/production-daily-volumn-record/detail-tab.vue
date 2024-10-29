@@ -455,6 +455,7 @@ const savePopupTank = async () => {
       form.storageTanks = [];
     }
     form.storageTanks.push({
+      Shift: props.shiftName,
       Tank: popupTank.value,
       Tank_Start_Time: popupStartTime.value,
       Tank_Stop_Time: popupStopTime.value,
