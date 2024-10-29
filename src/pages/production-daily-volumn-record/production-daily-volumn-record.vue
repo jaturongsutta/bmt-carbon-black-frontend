@@ -204,117 +204,262 @@ const headers = [
   { title: "Product Name", key: "Product_Name" },
 
   //** Shift 1 */
-  { title: "Production", key: "S1_1_Production_Prod_Total" },
-  { title: "EKINEN", key: "S1_1_EKINEN_EKN_Total" },
-  { title: "Total", key: "S1_1_PRODUCTION_EKINEN_Total" },
-  { title: "Production", key: "S1_2_NG_Production" },
-  { title: "Warm up", key: "S1_2_NG_Warm_up" },
-  { title: "Prepeat", key: "S1_2_NG_Preheat" },
-  { title: "Drying", key: "S1_2_NG_Drying" },
+  {
+    title: "Production",
+    key: "S1_1_Production_Prod_Total",
+    value: ({ S1_1_Production_Prod_Total }) =>
+      numberFormat(S1_1_Production_Prod_Total),
+  },
+  {
+    title: "EKINEN",
+    key: "S1_1_EKINEN_EKN_Total",
+    value: ({ S1_1_EKINEN_EKN_Total }) => numberFormat(S1_1_EKINEN_EKN_Total),
+  },
+  {
+    title: "Total",
+    key: "S1_1_PRODUCTION_EKINEN_Total",
+    value: ({ S1_1_PRODUCTION_EKINEN_Total }) =>
+      numberFormat(S1_1_PRODUCTION_EKINEN_Total),
+  },
+  {
+    title: "Production",
+    key: "S1_2_NG_Production",
+    value: ({ S1_2_NG_Production }) => numberFormat(S1_2_NG_Production),
+  },
+  {
+    title: "Warm up",
+    key: "S1_2_NG_Warm_up",
+    value: ({ S1_2_NG_Warm_up }) => numberFormat(S1_2_NG_Warm_up),
+  },
+  {
+    title: "Prepeat",
+    key: "S1_2_NG_Preheat",
+    value: ({ S1_2_NG_Preheat }) => numberFormat(S1_2_NG_Preheat),
+  },
+  {
+    title: "Drying",
+    key: "S1_2_NG_Drying",
+    value: ({ S1_2_NG_Drying }) => numberFormat(S1_2_NG_Drying),
+  },
   {
     title: "Liquid",
     key: "liquid1",
     value: (item) => {
-      return (
-        conertToInt(item.S1_2_FCC_Preheat) +
-        conertToInt(item.S1_2_EBO_Preheat) +
-        conertToInt(item.S1_2_CBO_Preheat)
+      return numberFormat(
+        convertToInt(item.S1_2_FCC_Preheat) +
+          convertToInt(item.S1_2_EBO_Preheat) +
+          convertToInt(item.S1_2_CBO_Preheat)
       );
     },
   },
-  { title: "Oil spray check", key: "S1_2_NG_Oil_Spray_checking" },
-  { title: "Total Mixing Volumn", key: "S1_3_Total_Mixing_Volume_Other" },
-  { title: "Dischargen Volumn", key: "S1_3_Discharged_Volume_Other" },
-  { title: "KOH Mixing", key: "S1_3_KOH_Mixing_Other" },
-  { title: "NaOH Consumption", key: "S1_3_NaOH_Consumption_Other" },
-  { title: "Recycle Hopper Level", key: "S1_3_Recycle_Hopper_Level_Other" },
+  {
+    title: "Oil spray check",
+    key: "S1_2_NG_Oil_Spray_checking",
+    value: ({ S1_2_NG_Oil_Spray_checking }) =>
+      numberFormat(S1_2_NG_Oil_Spray_checking),
+  },
+  {
+    title: "Total Mixing Volumn",
+    key: "S1_3_Total_Mixing_Volume_Other",
+    value: ({ S1_3_Total_Mixing_Volume_Other }) =>
+      numberFormat(S1_3_Total_Mixing_Volume_Other),
+  },
+  {
+    title: "Dischargen Volumn",
+    key: "S1_3_Discharged_Volume_Other",
+    value: ({ S1_3_Discharged_Volume_Other }) =>
+      numberFormat(S1_3_Discharged_Volume_Other),
+  },
+  {
+    title: "KOH Mixing",
+    key: "S1_3_KOH_Mixing_Other",
+    value: ({ S1_3_KOH_Mixing_Other }) => numberFormat(S1_3_KOH_Mixing_Other),
+  },
+  {
+    title: "NaOH Consumption",
+    key: "S1_3_NaOH_Consumption_Other",
+    value: ({ S1_3_NaOH_Consumption_Other }) =>
+      numberFormat(S1_3_NaOH_Consumption_Other),
+  },
+  {
+    title: "Recycle Hopper Level",
+    key: "S1_3_Recycle_Hopper_Level_Other",
+    value: ({ S1_3_Recycle_Hopper_Level_Other }) =>
+      numberFormat(S1_3_Recycle_Hopper_Level_Other),
+  },
   { title: "Tank", key: "S1_4_Tank" },
 
   //** Shift 2 */
-  { title: "Production", key: "S2_1_Production_Prod_Total" },
-  { title: "EKINEN", key: "S2_1_EKINEN_EKN_Total" },
-  { title: "Total", key: "S2_1_PRODUCTION_EKINEN_Total" },
-  { title: "Production", key: "S2_2_NG_Production" },
-  { title: "Warm up", key: "S2_2_NG_Warm_up" },
-  { title: "Prepeat", key: "S2_2_NG_Preheat" },
-  { title: "Drying", key: "S2_2_NG_Drying" },
+  {
+    title: "Production",
+    key: "S2_1_Production_Prod_Total",
+    value: ({ S2_1_Production_Prod_Total }) =>
+      numberFormat(S2_1_Production_Prod_Total),
+  },
+  {
+    title: "EKINEN",
+    key: "S2_1_EKINEN_EKN_Total",
+    value: ({ S2_1_EKINEN_EKN_Total }) => numberFormat(S2_1_EKINEN_EKN_Total),
+  },
+  {
+    title: "Total",
+    key: "S2_1_PRODUCTION_EKINEN_Total",
+    value: ({ S2_1_PRODUCTION_EKINEN_Total }) =>
+      numberFormat(S2_1_PRODUCTION_EKINEN_Total),
+  },
+  {
+    title: "Production",
+    key: "S2_2_NG_Production",
+    value: ({ S2_2_NG_Production }) => numberFormat(S2_2_NG_Production),
+  },
+  {
+    title: "Warm up",
+    key: "S2_2_NG_Warm_up",
+    value: ({ S2_2_NG_Warm_up }) => numberFormat(S2_2_NG_Warm_up),
+  },
+  {
+    title: "Prepeat",
+    key: "S2_2_NG_Preheat",
+    value: ({ S2_2_NG_Preheat }) => numberFormat(S2_2_NG_Preheat),
+  },
+  {
+    title: "Drying",
+    key: "S2_2_NG_Drying",
+    value: ({ S2_2_NG_Drying }) => numberFormat(S2_2_NG_Drying),
+  },
   {
     title: "Liquid",
     key: "liquid2",
     value: (item) => {
-      return (
-        conertToInt(item.S2_2_FCC_Preheat) +
-        conertToInt(item.S2_2_EBO_Preheat) +
-        conertToInt(item.S2_2_CBO_Preheat)
+      return numberFormat(
+        convertToInt(item.S2_2_FCC_Preheat) +
+          convertToInt(item.S2_2_EBO_Preheat) +
+          convertToInt(item.S2_2_CBO_Preheat)
       );
     },
   },
-  { title: "Oil spray check", key: "S2_2_NG_Oil_Spray_checking" },
-  { title: "Total Mixing Volumn", key: "S2_3_Total_Mixing_Volume_Other" },
-  { title: "Dischargen Volumn", key: "S2_3_Discharged_Volume_Other" },
-  { title: "KOH Mixing", key: "S2_3_KOH_Mixing_Other" },
-  { title: "NaOH Consumption", key: "S2_3_NaOH_Consumption_Other" },
-  { title: "Recycle Hopper Level", key: "S2_3_Recycle_Hopper_Level_Other" },
+  {
+    title: "Oil spray check",
+    key: "S2_2_NG_Oil_Spray_checking",
+    value: ({ S2_2_NG_Oil_Spray_checking }) =>
+      numberFormat(S2_2_NG_Oil_Spray_checking),
+  },
+  {
+    title: "Total Mixing Volumn",
+    key: "S2_3_Total_Mixing_Volume_Other",
+    value: ({ S2_3_Total_Mixing_Volume_Other }) =>
+      numberFormat(S2_3_Total_Mixing_Volume_Other),
+  },
+  {
+    title: "Dischargen Volumn",
+    key: "S2_3_Discharged_Volume_Other",
+    value: ({ S2_3_Discharged_Volume_Other }) =>
+      numberFormat(S2_3_Discharged_Volume_Other),
+  },
+  {
+    title: "KOH Mixing",
+    key: "S2_3_KOH_Mixing_Other",
+    value: ({ S2_3_KOH_Mixing_Other }) => numberFormat(S2_3_KOH_Mixing_Other),
+  },
+  {
+    title: "NaOH Consumption",
+    key: "S2_3_NaOH_Consumption_Other",
+    value: ({ S2_3_NaOH_Consumption_Other }) =>
+      numberFormat(S2_3_NaOH_Consumption_Other),
+  },
+  {
+    title: "Recycle Hopper Level",
+    key: "S2_3_Recycle_Hopper_Level_Other",
+    value: ({ S2_3_Recycle_Hopper_Level_Other }) =>
+      numberFormat(S2_3_Recycle_Hopper_Level_Other),
+  },
   { title: "Tank", key: "S2_4_Tank" },
 
   //** Shift 3 */
-  { title: "Production", key: "S3_1_Production_Prod_Total" },
-  { title: "EKINEN", key: "S3_1_EKINEN_EKN_Total" },
-  { title: "Total", key: "S3_1_PRODUCTION_EKINEN_Total" },
-  { title: "Production", key: "S3_2_NG_Production" },
-  { title: "Warm up", key: "S3_2_NG_Warm_up" },
-  { title: "Prepeat", key: "S3_2_NG_Preheat" },
-  { title: "Drying", key: "S3_2_NG_Drying" },
+  {
+    title: "Production",
+    key: "S3_1_Production_Prod_Total",
+    value: ({ S3_1_Production_Prod_Total }) =>
+      numberFormat(S3_1_Production_Prod_Total),
+  },
+  {
+    title: "EKINEN",
+    key: "S3_1_EKINEN_EKN_Total",
+    value: ({ S3_1_EKINEN_EKN_Total }) => numberFormat(S3_1_EKINEN_EKN_Total),
+  },
+  {
+    title: "Total",
+    key: "S3_1_PRODUCTION_EKINEN_Total",
+    value: ({ S3_1_PRODUCTION_EKINEN_Total }) =>
+      numberFormat(S3_1_PRODUCTION_EKINEN_Total),
+  },
+  {
+    title: "Production",
+    key: "S3_2_NG_Production",
+    value: ({ S3_2_NG_Production }) => numberFormat(S3_2_NG_Production),
+  },
+  {
+    title: "Warm up",
+    key: "S3_2_NG_Warm_up",
+    value: ({ S3_2_NG_Warm_up }) => numberFormat(S3_2_NG_Warm_up),
+  },
+  {
+    title: "Prepeat",
+    key: "S3_2_NG_Preheat",
+    value: ({ S3_2_NG_Preheat }) => numberFormat(S3_2_NG_Preheat),
+  },
+  {
+    title: "Drying",
+    key: "S3_2_NG_Drying",
+    value: ({ S3_2_NG_Drying }) => numberFormat(S3_2_NG_Drying),
+  },
   {
     title: "Liquid",
     key: "liquid3",
     value: (item) => {
-      return (
-        conertToInt(item.S3_2_FCC_Preheat) +
-        conertToInt(item.S3_2_EBO_Preheat) +
-        conertToInt(item.S3_2_CBO_Preheat)
+      return numberFormat(
+        convertToInt(item.S3_2_FCC_Preheat) +
+          convertToInt(item.S3_2_EBO_Preheat) +
+          convertToInt(item.S3_2_CBO_Preheat)
       );
     },
   },
-  { title: "Oil spray check", key: "S3_2_NG_Oil_Spray_checking" },
-  { title: "Total Mixing Volumn", key: "S3_3_Total_Mixing_Volume_Other" },
-  { title: "Dischargen Volumn", key: "S3_3_Discharged_Volume_Other" },
-  { title: "KOH Mixing", key: "S3_3_KOH_Mixing_Other" },
-  { title: "NaOH Consumption", key: "S3_3_NaOH_Consumption_Other" },
-  { title: "Recycle Hopper Level", key: "S3_3_Recycle_Hopper_Level_Other" },
+  {
+    title: "Oil spray check",
+    key: "S3_2_NG_Oil_Spray_checking",
+    value: ({ S3_2_NG_Oil_Spray_checking }) =>
+      numberFormat(S3_2_NG_Oil_Spray_checking),
+  },
+  {
+    title: "Total Mixing Volumn",
+    key: "S3_3_Total_Mixing_Volume_Other",
+    value: ({ S3_3_Total_Mixing_Volume_Other }) =>
+      numberFormat(S3_3_Total_Mixing_Volume_Other),
+  },
+  {
+    title: "Dischargen Volumn",
+    key: "S3_3_Discharged_Volume_Other",
+    value: ({ S3_3_Discharged_Volume_Other }) =>
+      numberFormat(S3_3_Discharged_Volume_Other),
+  },
+  {
+    title: "KOH Mixing",
+    key: "S3_3_KOH_Mixing_Other",
+    value: ({ S3_3_KOH_Mixing_Other }) => numberFormat(S3_3_KOH_Mixing_Other),
+  },
+  {
+    title: "NaOH Consumption",
+    key: "S3_3_NaOH_Consumption_Other",
+    value: ({ S3_3_NaOH_Consumption_Other }) =>
+      numberFormat(S3_3_NaOH_Consumption_Other),
+  },
+  {
+    title: "Recycle Hopper Level",
+    key: "S3_3_Recycle_Hopper_Level_Other",
+    value: ({ S3_3_Recycle_Hopper_Level_Other }) =>
+      numberFormat(S3_3_Recycle_Hopper_Level_Other),
+  },
   { title: "Tank", key: "S3_4_Tank" },
-
-  // { title: "Production", key: "production2_1" },
-  // { title: "EKINEN", key: "ekinen2" },
-  // { title: "Total", key: "total2" },
-  // { title: "Production", key: "production2_2" },
-  // { title: "Warm up", key: "warmup2" },
-  // { title: "Prepeat", key: "prepeat2" },
-  // { title: "Drying", key: "drying2" },
-  // { title: "Liquid", key: "liquid2" },
-  // { title: "Oil spray check", key: "oilSprayCheck2" },
-  // { title: "Total Mixing Volumn", key: "totalMixingVolumn2" },
-  // { title: "Dischargen Volumn", key: "dischargenVolumn2" },
-  // { title: "KOH Mixing", key: "kohMixing2" },
-  // { title: "NaOH Consumption", key: "naohConsumption2" },
-  // { title: "Recycle Hopper Level", key: "recycleHopperLevel2" },
-  // { title: "Tank", key: "tank2" },
-
-  // { title: "Production", key: "production3_1" },
-  // { title: "EKINEN", key: "ekinen3" },
-  // { title: "Total", key: "total3" },
-  // { title: "Production", key: "production3_2" },
-  // { title: "Warm up", key: "warmup3" },
-  // { title: "Prepeat", key: "prepeat3" },
-  // { title: "Drying", key: "drying3" },
-  // { title: "Liquid", key: "liquid3" },
-  // { title: "Oil spray check", key: "oilSprayCheck3" },
-  // { title: "Total Mixing Volumn", key: "totalMixingVolumn3" },
-  // { title: "Dischargen Volumn", key: "dischargenVolumn3" },
-  // { title: "KOH Mixing", key: "kohMixing3" },
-  // { title: "NaOH Consumption", key: "naohConsumption3" },
-  // { title: "Recycle Hopper Level", key: "recycleHopperLevel3" },
-  // { title: "Tank", key: "tank3" },
 ];
 let items = ref([]);
 
@@ -392,7 +537,11 @@ const onEdit = (id) => {
   });
 };
 
-const conertToInt = (value) => {
+const convertToInt = (value) => {
   return value ? parseInt(value) : 0;
+};
+
+const numberFormat = (value) => {
+  return value ? numeral(value).format("0,0") : "0";
 };
 </script>
