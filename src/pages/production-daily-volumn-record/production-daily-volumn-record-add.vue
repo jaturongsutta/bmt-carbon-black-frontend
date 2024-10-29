@@ -214,9 +214,10 @@ const loadData = (id) => {
 };
 
 const onSave = async () => {
-  const { valid } = await frmMainInput.value.validate();
+  const { validMain } = await frmMainInput.value.validate();
+  const { validFile } = await fileInputTxt.value.validate();
 
-  if (valid) {
+  if (validMain && validFile) {
     try {
       isLoading.value = true;
       let res = null;
@@ -326,36 +327,6 @@ const handleFileChange = (event) => {
 };
 
 // validate
-// const validateDate = (value) => {
-//   if (dateExcel === null) {
-//     return true;
-//   }
-
-//   return form.value.date != dateExcel ? "Date not match in file" : true;
-// };
-
-// const validateLine = (value) => {
-//   if (lineExcel === null) {
-//     return true;
-//   }
-//   return value != lineExcel ? "Line not match in file" : true;
-// };
-
-// const validateGrade = (value) => {
-//   if (gradeExcel === null) {
-//     return true;
-//   }
-//   const grade = gradeList.value.find((x) => x.value === value);
-//   return value != grade.value ? "Grade not match in file" : true;
-// };
-
-// const validateProductName = (value) => {
-//   if (productExcel === null) {
-//     return true;
-//   }
-//   return value != productExcel ? "Product Name not match in file" : true;
-// };
-
 const validateFileUpload = (value) => {
   console.log("validateFileUpload ", value);
   if (value) {
