@@ -94,7 +94,7 @@
               <th rowspan="2">KOH Mixing</th>
               <th rowspan="2">NaOH Consumption</th>
               <th rowspan="2">Recyde Hopper Level</th>
-              <th rowspan="2">Tank</th>
+              <th rowspan="2" style="min-width: 150px">Tank</th>
 
               <th colspan="3">Feedstock Oil</th>
               <th colspan="6">Fuel</th>
@@ -102,7 +102,7 @@
               <th rowspan="2">KOH Mixing</th>
               <th rowspan="2">NaOH Consumption</th>
               <th rowspan="2">Recyde Hopper Level</th>
-              <th rowspan="2">Tank</th>
+              <th rowspan="2" style="min-width: 150px">Tank</th>
 
               <th colspan="3">Feedstock Oil</th>
               <th colspan="6">Fuel</th>
@@ -110,7 +110,7 @@
               <th rowspan="2">KOH Mixing</th>
               <th rowspan="2">NaOH Consumption</th>
               <th rowspan="2">Recyde Hopper Level</th>
-              <th rowspan="2">Tank</th>
+              <th rowspan="2" style="min-width: 150px">Tank</th>
             </tr>
             <tr>
               <th>Production</th>
