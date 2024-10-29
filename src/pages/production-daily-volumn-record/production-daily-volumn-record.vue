@@ -13,7 +13,7 @@
           <v-col>
             <label>Line</label>
             <v-select
-              v-model="form.field2"
+              v-model="form.line"
               :items="[{ title: 'All', value: null }, ...lineList]"
             ></v-select>
           </v-col>
@@ -27,7 +27,7 @@
           <v-col>
             <label>Product Name</label>
             <v-select
-              v-model="form.field3"
+              v-model="form.productName"
               :items="[{ title: 'All', value: null }, ...productList]"
             ></v-select>
           </v-col>
@@ -370,7 +370,12 @@ const onSearch = async () => {
 };
 
 const onReset = () => {
-  form.value = {};
+  form.value = {
+    date: dateUtils.getToday(),
+    line: null,
+    grade: null,
+    productName: null,
+  };
   setTimeout(() => {
     isLoading.value = false;
   }, 1000);
