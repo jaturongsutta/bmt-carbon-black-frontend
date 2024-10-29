@@ -35,14 +35,14 @@
               <td>{{ T1_EKINEN_EBO }}</td>
               <td>{{ T1_EKINEN_CBO }}</td>
               <td>{{ T1_EKINEN_FCC }}</td>
-              <td>{{ T1_PRODUCTION_EKINEN_Total }}</td>
+              <td>{{ T1_EKINEN_Total }}</td>
             </tr>
             <tr>
               <td>Production + EKINEN</td>
               <td>{{ T1_PRODUCTION_EKINEN_EBO }}</td>
               <td>{{ T1_PRODUCTION_EKINEN_CBO }}</td>
               <td>{{ T1_PRODUCTION_EKINEN_FCC }}</td>
-              <td>{{ T1_PRODUCTION_EKINEN_EBO }}</td>
+              <td>{{ T1_PRODUCTION_EKINEN_Total }}</td>
             </tr>
           </tbody>
         </v-table>
@@ -322,11 +322,11 @@ const T1_EKINEN_FCC = computed(() => {
   ).format("0,0");
 });
 
-const T1_PRODUCTION_EKINEN_Total = computed(() => {
+const T1_EKINEN_Total = computed(() => {
   return numeral(
-    convertToInteger(formShift1.T1_PRODUCTION_EKINEN_Total) +
-      convertToInteger(formShift2.T1_PRODUCTION_EKINEN_Total) +
-      convertToInteger(formShift3.T1_PRODUCTION_EKINEN_Total)
+    convertToInteger(formShift1.T1_EKINEN_EKN_Total) +
+      convertToInteger(formShift2.T1_EKINEN_EKN_Total) +
+      convertToInteger(formShift3.T1_EKINEN_EKN_Total)
   ).format("0,0");
 });
 
@@ -351,6 +351,14 @@ const T1_PRODUCTION_EKINEN_FCC = computed(() => {
     convertToInteger(formShift1.T1_PRODUCTION_EKINEN_FCC) +
       convertToInteger(formShift2.T1_PRODUCTION_EKINEN_FCC) +
       convertToInteger(formShift3.T1_PRODUCTION_EKINEN_FCC)
+  ).format("0,0");
+});
+
+const T1_PRODUCTION_EKINEN_Total = computed(() => {
+  return numeral(
+    convertToInteger(formShift1.T1_PRODUCTION_EKINEN_Total) +
+      convertToInteger(formShift2.T1_PRODUCTION_EKINEN_Total) +
+      convertToInteger(formShift3.T1_PRODUCTION_EKINEN_Total)
   ).format("0,0");
 });
 
