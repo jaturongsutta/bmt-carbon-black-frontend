@@ -343,9 +343,9 @@ const validateFileUpload = (value) => {
       return "Line not match in file";
     }
 
-    const grade = gradeList.value.find((x) => x.value === form.value.grade);
+    const grade = gradeList.value.find((x) => x.title === gradeExcel);
 
-    if (form.value.grade != grade.value) {
+    if (!grade) {
       return "Grade not match in file";
     }
 
