@@ -6,7 +6,7 @@
       </v-card-title>
 
       <v-card-text>
-        <v-form @submit.prevent="onSave" ref="frmInfo">
+        <v-form ref="frmInfo">
           <v-form ref="frmMainInput">
             <v-row>
               <v-col md="3">
@@ -116,7 +116,7 @@
           <v-row>
             <v-col>
               <div class="d-flex justify-center mb-3">
-                <n-btn-save type="submit"> </n-btn-save>
+                <n-btn-save @click="onSave"> </n-btn-save>
                 <n-btn-cancel @click="router.go(-1)" class="ml-3" />
               </div>
             </v-col>
@@ -214,10 +214,10 @@ const loadData = (id) => {
 };
 
 const onSave = async () => {
-  const { validMain } = await frmMainInput.value.validate();
-  const { validFile } = await fileInputTxt.value.validate();
+  const { valid: validMain } = await frmMainInput.value.validate();
+  const validFile = await fileInputTxt.value.validate();
 
-  if (validMain && validFile) {
+  if (validMain && validFile.length === 0) {
     try {
       isLoading.value = true;
       let res = null;
@@ -265,7 +265,7 @@ const uplaodFileClick = async () => {
 };
 
 const handleFileChange = (event) => {
-  console.log("handleFileChange");
+  console.log("handleFileChange", event);
   if (event.target.files.length > 0) {
     const file = event.target.files[0];
     const filename = file.name;
@@ -328,7 +328,12 @@ const handleFileChange = (event) => {
 
 // validate
 const validateFileUpload = (value) => {
-  console.log("validateFileUpload ", value);
+  if (mode.value === "Add") {
+    if (!value) {
+      return "Please choose file to upload";
+    }
+  }
+
   if (value) {
     if (form.value.date != dateExcel) {
       return "Date not match in file";
