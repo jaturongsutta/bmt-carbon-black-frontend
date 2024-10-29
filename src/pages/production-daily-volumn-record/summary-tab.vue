@@ -522,10 +522,18 @@ const T3_Recycle_Hopper_Level_Other = computed(() => {
   ).format("0,0");
 });
 
+// const storageTanks = computed(() => {
+//   return formShift1.storageTanks.concat(
+//     formShift2.storageTanks,
+//     formShift3.storageTanks
+//   );
+// });
+
 const storageTanks = computed(() => {
-  return formShift1.storageTanks.concat(
-    formShift2.storageTanks,
-    formShift3.storageTanks
-  );
+  const tanks1 = formShift1.storageTanks || [];
+  const tanks2 = formShift2.storageTanks || [];
+  const tanks3 = formShift3.storageTanks || [];
+
+  return tanks1.concat(tanks2, tanks3);
 });
 </script>
