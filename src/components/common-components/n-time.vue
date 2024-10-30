@@ -1,15 +1,13 @@
 <template>
-  <div>
-    <v-text-field
-      type="text"
-      v-model="timeInput"
-      @input="applyMask"
-      placeholder="HH:mm"
-      maxlength="5"
-      @change="onInputUpdated"
-      append-inner-icon="mdi-clock-time-eight-outline"
-    ></v-text-field>
-  </div>
+  <v-text-field
+    type="text"
+    v-model="timeInput"
+    @input="applyMask"
+    placeholder="HH:mm"
+    maxlength="5"
+    @change="onInputUpdated"
+    append-inner-icon="mdi-clock-time-eight-outline"
+  ></v-text-field>
 </template>
 
 <script setup>
