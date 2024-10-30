@@ -6,6 +6,7 @@
     placeholder="HH:mm"
     maxlength="5"
     @change="onInputUpdated"
+    @keypress="onKeypress"
     append-inner-icon="mdi-clock-time-eight-outline"
   ></v-text-field>
 </template>
@@ -43,6 +44,15 @@ watch(
 //   emit("input", newValue);
 // });
 
+const onKeypress = (e) => {
+  const key = e.key;
+  const isValidKey = /[0-9:]/.test(key);
+
+  if (!isValidKey) {
+    e.preventDefault();
+  }
+};
+
 const applyMask = () => {
   // let value = timeInput.value.replace(/\D/g, ""); // Remove non-numeric characters
   let value = timeInput.value;
@@ -60,30 +70,6 @@ const applyMask = () => {
       value = hours + ":" + minutes;
     }
   }
-
-  // // Only allow the value to have up to 5 characters ("HH:mm")
-  // value = value.slice(0, 5);
-
-  // // Parse hours and minutes
-  // let [hours, minutes] = value.split(":");
-  // console.log(hours, minutes);
-
-  // // Ensure hours are between 00 and 24
-  // if (hours) {
-  //   if (parseInt(hours) > 24) {
-  //     hours = "24"; // Cap at 24
-  //   } else if (hours.length === 2 && parseInt(hours) < 10) {
-  //     hours = ("0" + hours).slice(-2); // Add leading zero for single digits
-  //   }
-  // }
-
-  // // Ensure minutes are between 00 and 59
-  // if (minutes && parseInt(minutes) > 59) {
-  //   minutes = "59"; // Cap at 59
-  // }
-
-  // // Update the input value
-  // timeInput.value = [hours, minutes].filter(Boolean).join(":");
 };
 
 const onInputUpdated = () => {
