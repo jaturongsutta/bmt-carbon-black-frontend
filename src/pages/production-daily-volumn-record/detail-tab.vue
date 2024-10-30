@@ -7,11 +7,11 @@
       </v-col>
       <v-col md="3">
         <label>Shift Start</label>
-        <v-text-field v-model="form.Shift_Start" type="time"></v-text-field>
+        <n-time v-model="form.Shift_Start"></n-time>
       </v-col>
       <v-col md="3">
         <label>Shift End</label>
-        <v-text-field v-model="form.Shift_End" type="time"></v-text-field>
+        <n-time v-model="form.Shift_End"></n-time>
       </v-col>
     </v-row>
     <v-row>
@@ -308,18 +308,10 @@
                 ></v-select>
               </td>
               <td>
-                <v-text-field
-                  hide-details
-                  type="time"
-                  v-model="item.Tank_Start_Time"
-                ></v-text-field>
+                <n-time hide-details v-model="item.Tank_Start_Time"></n-time>
               </td>
               <td>
-                <v-text-field
-                  hide-details
-                  type="time"
-                  v-model="item.Tank_Stop_Time"
-                ></v-text-field>
+                <n-time hide-details v-model="item.Tank_Stop_Time"></n-time>
               </td>
               <td>
                 <v-text-field hide-details v-model="item.Reason"></v-text-field>
@@ -354,20 +346,18 @@
 
               <v-col md="3">
                 <label class="require-field">Start Time</label>
-                <v-text-field
+                <n-time
                   v-model="popupStartTime"
                   :rules="[rules.required]"
-                  type="time"
-                ></v-text-field>
+                ></n-time>
               </v-col>
 
               <v-col md="3">
                 <label class="require-field">Stop Time</label>
-                <v-text-field
+                <n-time
                   v-model="popupStopTime"
                   :rules="[rules.required]"
-                  type="time"
-                ></v-text-field>
+                ></n-time>
               </v-col>
 
               <v-col md="3">
