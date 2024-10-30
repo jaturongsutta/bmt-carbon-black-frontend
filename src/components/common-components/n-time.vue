@@ -36,8 +36,6 @@ watch(
 watch(
   timeInput,
   (newValue) => {
-    console.log("newValue ", newValue);
-
     emit("update:modelValue", newValue);
   },
   { deep: true }
@@ -80,7 +78,6 @@ const applyMask = () => {
 };
 
 const onInputUpdated = () => {
-  console.log("onInputUpdated ");
   let value = timeInput.value.replace(/\D/g, ""); // Remove non-numeric characters
 
   // Auto-insert colon after 2 digits (HH:mm format)
@@ -88,7 +85,6 @@ const onInputUpdated = () => {
     value = value.slice(0, 2) + ":" + value.slice(2, 4);
   }
   let [hours, minutes] = value.split(":");
-  console.log("minutes ", minutes);
   if (hours >= 24) {
     minutes = "00";
     timeInput.value = [hours, minutes].filter(Boolean).join(":");
