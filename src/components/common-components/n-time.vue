@@ -44,51 +44,70 @@ watch(
 // });
 
 const applyMask = () => {
-  let value = timeInput.value.replace(/\D/g, ""); // Remove non-numeric characters
-
+  // let value = timeInput.value.replace(/\D/g, ""); // Remove non-numeric characters
+  let value = timeInput.value;
   // Auto-insert colon after 2 digits (HH:mm format)
   if (value.length >= 3) {
-    value = value.slice(0, 2) + ":" + value.slice(2, 4);
-  }
-
-  // Only allow the value to have up to 5 characters ("HH:mm")
-  value = value.slice(0, 5);
-
-  // Parse hours and minutes
-  let [hours, minutes] = value.split(":");
-
-  // Ensure hours are between 00 and 24
-  if (hours) {
-    if (parseInt(hours) > 24) {
-      hours = "24"; // Cap at 24
-    } else if (hours.length === 2 && parseInt(hours) < 10) {
-      hours = ("0" + hours).slice(-2); // Add leading zero for single digits
+    if (value.indexOf(":") === -1) {
+      value = value.slice(0, 2) + ":" + value.slice(2, 4);
+      // Update the input value
+      let [hours, minutes] = value.split(":");
+      timeInput.value = [hours, minutes].filter(Boolean).join(":");
+    } else {
+      let [hours, minutes] = value.split(":");
+      hours = hours.padStart(2, "0");
+      minutes = minutes.padStart(2, "0");
+      value = hours + ":" + minutes;
     }
   }
 
-  // Ensure minutes are between 00 and 59
-  if (minutes && parseInt(minutes) > 59) {
-    minutes = "59"; // Cap at 59
-  }
+  // // Only allow the value to have up to 5 characters ("HH:mm")
+  // value = value.slice(0, 5);
 
-  // Update the input value
-  timeInput.value = [hours, minutes].filter(Boolean).join(":");
+  // // Parse hours and minutes
+  // let [hours, minutes] = value.split(":");
+  // console.log(hours, minutes);
+
+  // // Ensure hours are between 00 and 24
+  // if (hours) {
+  //   if (parseInt(hours) > 24) {
+  //     hours = "24"; // Cap at 24
+  //   } else if (hours.length === 2 && parseInt(hours) < 10) {
+  //     hours = ("0" + hours).slice(-2); // Add leading zero for single digits
+  //   }
+  // }
+
+  // // Ensure minutes are between 00 and 59
+  // if (minutes && parseInt(minutes) > 59) {
+  //   minutes = "59"; // Cap at 59
+  // }
+
+  // // Update the input value
+  // timeInput.value = [hours, minutes].filter(Boolean).join(":");
 };
 
 const onInputUpdated = () => {
-  let value = timeInput.value.replace(/\D/g, ""); // Remove non-numeric characters
+  let value = timeInput.value;
 
-  // Auto-insert colon after 2 digits (HH:mm format)
-  if (value.length >= 3) {
-    value = value.slice(0, 2) + ":" + value.slice(2, 4);
+  if (value.indexOf(":") !== -1) {
+    let [hours, minutes] = value.split(":");
+    hours = hours.padStart(2, "0");
+    minutes = minutes.padStart(2, "0");
+    value = hours + ":" + minutes;
   }
+
+  if (value.indexOf(":") === -1 && value.length > 0) {
+    value = value.padStart(2, "0") + ":00";
+  }
+
   let [hours, minutes] = value.split(":");
   if (hours >= 24) {
+    hours = "24";
     minutes = "00";
-    timeInput.value = [hours, minutes].filter(Boolean).join(":");
   } else if (minutes && minutes.length === 1) {
     minutes = "0" + minutes;
-    timeInput.value = [hours, minutes].filter(Boolean).join(":");
   }
+
+  timeInput.value = [hours, minutes].filter(Boolean).join(":");
 };
 </script>
