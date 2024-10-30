@@ -199,7 +199,6 @@ const loadData = (id) => {
       if (res.status === 2) {
         Alert.error(res.message);
       } else {
-        console.log(res);
         form.value = res;
         shiftData1.value = res.shifts[0];
         shiftData2.value = res.shifts[1];
@@ -265,7 +264,6 @@ const uplaodFileClick = async () => {
 };
 
 const handleFileChange = (event) => {
-  console.log("handleFileChange", event);
   if (event.target.files.length > 0) {
     const file = event.target.files[0];
     const filename = file.name;
@@ -335,8 +333,10 @@ const validateFileUpload = (value) => {
   }
 
   if (value) {
-    if (form.value.date != dateExcel) {
-      return "Date not match in file";
+    if (form.value.date && form.value.date.length >= 10) {
+      if (form.value.date.substring(0, 10) != dateExcel) {
+        return "Date not match in file";
+      }
     }
 
     if (form.value.line != lineExcel) {
