@@ -257,14 +257,18 @@ const convertToInteger = (value) => {
   return parseInt(value) || 0;
 };
 
+const convertToNumber = (value) => {
+  return parseFloat(value) || 0;
+};
+
 // calculate summary
 
 const Total_Operating_Time = computed(() => {
   return numeral(
-    convertToInteger(formShift1.Shift_Oper_Time) +
-      convertToInteger(formShift2.Shift_Oper_Time) +
-      convertToInteger(formShift3.Shift_Oper_Time)
-  ).format("0,0");
+    convertToNumber(formShift1.Shift_Oper_Time) +
+      convertToNumber(formShift2.Shift_Oper_Time) +
+      convertToNumber(formShift3.Shift_Oper_Time)
+  ).format("0,0.00");
 });
 const T1_Production_EBO = computed(() => {
   return numeral(
