@@ -343,13 +343,17 @@ const validateFileUpload = (value) => {
       return "Line not match in file";
     }
 
-    const grade = gradeList.value.find((x) => x.title === gradeExcel);
+    const grade = gradeList.value.find(
+      (x) => x.title.toUpperCase() === gradeExcel.toUpperCase()
+    );
 
     if (!grade) {
       return "Grade not match in file";
     }
 
-    const product = productList.value.find((x) => x.title === productExcel);
+    const product = productList.value.find(
+      (x) => x.title.toUpperCase() === productExcel.toUpperCase()
+    );
 
     if (!product) {
       return "Product Name not match in file";
