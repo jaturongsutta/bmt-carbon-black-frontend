@@ -11,6 +11,12 @@ const rules = {
     }
     return true;
   },
+  nonNegative: function (val) {
+    if (Number(val) < 0) {
+      return "This field must be a non-negative number";
+    }
+    return true;
+  },
 };
 
 export default rules;

@@ -104,7 +104,11 @@
                     <label class="require-field">Total Q'ty (Kg.)</label>
                     <v-text-field
                       v-model="form.totalQty"
-                      :rules="[rules.required, rules.integer]"
+                      :rules="[
+                        rules.required,
+                        rules.integer,
+                        rules.nonNegative,
+                      ]"
                       type="number"
                       @input="totalQtyChange"
                     ></v-text-field>
@@ -140,7 +144,7 @@
                     <label>Additional Adjustment</label>
                     <v-text-field
                       v-model="form.additionalAdj"
-                      :rules="[rules.integer]"
+                      :rules="[rules.integer, rules.nonNegative]"
                       type="number"
                     ></v-text-field>
                   </v-col> </v-row
