@@ -41,52 +41,47 @@
                 ></n-input-number>
               </td>
               <td>
-                <v-text-field
+                <n-input-number
                   hide-details
-                  type="number"
                   v-model="form.T1_Production_CBO"
-                ></v-text-field>
+                ></n-input-number>
               </td>
               <td>
-                <v-text-field
+                <n-input-number
                   hide-details
-                  type="number"
                   v-model="form.T1_Production_FCC"
-                ></v-text-field>
+                ></n-input-number>
               </td>
-              <td>{{ form.T1_Production_Prod_Total }}</td>
+              <td>{{ formatNumber(form.T1_Production_Prod_Total) }}</td>
             </tr>
             <tr>
               <td>EKINEN</td>
               <td>
-                <v-text-field
+                <n-input-number
                   hide-details
-                  type="number"
                   v-model="form.T1_EKINEN_EBO"
-                ></v-text-field>
+                ></n-input-number>
               </td>
               <td>
-                <v-text-field
+                <n-input-number
                   hide-details
-                  type="number"
                   v-model="form.T1_EKINEN_CBO"
-                ></v-text-field>
+                ></n-input-number>
               </td>
               <td>
-                <v-text-field
+                <n-input-number
                   hide-details
-                  type="number"
                   v-model="form.T1_EKINEN_FCC"
-                ></v-text-field>
+                ></n-input-number>
               </td>
-              <td>{{ form.T1_EKINEN_EKN_Total }}</td>
+              <td>{{ formatNumber(form.T1_EKINEN_EKN_Total) }}</td>
             </tr>
             <tr>
               <td>Production + EKINEN</td>
-              <td>{{ form.T1_PRODUCTION_EKINEN_EBO }}</td>
-              <td>{{ form.T1_PRODUCTION_EKINEN_CBO }}</td>
-              <td>{{ form.T1_PRODUCTION_EKINEN_FCC }}</td>
-              <td>{{ form.T1_PRODUCTION_EKINEN_Total }}</td>
+              <td>{{ formatNumber(form.T1_PRODUCTION_EKINEN_EBO) }}</td>
+              <td>{{ formatNumber(form.T1_PRODUCTION_EKINEN_CBO) }}</td>
+              <td>{{ formatNumber(form.T1_PRODUCTION_EKINEN_FCC) }}</td>
+              <td>{{ formatNumber(form.T1_PRODUCTION_EKINEN_Total) }}</td>
             </tr>
           </tbody>
         </v-table>
@@ -110,90 +105,82 @@
             <tr>
               <td>Production</td>
               <td>
-                <v-text-field
+                <n-input-number
                   hide-details
-                  type="number"
                   v-model="form.T2_NG_Production"
-                ></v-text-field>
+                ></n-input-number>
               </td>
               <td></td>
               <td></td>
               <td></td>
-              <td>{{ form.T2_NG_Production_Total }}</td>
+              <td>{{ formatNumber(form.T2_NG_Production_Total) }}</td>
             </tr>
             <tr>
               <td>Warm up</td>
               <td>
-                <v-text-field
+                <n-input-number
                   hide-details
-                  type="number"
                   v-model="form.T2_NG_Warm_up"
-                ></v-text-field>
+                ></n-input-number>
               </td>
               <td></td>
               <td></td>
               <td></td>
-              <td>{{ form.T2_NG_Warm_up_Total }}</td>
+              <td>{{ formatNumber(form.T2_NG_Warm_up_Total) }}</td>
             </tr>
             <tr>
               <td>Preheat</td>
               <td>
-                <v-text-field
+                <n-input-number
                   hide-details
-                  type="number"
                   v-model="form.T2_NG_Preheat"
-                ></v-text-field>
+                ></n-input-number>
               </td>
               <td>
-                <v-text-field
+                <n-input-number
                   hide-details
-                  type="number"
                   v-model="form.T2_EBO_Preheat"
-                ></v-text-field>
+                ></n-input-number>
               </td>
               <td>
-                <v-text-field
+                <n-input-number
                   hide-details
-                  type="number"
                   v-model="form.T2_CBO_Preheat"
-                ></v-text-field>
+                ></n-input-number>
               </td>
               <td>
-                <v-text-field
+                <n-input-number
                   hide-details
-                  type="number"
                   v-model="form.T2_FCC_Preheat"
-                ></v-text-field>
+                ></n-input-number>
               </td>
-              <td>{{ form.T2_Preheat_Total }}</td>
+              <td>{{ formatNumber(form.T2_Preheat_Total) }}</td>
             </tr>
             <tr>
               <td>Drying</td>
               <td>
-                <v-text-field
+                <n-input-number
                   hide-details
-                  type="number"
                   v-model="form.T2_NG_Drying"
-                ></v-text-field>
+                ></n-input-number>
               </td>
               <td></td>
               <td></td>
               <td></td>
-              <td>{{ form.T2_NG_Drying_Total }}</td>
+              <td>{{ formatNumber(form.T2_NG_Drying_Total) }}</td>
             </tr>
             <tr>
               <td>Oil Spray checking</td>
               <td>
-                <v-text-field
+                <n-input-number
                   hide-details
-                  type="number"
                   v-model="form.T2_NG_Oil_Spray_checking"
-                ></v-text-field>
+                ></n-input-number>
               </td>
               <td></td>
               <td></td>
               <td></td>
-              <td>{{ form.T2_NG_Oil_Spray_checking_Total }}</td>
+              <td>{{ formatNumber(form.T2_NG_Oil_Spray_checking_Total) }}</td>
             </tr>
           </tbody>
         </v-table>
@@ -219,33 +206,29 @@
           <tbody>
             <tr>
               <td>
-                <v-text-field
+                <n-input-number
                   hide-details
-                  type="number"
                   v-model="form.T3_Mixing_Other"
-                ></v-text-field>
+                ></n-input-number>
               </td>
               <td>
-                <v-text-field
+                <n-input-number
                   hide-details
-                  type="number"
                   v-model="form.T3_Hoist_Other"
-                ></v-text-field>
+                ></n-input-number>
               </td>
               <td>
-                <v-text-field
+                <n-input-number
                   hide-details
-                  type="number"
                   v-model="form.T3_Kande_Other"
-                ></v-text-field>
+                ></n-input-number>
               </td>
-              <td>{{ form.T3_Total_Mixing_Volume_Other }}</td>
+              <td>{{ formatNumber(form.T3_Total_Mixing_Volume_Other) }}</td>
               <td>
-                <v-text-field
+                <n-input-number
                   hide-details
-                  type="number"
                   v-model="form.T3_Discharged_Volume_Other"
-                ></v-text-field>
+                ></n-input-number>
               </td>
             </tr>
           </tbody>
@@ -255,27 +238,24 @@
     <v-row>
       <v-col md="3">
         <label>KOH Mixing(Litres)</label>
-        <v-text-field
+        <n-input-number
           v-model="form.T3_KOH_Mixing_Other"
-          type="number"
           hide-details
-        ></v-text-field>
+        ></n-input-number>
       </v-col>
       <v-col md="3">
         <label>NaOH Consumption(Litres)</label>
-        <v-text-field
+        <n-input-number
           v-model="form.T3_NaOH_Consumption_Other"
-          type="number"
           hide-details
-        ></v-text-field>
+        ></n-input-number>
       </v-col>
       <v-col md="3">
         <label>Recycle Hopper Level(%)</label>
-        <v-text-field
+        <n-input-number
           v-model="form.T3_Recycle_Hopper_Level_Other"
-          type="number"
           hide-details
-        ></v-text-field>
+        ></n-input-number>
       </v-col>
     </v-row>
 
@@ -394,10 +374,19 @@
 </template>
 
 <script setup>
-import { reactive, ref, defineProps, defineEmits, watch, onMounted } from "vue";
+import {
+  reactive,
+  ref,
+  defineProps,
+  defineEmits,
+  watch,
+  onMounted,
+  nextTick,
+} from "vue";
 import moment from "moment";
 import * as ddlApi from "@/api/dropdown-list.js";
 import rules from "@/utils/rules";
+import numeral from "numeral";
 // Define emits
 const emit = defineEmits(["update:modelValue"]);
 
@@ -467,6 +456,14 @@ const convertToInt = (value) => {
   }
 };
 
+const formatNumber = (value) => {
+  if (value) {
+    return numeral(value).format("0,0");
+  } else {
+    return 0;
+  }
+};
+
 watch([() => form.Shift_Start, () => form.Shift_End], ([start, end]) => {
   // Calculate the difference between Shift_Start and Shift_End
   if (start && end) {
@@ -487,7 +484,9 @@ watch([() => form.Shift_Start, () => form.Shift_End], ([start, end]) => {
 watch(
   () => props.modelValue,
   (newValue) => {
-    Object.assign(form, newValue);
+    nextTick(() => {
+      Object.assign(form, newValue);
+    });
   },
   { immediate: true }
 );
