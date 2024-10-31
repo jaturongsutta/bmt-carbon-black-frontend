@@ -3,7 +3,11 @@
     <v-row>
       <v-col md="3">
         <label>Operating Time(h)</label>
-        <v-text-field v-model="form.Shift_Oper_Time" readonly></v-text-field>
+        <n-input-number
+          v-model="form.Shift_Oper_Time"
+          :digit="2"
+          readonly
+        ></n-input-number>
       </v-col>
       <v-col md="3">
         <label>Shift Start</label>
@@ -31,11 +35,10 @@
             <tr>
               <td>PRODUCTION</td>
               <td>
-                <v-text-field
+                <n-input-number
                   hide-details
-                  type="number"
                   v-model="form.T1_Production_EBO"
-                ></v-text-field>
+                ></n-input-number>
               </td>
               <td>
                 <v-text-field
@@ -456,8 +459,12 @@ const savePopupTank = async () => {
   }
 };
 
-const conertToInt = (value) => {
-  return value ? parseInt(value) : 0;
+const convertToInt = (value) => {
+  if (value) {
+    return parseInt(value.toString().replace(/,/g, "")) || 0;
+  } else {
+    return 0;
+  }
 };
 
 watch([() => form.Shift_Start, () => form.Shift_End], ([start, end]) => {
@@ -501,17 +508,17 @@ watch(
   ],
   ([n1, n2, n3]) => {
     form.T1_Production_Prod_Total =
-      conertToInt(n1) + conertToInt(n2) + conertToInt(n3);
+      convertToInt(n1) + convertToInt(n2) + convertToInt(n3);
 
     form.T1_PRODUCTION_EKINEN_EBO =
-      conertToInt(form.T1_Production_EBO) + conertToInt(form.T1_EKINEN_EBO);
+      convertToInt(form.T1_Production_EBO) + convertToInt(form.T1_EKINEN_EBO);
     form.T1_PRODUCTION_EKINEN_CBO =
-      conertToInt(form.T1_Production_CBO) + conertToInt(form.T1_EKINEN_CBO);
+      convertToInt(form.T1_Production_CBO) + convertToInt(form.T1_EKINEN_CBO);
     form.T1_PRODUCTION_EKINEN_FCC =
-      conertToInt(form.T1_Production_FCC) + conertToInt(form.T1_EKINEN_FCC);
+      convertToInt(form.T1_Production_FCC) + convertToInt(form.T1_EKINEN_FCC);
     form.T1_PRODUCTION_EKINEN_Total =
-      conertToInt(form.T1_Production_Prod_Total) +
-      conertToInt(form.T1_EKINEN_EKN_Total);
+      convertToInt(form.T1_Production_Prod_Total) +
+      convertToInt(form.T1_EKINEN_EKN_Total);
   }
 );
 
@@ -523,17 +530,17 @@ watch(
   ],
   ([n1, n2, n3]) => {
     form.T1_EKINEN_EKN_Total =
-      conertToInt(n1) + conertToInt(n2) + conertToInt(n3);
+      convertToInt(n1) + convertToInt(n2) + convertToInt(n3);
 
     form.T1_PRODUCTION_EKINEN_EBO =
-      conertToInt(form.T1_Production_EBO) + conertToInt(form.T1_EKINEN_EBO);
+      convertToInt(form.T1_Production_EBO) + convertToInt(form.T1_EKINEN_EBO);
     form.T1_PRODUCTION_EKINEN_CBO =
-      conertToInt(form.T1_Production_CBO) + conertToInt(form.T1_EKINEN_CBO);
+      convertToInt(form.T1_Production_CBO) + convertToInt(form.T1_EKINEN_CBO);
     form.T1_PRODUCTION_EKINEN_FCC =
-      conertToInt(form.T1_Production_FCC) + conertToInt(form.T1_EKINEN_FCC);
+      convertToInt(form.T1_Production_FCC) + convertToInt(form.T1_EKINEN_FCC);
     form.T1_PRODUCTION_EKINEN_Total =
-      conertToInt(form.T1_Production_Prod_Total) +
-      conertToInt(form.T1_EKINEN_EKN_Total);
+      convertToInt(form.T1_Production_Prod_Total) +
+      convertToInt(form.T1_EKINEN_EKN_Total);
   }
 );
 
@@ -559,7 +566,7 @@ watch(
   ],
   ([n1, n2, n3, n4]) => {
     form.T2_Preheat_Total =
-      conertToInt(n1) + conertToInt(n2) + conertToInt(n3) + conertToInt(n4);
+      convertToInt(n1) + convertToInt(n2) + convertToInt(n3) + convertToInt(n4);
   }
 );
 
