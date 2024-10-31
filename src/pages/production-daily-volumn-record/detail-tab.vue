@@ -390,7 +390,7 @@ import numeral from "numeral";
 // Define emits
 const emit = defineEmits(["update:modelValue"]);
 
-const form = reactive({});
+const form = ref({});
 
 const frmPopup = ref(null);
 
@@ -433,10 +433,10 @@ const addPopupTank = () => {
 const savePopupTank = async () => {
   const { valid } = await frmPopup.value.validate();
   if (valid) {
-    if (form.storageTanks === undefined) {
-      form.storageTanks = [];
+    if (form.value.storageTanks === undefined) {
+      form.value.storageTanks = [];
     }
-    form.storageTanks.push({
+    form.value.storageTanks.push({
       Shift: props.shiftName,
       Tank: popupTank.value,
       Tank_Start_Time: popupStartTime.value,
@@ -464,34 +464,37 @@ const formatNumber = (value) => {
   }
 };
 
-watch([() => form.Shift_Start, () => form.Shift_End], ([start, end]) => {
-  // Calculate the difference between Shift_Start and Shift_End
-  if (start && end) {
-    let shiftStart = moment(start, "HH:mm");
-    let shiftEnd = moment(end, "HH:mm");
+watch(
+  [() => form.value.Shift_Start, () => form.value.Shift_End],
+  ([start, end]) => {
+    // Calculate the difference between Shift_Start and Shift_End
+    if (start && end) {
+      let shiftStart = moment(start, "HH:mm");
+      let shiftEnd = moment(end, "HH:mm");
 
-    // If start time is greater than end time, add one day to end time
-    if (shiftStart.isAfter(shiftEnd)) {
-      shiftEnd.add(1, "day");
+      // If start time is greater than end time, add one day to end time
+      if (shiftStart.isAfter(shiftEnd)) {
+        shiftEnd.add(1, "day");
+      }
+
+      const duration = moment.duration(shiftEnd.diff(shiftStart));
+      const hours = duration.asHours();
+      form.value.Shift_Oper_Time = hours.toFixed(2);
     }
-
-    const duration = moment.duration(shiftEnd.diff(shiftStart));
-    const hours = duration.asHours();
-    form.Shift_Oper_Time = hours.toFixed(2);
   }
-});
+);
 
 watch(
   () => props.modelValue,
   (newValue) => {
     nextTick(() => {
-      Object.assign(form, newValue);
+      Object.assign(form.value, newValue);
     });
   },
   { immediate: true }
 );
 watch(
-  form,
+  form.value,
   (newValue) => {
     emit("update:modelValue", newValue);
   },
@@ -501,84 +504,90 @@ watch(
 // Calculate total
 watch(
   [
-    () => form.T1_Production_EBO,
-    () => form.T1_Production_CBO,
-    () => form.T1_Production_FCC,
+    () => form.value.T1_Production_EBO,
+    () => form.value.T1_Production_CBO,
+    () => form.value.T1_Production_FCC,
   ],
   ([n1, n2, n3]) => {
-    form.T1_Production_Prod_Total =
+    form.value.T1_Production_Prod_Total =
       convertToInt(n1) + convertToInt(n2) + convertToInt(n3);
 
-    form.T1_PRODUCTION_EKINEN_EBO =
-      convertToInt(form.T1_Production_EBO) + convertToInt(form.T1_EKINEN_EBO);
-    form.T1_PRODUCTION_EKINEN_CBO =
-      convertToInt(form.T1_Production_CBO) + convertToInt(form.T1_EKINEN_CBO);
-    form.T1_PRODUCTION_EKINEN_FCC =
-      convertToInt(form.T1_Production_FCC) + convertToInt(form.T1_EKINEN_FCC);
-    form.T1_PRODUCTION_EKINEN_Total =
-      convertToInt(form.T1_Production_Prod_Total) +
-      convertToInt(form.T1_EKINEN_EKN_Total);
+    form.value.T1_PRODUCTION_EKINEN_EBO =
+      convertToInt(form.value.T1_Production_EBO) +
+      convertToInt(form.value.T1_EKINEN_EBO);
+    form.value.T1_PRODUCTION_EKINEN_CBO =
+      convertToInt(form.value.T1_Production_CBO) +
+      convertToInt(form.value.T1_EKINEN_CBO);
+    form.value.T1_PRODUCTION_EKINEN_FCC =
+      convertToInt(form.value.T1_Production_FCC) +
+      convertToInt(form.value.T1_EKINEN_FCC);
+    form.value.T1_PRODUCTION_EKINEN_Total =
+      convertToInt(form.value.T1_Production_Prod_Total) +
+      convertToInt(form.value.T1_EKINEN_EKN_Total);
   }
 );
 
 watch(
   [
-    () => form.T1_EKINEN_EBO,
-    () => form.T1_EKINEN_CBO,
-    () => form.T1_EKINEN_FCC,
+    () => form.value.T1_EKINEN_EBO,
+    () => form.value.T1_EKINEN_CBO,
+    () => form.value.T1_EKINEN_FCC,
   ],
   ([n1, n2, n3]) => {
-    form.T1_EKINEN_EKN_Total =
+    form.value.T1_EKINEN_EKN_Total =
       convertToInt(n1) + convertToInt(n2) + convertToInt(n3);
 
-    form.T1_PRODUCTION_EKINEN_EBO =
-      convertToInt(form.T1_Production_EBO) + convertToInt(form.T1_EKINEN_EBO);
-    form.T1_PRODUCTION_EKINEN_CBO =
-      convertToInt(form.T1_Production_CBO) + convertToInt(form.T1_EKINEN_CBO);
-    form.T1_PRODUCTION_EKINEN_FCC =
-      convertToInt(form.T1_Production_FCC) + convertToInt(form.T1_EKINEN_FCC);
-    form.T1_PRODUCTION_EKINEN_Total =
-      convertToInt(form.T1_Production_Prod_Total) +
-      convertToInt(form.T1_EKINEN_EKN_Total);
+    form.value.T1_PRODUCTION_EKINEN_EBO =
+      convertToInt(form.value.T1_Production_EBO) +
+      convertToInt(form.value.T1_EKINEN_EBO);
+    form.value.T1_PRODUCTION_EKINEN_CBO =
+      convertToInt(form.value.T1_Production_CBO) +
+      convertToInt(form.value.T1_EKINEN_CBO);
+    form.value.T1_PRODUCTION_EKINEN_FCC =
+      convertToInt(form.value.T1_Production_FCC) +
+      convertToInt(form.value.T1_EKINEN_FCC);
+    form.value.T1_PRODUCTION_EKINEN_Total =
+      convertToInt(form.value.T1_Production_Prod_Total) +
+      convertToInt(form.value.T1_EKINEN_EKN_Total);
   }
 );
 
 watch(
-  () => form.T2_NG_Production,
+  () => form.value.T2_NG_Production,
   (newValue) => {
-    form.T2_NG_Production_Total = newValue;
+    form.value.T2_NG_Production_Total = newValue;
   }
 );
 watch(
-  () => form.T2_NG_Warm_up,
+  () => form.value.T2_NG_Warm_up,
   (newValue) => {
-    form.T2_NG_Warm_up_Total = newValue;
+    form.value.T2_NG_Warm_up_Total = newValue;
   }
 );
 
 watch(
   [
-    () => form.T2_NG_Preheat,
-    () => form.T2_EBO_Preheat,
-    () => form.T2_CBO_Preheat,
-    () => form.T2_FCC_Preheat,
+    () => form.value.T2_NG_Preheat,
+    () => form.value.T2_EBO_Preheat,
+    () => form.value.T2_CBO_Preheat,
+    () => form.value.T2_FCC_Preheat,
   ],
   ([n1, n2, n3, n4]) => {
-    form.T2_Preheat_Total =
+    form.value.T2_Preheat_Total =
       convertToInt(n1) + convertToInt(n2) + convertToInt(n3) + convertToInt(n4);
   }
 );
 
 watch(
-  () => form.T2_NG_Drying,
+  () => form.value.T2_NG_Drying,
   (newValue) => {
-    form.T2_NG_Drying_Total = newValue;
+    form.value.T2_NG_Drying_Total = newValue;
   }
 );
 watch(
-  () => form.T2_NG_Oil_Spray_checking,
+  () => form.value.T2_NG_Oil_Spray_checking,
   (newValue) => {
-    form.T2_NG_Oil_Spray_checking_Total = newValue;
+    form.value.T2_NG_Oil_Spray_checking_Total = newValue;
   }
 );
 </script>

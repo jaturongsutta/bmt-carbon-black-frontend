@@ -9,7 +9,7 @@
 
 <script setup>
 /* eslint-disable */
-import { defineProps, defineEmits, watch, ref } from "vue";
+import { defineProps, defineEmits, watch, ref, nextTick } from "vue";
 import numeral from "numeral";
 const props = defineProps({
   modelValue: {},
@@ -35,8 +35,10 @@ watch(
       // Handle the case where newValue is a string
       inputValue.value = parseValue(newValue);
     }
-    // inputValue.value = convert newValue;
-    inputDisplay.value = parseDisplay(inputValue.value);
+
+    nextTick(() => {
+      inputDisplay.value = parseDisplay(newValue);
+    });
   },
   { deep: true }
 );
