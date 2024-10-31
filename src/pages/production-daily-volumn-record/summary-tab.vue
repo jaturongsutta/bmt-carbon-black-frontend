@@ -199,7 +199,15 @@
 </template>
 
 <script setup>
-import { reactive, ref, defineProps, defineEmits, watch, computed } from "vue";
+import {
+  reactive,
+  ref,
+  defineProps,
+  defineEmits,
+  watch,
+  computed,
+  nextTick,
+} from "vue";
 import numeral from "numeral";
 // Define props
 const props = defineProps({
@@ -232,7 +240,9 @@ const formShift3 = reactive(props.modelValueShift3);
 watch(
   () => props.modelValueShift1,
   (newValue) => {
-    Object.assign(formShift1, newValue);
+    nextTick(() => {
+      Object.assign(formShift1, newValue);
+    });
   },
   { immediate: true }
 );
@@ -240,8 +250,9 @@ watch(
 watch(
   () => props.modelValueShift2,
   (newValue) => {
-    console.log("shift2 change ", newValue);
-    Object.assign(formShift2, newValue);
+    nextTick(() => {
+      Object.assign(formShift2, newValue);
+    });
   },
   { immediate: true }
 );
@@ -249,8 +260,9 @@ watch(
 watch(
   () => props.modelValueShift3,
   (newValue) => {
-    console.log("shift3 change ", newValue);
-    Object.assign(formShift3, newValue);
+    nextTick(() => {
+      Object.assign(formShift3, newValue);
+    });
   },
   { immediate: true }
 );
@@ -281,6 +293,8 @@ const Total_Operating_Time = computed(() => {
   ).format("0,0.00");
 });
 const T1_Production_EBO = computed(() => {
+  console.log("formShift1.T1_Production_EBO", formShift1.T1_Production_EBO);
+
   return numeral(
     convertToInteger(formShift1.T1_Production_EBO) +
       convertToInteger(formShift2.T1_Production_EBO) +
