@@ -17,10 +17,10 @@ export const getById = async (id) => {
   }
 };
 
-export const getProductWeight = async (line, productName) => {
+export const getProductWeight = async (month, year, line, productName) => {
   try {
     const response = await axios.get(
-      `/failed-management/get-product-weight/${line}/${productName}`
+      `/failed-management/get-product-weight/${month}/${year}/${line}/${productName}`
     );
     return response.data;
   } catch (error) {

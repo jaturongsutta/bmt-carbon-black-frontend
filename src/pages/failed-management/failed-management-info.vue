@@ -224,8 +224,15 @@ const onSave = async () => {
 
 const getProductWeight = async () => {
   isLoading.value = true;
-  if (form.value.line && form.value.productName) {
+  if (
+    form.value.month &&
+    form.value.year &&
+    form.value.line &&
+    form.value.productName
+  ) {
     const res = await api.getProductWeight(
+      form.value.month,
+      form.value.year,
       form.value.line,
       form.value.productName
     );
