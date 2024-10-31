@@ -108,21 +108,13 @@ const router = useRouter();
 const mode = ref("Add");
 
 const form = ref({
-  date: null,
-  linkTank: null,
-  grade: null,
+  month: null,
+  year: null,
+  line: null,
   productName: null,
-  shippingType: null,
-  class: null,
-  lotNo: null,
-  packingWeight: null,
-  totalQty: null,
-  workingTimeStart: null,
-  workingTimeStop: null,
-  adjValue: null,
-  additionalAdj: null,
-  empty: "N",
-  emptyTime: null,
+  prodWeight2: null,
+  failedValue: null,
+  finalProd2: null,
 });
 
 const lineList = ref([]);
@@ -253,7 +245,11 @@ const getProductWeight = async () => {
 };
 
 const calculateFinalProd2 = () => {
-  if (form.value.prodWeight2 && form.value.failedValue) {
+  if (
+    form.value.prodWeight2 !== null &&
+    form.value.failedValue !== null &&
+    form.value.failedValue !== ""
+  ) {
     form.value.finalProd2 =
       parseInt(form.value.prodWeight2) + parseInt(form.value.failedValue);
   } else {
