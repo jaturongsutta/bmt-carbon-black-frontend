@@ -258,23 +258,25 @@ const onEdit = (id) => {
 
 const onDelete = (id) => {
   Alert.confirm("Are you sure you want to delete this failed value ?").then(
-    () => {
-      api
-        .remove(id)
-        .then((res) => {
-          if (res.status === 0) {
-            Alert.success("Delete successfully");
-            onSearch();
-          } else if (res.status === 1) {
-            Alert.warning(res.message);
-          } else {
-            Alert.error(res.message);
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching API:", error);
-          Alert.error(error.message);
-        });
+    ({ isConfirmed }) => {
+      if (isConfirmed) {
+        api
+          .remove(id)
+          .then((res) => {
+            if (res.status === 0) {
+              Alert.success("Delete successfully");
+              onSearch();
+            } else if (res.status === 1) {
+              Alert.warning(res.message);
+            } else {
+              Alert.error(res.message);
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching API:", error);
+            Alert.error(error.message);
+          });
+      }
     }
   );
 };
