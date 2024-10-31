@@ -347,15 +347,14 @@ const validateFileUpload = (value) => {
       (x) => x.title.toUpperCase() === gradeExcel.toUpperCase()
     );
 
-    if (!grade) {
+    if (!grade || form.value.grade != grade.value) {
       return "Grade not match in file";
     }
-
     const product = productList.value.find(
       (x) => x.title.toUpperCase() === productExcel.toUpperCase()
     );
 
-    if (!product) {
+    if (!product || form.value.productName != product.value) {
       return "Product Name not match in file";
     }
   }
