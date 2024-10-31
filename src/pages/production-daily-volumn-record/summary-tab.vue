@@ -240,6 +240,7 @@ watch(
 watch(
   () => props.modelValueShift2,
   (newValue) => {
+    console.log("shift2 change ", newValue);
     Object.assign(formShift2, newValue);
   },
   { immediate: true }
@@ -248,17 +249,26 @@ watch(
 watch(
   () => props.modelValueShift3,
   (newValue) => {
+    console.log("shift3 change ", newValue);
     Object.assign(formShift3, newValue);
   },
   { immediate: true }
 );
 
 const convertToInteger = (value) => {
-  return parseInt(value) || 0;
+  if (value) {
+    return parseInt(value.toString().replace(/,/g, "")) || 0;
+  } else {
+    return 0;
+  }
 };
 
 const convertToNumber = (value) => {
-  return parseFloat(value) || 0;
+  if (value) {
+    return parseFloat(value.toString().replace(/,/g, "")) || 0;
+  } else {
+    return 0;
+  }
 };
 
 // calculate summary
