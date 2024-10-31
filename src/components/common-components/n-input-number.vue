@@ -15,7 +15,7 @@ const props = defineProps({
   modelValue: {},
   digit: {
     type: Number,
-    default: 2,
+    default: 0,
   },
 });
 const emit = defineEmits(["update:modelValue", "onEnter"]);
@@ -27,6 +27,10 @@ const inputDisplay = ref(null);
 watch(
   () => props.modelValue,
   (newValue) => {
+    if (typeof newValue === "string") {
+      // Handle the case where newValue is a string
+      inputValue.value = parseValue(newValue);
+    }
     // inputValue.value = convert newValue;
     inputDisplay.value = parseDisplay(newValue);
   }
@@ -72,6 +76,19 @@ const onInputUpdated = () => {
 const parseDisplay = (v) => {
   const numFormat = getFormatNumber();
   return numeral(v).format(numFormat);
+};
+
+const parseValue = (v) => {
+  if (v) {
+    const numStr = v.toString().replace(/,/g, "");
+    if (props.digit > 0) {
+      return parseFloat(numStr);
+    } else {
+      return parseInt(numStr);
+    }
+  } else {
+    return null;
+  }
 };
 
 function getFormatNumber() {
