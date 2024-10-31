@@ -92,6 +92,8 @@ const onInputUpdated = () => {
     minutes = "00";
   } else if (minutes && minutes.length === 1) {
     minutes = "0" + minutes;
+  } else if (minutes && minutes >= 60) {
+    minutes = "59";
   }
 
   timeInput.value = [hours, minutes].filter(Boolean).join(":");
