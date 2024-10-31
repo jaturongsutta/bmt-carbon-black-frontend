@@ -17,6 +17,10 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
+  nullable: {
+    type: Boolean,
+    default: false,
+  },
 });
 const emit = defineEmits(["update:modelValue", "onEnter"]);
 
@@ -32,12 +36,17 @@ watch(
       inputValue.value = parseValue(newValue);
     }
     // inputValue.value = convert newValue;
-    inputDisplay.value = parseDisplay(newValue);
-  }
+    inputDisplay.value = parseDisplay(inputValue.value);
+  },
+  { deep: true }
 );
-watch(inputValue, (newValue) => {
-  emit("update:modelValue", newValue);
-});
+watch(
+  inputValue,
+  (newValue) => {
+    emit("update:modelValue", newValue);
+  },
+  { deep: true }
+);
 
 // watch(
 //   inputDisplay,
@@ -56,29 +65,48 @@ const onKeypress = (e) => {
   const isValidKey = /[0-9.]/.test(key);
   if (!isValidKey) {
     e.preventDefault();
-  } else if (inputDisplay.value.indexOf(".") > -1 && key === ".") {
+  } else if (
+    inputDisplay.value &&
+    inputDisplay.value.indexOf(".") > -1 &&
+    key === "."
+  ) {
     e.preventDefault();
   }
 };
 
-const onInputUpdated = () => {
-  inputDisplay.value = parseDisplay(inputDisplay.value);
+const onInputUpdated = (e) => {
+  const v = e.target.value;
+
+  if (v === null || v === "") {
+    inputValue.value = props.nullable ? null : 0;
+    inputDisplay.value = parseDisplay(v);
+    return;
+  }
+
+  inputDisplay.value = parseDisplay(v);
 
   const num = inputDisplay.value.replace(/,/g, "");
 
   if (props.digit > 0) {
-    emit("update:modelValue", parseFloat(num));
+    inputValue.value = parseFloat(num);
   } else {
-    emit("update:modelValue", parseInt(num));
+    console.log("parseInt(num) ", num);
+    inputValue.value = parseInt(num);
   }
 };
 
 const parseDisplay = (v) => {
   const numFormat = getFormatNumber();
-  return numeral(v).format(numFormat);
+  console.log("parseDisplay ", v);
+  if (v && v !== "") {
+    return numeral(v).format(numFormat);
+  } else {
+    return props.nullable ? "" : numeral(0).format(numFormat);
+  }
 };
 
 const parseValue = (v) => {
+  console.log("parseValue ", v);
   if (v) {
     const numStr = v.toString().replace(/,/g, "");
     if (props.digit > 0) {
