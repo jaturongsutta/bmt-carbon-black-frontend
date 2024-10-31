@@ -90,14 +90,12 @@ const onInputUpdated = (e) => {
   if (props.digit > 0) {
     inputValue.value = parseFloat(num);
   } else {
-    console.log("parseInt(num) ", num);
     inputValue.value = parseInt(num);
   }
 };
 
 const parseDisplay = (v) => {
   const numFormat = getFormatNumber();
-  console.log("parseDisplay ", v);
   if (v && v !== "") {
     return numeral(v).format(numFormat);
   } else {
@@ -106,7 +104,6 @@ const parseDisplay = (v) => {
 };
 
 const parseValue = (v) => {
-  console.log("parseValue ", v);
   if (v) {
     const numStr = v.toString().replace(/,/g, "");
     if (props.digit > 0) {
