@@ -138,7 +138,7 @@ const headers = [
     key: "Total_Qty",
     sortable: false,
     value: (item) =>
-      item.Packing_Weight ? numeral(item.Packing_Weight).format("0,0") : "",
+      item.Total_Qty ? numeral(item.Total_Qty).format("0,0") : "",
   },
 ];
 let items = ref([]);
