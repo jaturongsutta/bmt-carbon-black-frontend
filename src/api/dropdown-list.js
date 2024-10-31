@@ -20,8 +20,8 @@ export const getMonth = async () => {
     { value: "8", title: "August" },
     { value: "9", title: "September" },
     { value: "10", title: "October" },
-    { value: "12", title: "December" },
     { value: "11", title: "November" },
+    { value: "12", title: "December" },
   ];
 
   return months;
