@@ -9,15 +9,24 @@
           <v-row class="justify-center">
             <v-col cols="12" sm="4">
               <label>Report Name</label>
-              <v-select v-model="form.field3" :items="[{ title: 'All', value: null }, ...reportList]"></v-select>
+              <v-select
+                v-model="form.reportName"
+                :items="[{ title: '', value: null }, ...reportList]"
+                :rules="[rules.required]"
+              ></v-select>
             </v-col>
             <v-col cols="12" sm="4">
               <label>Date</label>
-              <n-date v-model="form.date"></n-date>
+              <n-date v-model="form.date" 
+              :rules="[rules.required]"></n-date>
             </v-col>
             <v-col cols="12" sm="2">
               <div class="mt-5">
-                <v-btn prepend-icon="mdi mdi-magnify" color="secondary" @click="onSearch">
+                <v-btn
+                  prepend-icon="mdi mdi-magnify"
+                  color="secondary"
+                  @click="onSearch"
+                >
                   <template v-slot:prepend>
                     <v-icon color="white" size="large"></v-icon>
                   </template>
@@ -36,45 +45,53 @@
 import { onMounted, ref, inject } from "vue";
 import { useRouter } from "vue-router";
 import * as dateUtils from "@/utils/date.js";
+import * as apiReports from "@/api/reports.js";
 import * as api from "@/api/common-master/systemparams.js";
+import rules from "@/utils/rules.js";
 
 const router = useRouter();
 const Alert = inject("Alert");
 let form = ref({});
-let stringURL= ref("");
-let stringUsername= ref("");
-let stringPassword= ref("");
-let reportList = ref([
-        { title: 'Production Condition Table Report', value: 1 },
-        { title: 'Tank Balance Report', value: 2 },
-        { title: 'Daily Management Report', value: 3 },
-      ]);
+let stringUsername = ref("");
+let stringPassword = ref("");
+let reportList = ref([]);
 
 onMounted(() => {
   form.value.date = dateUtils.getToday();
- 
-  api.findbyType('REPORT_URL').then((res) => {
-    stringURL.value = res.data.paramValue
+
+  apiReports.findbyReportType("Daily").then((res) => {
+    
+    const coReports = res.data;
+
+    coReports.forEach((item) => {
+      reportList.value.push({
+        title: item.reportName,
+        value: item.configReportId,
+        path: item.path
+      });
+    });
   });
+
   api.findbyType('REPORT_USERNAME').then((res) => {
     stringUsername.value = res.data.paramValue
   });
   api.findbyType('REPORT_PASSWORD').then((res) => {
     stringPassword.value = res.data.paramValue
   });
-
 });
 
 const onSearch = async () => {
-  openReport();
+  console.log(form.value.field3)
+  let coReport = reportList.value.findLast(x=>x.value == form.value.reportName )
+  console.log("coReport", coReport.path)
+  openReport(coReport.path);
 };
 
-const openReport = async () => {
+const openReport = async (path) => {
   //open report
   let login = `${stringUsername.value}:${stringPassword.value}@`;
-  let url = stringURL.value.replace("://","://"+login);
-  url = url+ '/ReportServer/Pages/ReportViewer.aspx?%2fBSCB+Report%2fMonthlyBgging&rs:Command=Render';
-  window.open(url, '_blank');
+  let url = path.replace("://", "://" + login);
+  url = url + "&Date=" + form.value.date;
+  window.open(url, "_blank");
 };
-
 </script>
