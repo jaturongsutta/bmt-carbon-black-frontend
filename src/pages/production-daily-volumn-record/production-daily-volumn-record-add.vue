@@ -349,7 +349,9 @@ const validateFileUpload = (value) => {
       return "Grade not match in file";
     }
 
-    if (form.value.productName != productExcel) {
+    const product = productList.value.find((x) => x.title === productExcel);
+
+    if (!product) {
       return "Product Name not match in file";
     }
   }
