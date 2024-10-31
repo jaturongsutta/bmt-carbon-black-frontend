@@ -180,6 +180,7 @@ function onBlur() {
   const date = parseDate(dateFormated.value);
   if (date === null) {
     dateFormated.value = "";
+    emit("update:modelValue", null);
   }
 
   if (tempDate !== date) {
