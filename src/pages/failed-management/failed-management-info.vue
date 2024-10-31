@@ -61,7 +61,7 @@
                 <label class="require-field">Failed Value</label>
                 <v-text-field
                   v-model="form.failedValue"
-                  :rules="[rules.required, rules.integer]"
+                  :rules="[rules.required, rules.integer, rules.nonNegative]"
                   type="number"
                   @update:model-value="calculateFinalProd2"
                 ></v-text-field>
