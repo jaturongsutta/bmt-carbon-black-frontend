@@ -2,7 +2,7 @@
   <div>
     <v-card>
       <v-card-title class="pl-2 mb-2">
-        <h4>{{ mode }} Tank Shipping</h4>
+        <h4>{{ mode }} Failed Management</h4>
       </v-card-title>
 
       <v-card-text>
