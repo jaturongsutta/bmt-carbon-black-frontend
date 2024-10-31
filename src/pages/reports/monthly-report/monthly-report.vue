@@ -7,15 +7,18 @@
       <v-card-text>
         <v-row class="justify-center">
           <v-col cols="12" sm="3"><label>Report Name</label>
-            <v-select v-model="form.reportName" :items="[{ title: 'All', value: null }, ...reportList]"></v-select>
+            <v-select v-model="form.reportName" :items="[{ title: '', value: null }, ...reportList]" 
+            :rules="[rules.required]"></v-select>
           </v-col>
           <v-col cols="12" sm="3">
             <label>Month</label>
-            <v-select v-model="form.dataMonth" :items="[{ title: 'All' , value: null }, ...monthList]"></v-select>
+            <v-select v-model="form.dataMonth" :items="[...monthList]" 
+            :rules="[rules.required]"></v-select>
           </v-col>
           <v-col cols="12" sm="3">
             <label>Year</label>
-            <v-select v-model="form.dataYear" :items="[{ title: 'All', value: null }, ...yearList]"></v-select>
+            <v-select v-model="form.dataYear" :items="[...yearList]" 
+            :rules="[rules.required]"></v-select>
           </v-col>
           <v-col cols="12" sm="1">
             <div class="mt-5">
@@ -37,7 +40,11 @@
 import { onMounted, ref, inject } from "vue";
 import { useRouter } from "vue-router";
 import * as dateUtils from "@/utils/date.js";
+
+import * as api from "@/api/common-master/systemparams.js";
 import * as ddlApi from "@/api/dropdown-list.js";
+import * as apiReports from "@/api/reports.js";
+import rules from "@/utils/rules.js";
 
 const router = useRouter();
 const Alert = inject("Alert");
@@ -50,17 +57,7 @@ let stringURL= ref("");
 let stringUsername= ref("");
 let stringPassword= ref("");
 
-let reportList = ref([
-  { title: 'Operating Time Spread  Report', value: 1 },
-  { title: 'Oil Application Table Report', value: 2 },
-  { title: 'Fuel Record Report', value: 3 },
-  { title: 'Bagging Report', value: 4 },
-  { title: 'Tank Volume Adjustment Report', value: 5 },
-  { title: 'Product Production Report', value: 6 },
-  { title: 'Tank Volume Remaining Report', value: 7 },
-  { title: 'Full Adjustment List Report', value: 8 },
-  { title: 'Monthly Management Report', value: 9 },
-]);
+let reportList = ref([]);
 
 onMounted(() => {
   ddlApi.getMonth().then((res) => {
@@ -71,9 +68,19 @@ onMounted(() => {
     yearList.value = res;
   });
 
-  api.findbyType('REPORT_URL').then((res) => {
-    stringURL.value = res.data.paramValue
+  apiReports.findbyReportType("Monthly").then((res) => {
+    
+    const coReports = res.data;
+
+    coReports.forEach((item) => {
+      reportList.value.push({
+        title: item.reportName,
+        value: item.configReportId,
+        path: item.path
+      });
+    });
   });
+
   api.findbyType('REPORT_USERNAME').then((res) => {
     stringUsername.value = res.data.paramValue
   });
@@ -83,14 +90,16 @@ onMounted(() => {
 });
 
 const onSearch = async () => {
-  openReport();
+  let coReport = reportList.value.findLast(x=>x.value == form.value.reportName )
+  openReport(coReport.path);
 };
 
-const openReport = async () => {
+const openReport = async (path) => {
   //open report
   let login = `${stringUsername.value}:${stringPassword.value}@`;
-  let url = stringURL.value.replace("://","://"+login);
-  url = url+ '/ReportServer/Pages/ReportViewer.aspx?%2fBSCB+Report%2fMonthlyBgging&rs:Command=Render';
-  window.open(url, '_blank');
+  let url = path.replace("://", "://" + login);
+  url = url + "&Month=" + form.value.dataMonth;
+  url = url + "&Year=" + form.value.dataYear;
+  window.open(url, "_blank");
 };
 </script>
