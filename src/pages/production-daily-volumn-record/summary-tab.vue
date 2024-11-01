@@ -294,9 +294,10 @@ const Total_Operating_Time = computed(() => {
     let [s2HH, s2MM] = formShift2.Shift_Oper_Time.toString().split(".");
     let [s3HH, s3MM] = formShift3.Shift_Oper_Time.toString().split(".");
 
-    s1MM = s1MM.padEnd(2, "0");
-    s2MM = s2MM.padEnd(2, "0");
-    s3MM = s3MM.padEnd(2, "0");
+    s1MM = s1MM ? s1MM.padEnd(2, "0") : "00";
+    s2MM = s2MM ? s2MM.padEnd(2, "0") : "00";
+    s3MM = s3MM ? s3MM.padEnd(2, "0") : "00";
+
     const totalHours =
       convertToInteger(s1HH) + convertToInteger(s2HH) + convertToInteger(s3HH);
     const totalMinutes =
