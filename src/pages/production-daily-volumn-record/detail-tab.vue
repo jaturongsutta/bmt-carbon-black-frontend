@@ -512,9 +512,10 @@ watch(
       }
 
       const duration = moment.duration(shiftEnd.diff(shiftStart));
-      console.log(duration);
-      const hours = duration.asHours();
-      form.value.Shift_Oper_Time = hours.toFixed(2);
+
+      const time =
+        duration.hours() + "." + duration.minutes().toString().padStart(2, "0");
+      form.value.Shift_Oper_Time = time;
     }
   }
 );

@@ -284,13 +284,34 @@ const convertToNumber = (value) => {
 };
 
 // calculate summary
-
 const Total_Operating_Time = computed(() => {
-  return numeral(
-    convertToNumber(formShift1.Shift_Oper_Time) +
-      convertToNumber(formShift2.Shift_Oper_Time) +
-      convertToNumber(formShift3.Shift_Oper_Time)
-  ).format("0,0.00");
+  if (
+    formShift1.Shift_Oper_Time &&
+    formShift2.Shift_Oper_Time &&
+    formShift3.Shift_Oper_Time
+  ) {
+    let [s1HH, s1MM] = formShift1.Shift_Oper_Time.toString().split(".");
+    let [s2HH, s2MM] = formShift2.Shift_Oper_Time.toString().split(".");
+    let [s3HH, s3MM] = formShift3.Shift_Oper_Time.toString().split(".");
+
+    s1MM = s1MM.padEnd(2, "0");
+    s2MM = s2MM.padEnd(2, "0");
+    s3MM = s3MM.padEnd(2, "0");
+    const totalHours =
+      convertToInteger(s1HH) + convertToInteger(s2HH) + convertToInteger(s3HH);
+    const totalMinutes =
+      convertToInteger(s1MM) + convertToInteger(s2MM) + convertToInteger(s3MM);
+
+    const calculatedHours = totalHours + Math.floor(totalMinutes / 60);
+    const calculatedMinutes = totalMinutes % 60;
+
+    const strTotal =
+      calculatedHours + "." + calculatedMinutes.toString().padStart(2, "0");
+
+    return numeral(strTotal).format("0,0.00");
+  }
+
+  return 0;
 });
 const T1_Production_EBO = computed(() => {
   console.log("formShift1.T1_Production_EBO", formShift1.T1_Production_EBO);
