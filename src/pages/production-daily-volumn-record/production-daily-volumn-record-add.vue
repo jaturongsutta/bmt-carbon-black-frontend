@@ -46,7 +46,7 @@
               </v-col>
             </v-row>
           </v-form>
-          <v-row>
+          <v-row class="mt-3">
             <v-col>
               <label>Upload</label>
               <input
@@ -83,19 +83,31 @@
               <v-tabs-window v-model="tab">
                 <v-tabs-window-item :value="1">
                   <v-container fluid>
-                    <detail-tab shift-name="1" v-model="shiftData1">
+                    <detail-tab
+                      ref="cShift1"
+                      shift-name="1"
+                      v-model="shiftData1"
+                    >
                     </detail-tab>
                   </v-container>
                 </v-tabs-window-item>
                 <v-tabs-window-item :value="2">
                   <v-container fluid>
-                    <detail-tab shift-name="2" v-model="shiftData2">
+                    <detail-tab
+                      ref="cShift2"
+                      shift-name="2"
+                      v-model="shiftData2"
+                    >
                     </detail-tab>
                   </v-container>
                 </v-tabs-window-item>
                 <v-tabs-window-item :value="3">
                   <v-container fluid>
-                    <detail-tab shift-name="3" v-model="shiftData3">
+                    <detail-tab
+                      ref="cShift3"
+                      shift-name="3"
+                      v-model="shiftData3"
+                    >
                     </detail-tab>
                   </v-container>
                 </v-tabs-window-item>
@@ -141,6 +153,10 @@ import * as dateUtils from "@/utils/date.js";
 const tab = ref(1);
 const frmInfo = ref(null);
 const frmMainInput = ref(null);
+
+const cShift1 = ref(null);
+const cShift2 = ref(null);
+const cShift3 = ref(null);
 
 const fileInput = ref(null);
 const fileInputTxt = ref(null);
@@ -217,6 +233,27 @@ const onSave = async () => {
   const validFile = await fileInputTxt.value.validate();
 
   if (validMain && validFile.length === 0) {
+    // validate shift 1
+    const vShift1 = await cShift1.value.validateForm();
+    if (!vShift1.valid) {
+      tab.value = 1;
+      return;
+    }
+
+    // validate shift 2
+    const vShift2 = await cShift2.value.validateForm();
+    if (!vShift2.valid) {
+      tab.value = 2;
+      return;
+    }
+
+    // validate shift 3
+    const vShift3 = await cShift3.value.validateForm();
+    if (!vShift3.valid) {
+      tab.value = 3;
+      return;
+    }
+
     try {
       isLoading.value = true;
       let res = null;

@@ -1,23 +1,30 @@
 <template>
   <div>
-    <v-row>
-      <v-col md="3">
-        <label>Operating Time(h)</label>
-        <n-input-number
-          v-model="form.Shift_Oper_Time"
-          :digit="2"
-          readonly
-        ></n-input-number>
-      </v-col>
-      <v-col md="3">
-        <label>Shift Start</label>
-        <n-time v-model="form.Shift_Start"></n-time>
-      </v-col>
-      <v-col md="3">
-        <label>Shift End</label>
-        <n-time v-model="form.Shift_End"></n-time>
-      </v-col>
-    </v-row>
+    <div class="mb-3">
+      <v-form ref="frmInfo">
+        <v-row>
+          <v-col md="3">
+            <label>Operating Time(h)</label>
+            <n-input-number
+              v-model="form.Shift_Oper_Time"
+              :digit="2"
+              readonly
+            ></n-input-number>
+          </v-col>
+          <v-col md="3">
+            <label>Shift Start</label>
+            <n-time
+              v-model="form.Shift_Start"
+              :rules="[rules.required]"
+            ></n-time>
+          </v-col>
+          <v-col md="3">
+            <label>Shift End</label>
+            <n-time v-model="form.Shift_End" :rules="[rules.required]"></n-time>
+          </v-col>
+        </v-row>
+      </v-form>
+    </div>
     <v-row>
       <v-col>
         <h5>Feedstock Oil Consumption</h5>
@@ -376,6 +383,7 @@
 <script setup>
 import {
   reactive,
+  defineExpose,
   ref,
   defineProps,
   defineEmits,
@@ -389,7 +397,10 @@ import rules from "@/utils/rules";
 import numeral from "numeral";
 // Define emits
 const emit = defineEmits(["update:modelValue"]);
-
+defineExpose({
+  validateForm,
+});
+const frmInfo = ref(null);
 const form = ref({});
 
 const frmPopup = ref(null);
@@ -420,6 +431,11 @@ onMounted(() => {
     lineTankList.value = res;
   });
 });
+
+function validateForm() {
+  console.log("validateForm");
+  return frmInfo.value.validate();
+}
 
 const addPopupTank = () => {
   dialog.value = true;
@@ -465,26 +481,6 @@ const formatNumber = (value) => {
 };
 
 watch(
-  [() => form.value.Shift_Start, () => form.value.Shift_End],
-  ([start, end]) => {
-    // Calculate the difference between Shift_Start and Shift_End
-    if (start && end) {
-      let shiftStart = moment(start, "HH:mm");
-      let shiftEnd = moment(end, "HH:mm");
-
-      // If start time is greater than end time, add one day to end time
-      if (shiftStart.isAfter(shiftEnd)) {
-        shiftEnd.add(1, "day");
-      }
-
-      const duration = moment.duration(shiftEnd.diff(shiftStart));
-      const hours = duration.asHours();
-      form.value.Shift_Oper_Time = hours.toFixed(2);
-    }
-  }
-);
-
-watch(
   () => props.modelValue,
   (newValue) => {
     nextTick(() => {
@@ -502,6 +498,27 @@ watch(
 );
 
 // Calculate total
+watch(
+  [() => form.value.Shift_Start, () => form.value.Shift_End],
+  ([start, end]) => {
+    // Calculate the difference between Shift_Start and Shift_End
+    if (start && end) {
+      let shiftStart = moment(start, "HH:mm");
+      let shiftEnd = moment(end, "HH:mm");
+
+      // If start time is greater than end time, add one day to end time
+      if (shiftStart.isAfter(shiftEnd)) {
+        shiftEnd.add(1, "day");
+      }
+
+      const duration = moment.duration(shiftEnd.diff(shiftStart));
+      console.log(duration);
+      const hours = duration.asHours();
+      form.value.Shift_Oper_Time = hours.toFixed(2);
+    }
+  }
+);
+
 watch(
   [
     () => form.value.T1_Production_EBO,
