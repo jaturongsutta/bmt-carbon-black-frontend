@@ -143,21 +143,21 @@ const headers = [
     key: "Prod_Weight_2",
     sortable: false,
     value: (item) =>
-      item.Prod_Weight_2 ? numeral(item.Prod_Weight_2).format("0,0") : "",
+      item.Prod_Weight_2 ? numeral(item.Prod_Weight_2).format("0,0") : "0",
   },
   {
     title: "Failed Value",
     key: "Failed_Value",
     sortable: false,
     value: (item) =>
-      item.Failed_Value ? numeral(item.Failed_Value).format("0,0") : "",
+      item.Failed_Value ? numeral(item.Failed_Value).format("0,0") : "0",
   },
   {
     title: "Final Production #2",
     key: "Final_Prod_2",
     sortable: false,
     value: (item) =>
-      item.Final_Prod_2 ? numeral(item.Final_Prod_2).format("0,0") : "",
+      item.Final_Prod_2 ? numeral(item.Final_Prod_2).format("0,0") : "0",
   },
   {
     title: "Created By",
