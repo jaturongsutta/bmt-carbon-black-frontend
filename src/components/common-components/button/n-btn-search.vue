@@ -1,5 +1,5 @@
 <template>
-  <v-btn prepend-icon="mdi mdi-magnify" class="bg-gradient-info">
+  <v-btn prepend-icon="mdi mdi-magnify" color="primary">
     <template v-slot:prepend>
       <v-icon color="white" size="large"></v-icon>
     </template>
