@@ -282,6 +282,7 @@ const onReset = () => {
   };
   items.value = [];
   totalItems.value = 0;
+  onSearch();
 };
 
 const onAdd = () => {
