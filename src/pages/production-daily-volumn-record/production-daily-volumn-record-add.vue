@@ -81,7 +81,7 @@
               </v-tabs>
 
               <v-tabs-window v-model="tab">
-                <v-tabs-window-item :value="1">
+                <v-tabs-window-item :value="1" eager>
                   <v-container fluid>
                     <detail-tab
                       ref="cShift1"
@@ -91,7 +91,7 @@
                     </detail-tab>
                   </v-container>
                 </v-tabs-window-item>
-                <v-tabs-window-item :value="2">
+                <v-tabs-window-item :value="2" eager>
                   <v-container fluid>
                     <detail-tab
                       ref="cShift2"
@@ -101,7 +101,7 @@
                     </detail-tab>
                   </v-container>
                 </v-tabs-window-item>
-                <v-tabs-window-item :value="3">
+                <v-tabs-window-item :value="3" eager>
                   <v-container fluid>
                     <detail-tab
                       ref="cShift3"
@@ -150,7 +150,7 @@ import summaryTab from "./summary-tab.vue";
 import * as ddlApi from "@/api/dropdown-list.js";
 import * as api from "@/api/production-daily-volumn-record.js";
 import * as dateUtils from "@/utils/date.js";
-const tab = ref(1);
+let tab = ref(1);
 const frmInfo = ref(null);
 const frmMainInput = ref(null);
 

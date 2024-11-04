@@ -309,14 +309,13 @@ const Total_Operating_Time = computed(() => {
     const strTotal =
       calculatedHours + "." + calculatedMinutes.toString().padStart(2, "0");
 
-    return numeral(strTotal).format("0,0.00");
+    return strTotal; // numeral(strTotal).format("0,0.00");
+  } else {
+    return 0;
   }
-
-  return 0;
 });
-const T1_Production_EBO = computed(() => {
-  console.log("formShift1.T1_Production_EBO", formShift1.T1_Production_EBO);
 
+const T1_Production_EBO = computed(() => {
   return numeral(
     convertToInteger(formShift1.T1_Production_EBO) +
       convertToInteger(formShift2.T1_Production_EBO) +
