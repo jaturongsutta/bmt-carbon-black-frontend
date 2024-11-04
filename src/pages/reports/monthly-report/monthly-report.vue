@@ -5,32 +5,48 @@
         <h4>Monthly Report</h4>
       </v-card-title>
       <v-card-text>
-        <v-row class="justify-center">
-          <v-col cols="12" sm="3"><label>Report Name</label>
-            <v-select v-model="form.reportName" :items="[{ title: '', value: null }, ...reportList]" 
-            :rules="[rules.required]"></v-select>
-          </v-col>
-          <v-col cols="12" sm="3">
-            <label>Month</label>
-            <v-select v-model="form.dataMonth" :items="[...monthList]" 
-            :rules="[rules.required]"></v-select>
-          </v-col>
-          <v-col cols="12" sm="3">
-            <label>Year</label>
-            <v-select v-model="form.dataYear" :items="[...yearList]" 
-            :rules="[rules.required]"></v-select>
-          </v-col>
-          <v-col cols="12" sm="1">
-            <div class="mt-5">
-              <v-btn prepend-icon="mdi mdi-magnify" color="secondary" @click="onSearch">
-                <template v-slot:prepend>
-                  <v-icon color="white" size="large"></v-icon>
-                </template>
-                Run
-              </v-btn>
-            </div>
-          </v-col>
-        </v-row>
+        <v-form ref="frmInfo">
+          <v-row class="justify-center">
+            <v-col cols="12" sm="3"
+              ><label>Report Name</label>
+              <v-select
+                v-model="form.reportName"
+                :items="reportList"
+                :rules="[rules.required]"
+              ></v-select>
+            </v-col>
+            <v-col cols="12" sm="3">
+              <label>Month</label>
+              <v-select
+                v-model="form.dataMonth"
+                :items="[...monthList]"
+                :rules="[rules.required]"
+              ></v-select>
+            </v-col>
+            <v-col cols="12" sm="3">
+              <label>Year</label>
+              <v-select
+                v-model="form.dataYear"
+                :items="[...yearList]"
+                :rules="[rules.required]"
+              ></v-select>
+            </v-col>
+            <v-col cols="12" sm="2">
+              <div class="mt-5">
+                <v-btn
+                  prepend-icon="mdi mdi-magnify"
+                  color="secondary"
+                  @click="onReview"
+                >
+                  <template v-slot:prepend>
+                    <v-icon color="white" size="large"></v-icon>
+                  </template>
+                  Run
+                </v-btn>
+              </div>
+            </v-col>
+          </v-row>
+        </v-form>
       </v-card-text>
     </v-card>
   </div>
@@ -48,14 +64,16 @@ import rules from "@/utils/rules.js";
 
 const router = useRouter();
 const Alert = inject("Alert");
+const frmInfo = ref(null);
+
 let form = ref({});
 
 let monthList = ref([]);
 let yearList = ref([]);
 
-let stringURL= ref("");
-let stringUsername= ref("");
-let stringPassword= ref("");
+let stringURL = ref("");
+let stringUsername = ref("");
+let stringPassword = ref("");
 
 let reportList = ref([]);
 
@@ -69,28 +87,33 @@ onMounted(() => {
   });
 
   apiReports.findbyReportType("Monthly").then((res) => {
-    
     const coReports = res.data;
 
     coReports.forEach((item) => {
       reportList.value.push({
         title: item.reportName,
         value: item.configReportId,
-        path: item.path
+        path: item.path,
       });
     });
   });
 
-  api.findbyType('REPORT_USERNAME').then((res) => {
-    stringUsername.value = res.data.paramValue
+  api.findbyType("REPORT_USERNAME").then((res) => {
+    stringUsername.value = res.data.paramValue;
   });
-  api.findbyType('REPORT_PASSWORD').then((res) => {
-    stringPassword.value = res.data.paramValue
+  api.findbyType("REPORT_PASSWORD").then((res) => {
+    stringPassword.value = res.data.paramValue;
   });
 });
 
-const onSearch = async () => {
-  let coReport = reportList.value.findLast(x=>x.value == form.value.reportName )
+const onReview = async () => {
+  const { valid } = await frmInfo.value.validate();
+  if (!valid) {
+    return;
+  }
+  let coReport = reportList.value.findLast(
+    (x) => x.value == form.value.reportName
+  );
   openReport(coReport.path);
 };
 
