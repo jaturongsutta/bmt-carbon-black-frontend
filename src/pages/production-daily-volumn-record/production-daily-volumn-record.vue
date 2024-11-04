@@ -118,7 +118,7 @@
               <th>Total</th>
               <th>Production</th>
               <th>Warm up</th>
-              <th>Prepeat</th>
+              <th>Preheat</th>
               <th>Drying</th>
               <th>Liquid</th>
               <th>Oil spray check</th>
@@ -130,7 +130,7 @@
               <th>Total</th>
               <th>Production</th>
               <th>Warm up</th>
-              <th>Prepeat</th>
+              <th>Preheat</th>
               <th>Drying</th>
               <th>Liquid</th>
               <th>Oil spray check</th>
@@ -142,7 +142,7 @@
               <th>Total</th>
               <th>Production</th>
               <th>Warm up</th>
-              <th>Prepeat</th>
+              <th>Preheat</th>
               <th>Drying</th>
               <th>Liquid</th>
               <th>Oil spray check</th>
@@ -232,7 +232,7 @@ const headers = [
     value: ({ S1_2_NG_Warm_up }) => numberFormat(S1_2_NG_Warm_up),
   },
   {
-    title: "Prepeat",
+    title: "Preheat",
     key: "S1_2_NG_Preheat",
     value: ({ S1_2_NG_Preheat }) => numberFormat(S1_2_NG_Preheat),
   },
@@ -318,7 +318,7 @@ const headers = [
     value: ({ S2_2_NG_Warm_up }) => numberFormat(S2_2_NG_Warm_up),
   },
   {
-    title: "Prepeat",
+    title: "Preheat",
     key: "S2_2_NG_Preheat",
     value: ({ S2_2_NG_Preheat }) => numberFormat(S2_2_NG_Preheat),
   },
@@ -404,7 +404,7 @@ const headers = [
     value: ({ S3_2_NG_Warm_up }) => numberFormat(S3_2_NG_Warm_up),
   },
   {
-    title: "Prepeat",
+    title: "Preheat",
     key: "S3_2_NG_Preheat",
     value: ({ S3_2_NG_Preheat }) => numberFormat(S3_2_NG_Preheat),
   },
