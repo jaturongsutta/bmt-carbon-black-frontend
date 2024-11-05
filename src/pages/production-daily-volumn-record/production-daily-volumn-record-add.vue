@@ -46,9 +46,22 @@
               </v-col>
             </v-row>
           </v-form>
+          <dv-row v-if="mode !== 'Add'">
+            <label class="form-label">Loaded file</label> &nbsp; &nbsp;
+
+            <a
+              class="me-3"
+              href="javascript:;"
+              data-bs-toggle="tooltip"
+              @click="onDownload(form.filename)"
+              >{{ form.filename }}
+              <i class="fas fa-download text-secondary"></i>
+            </a>
+          </dv-row>
+
           <v-row class="mt-3">
             <v-col>
-              <label>Upload</label>
+              <!-- <label>Upload</label> -->
               <input
                 ref="fileInput"
                 type="file"
@@ -396,5 +409,24 @@ const validateFileUpload = (value) => {
     }
   }
   return true;
+};
+
+const onDownload = async (filename) => {
+  try {
+    console.log("filename", filename);
+    let response = await api.download(filename);
+    const url = URL.createObjectURL(
+      new Blob([response.data], {
+        type: "application/vnd.ms-excel",
+      })
+    );
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+    link.click();
+  } catch (error) {
+    Alert.error("Download file failed");
+  }
 };
 </script>
