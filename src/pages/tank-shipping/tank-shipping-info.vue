@@ -115,19 +115,17 @@
                   </v-col>
                   <v-col md="3">
                     <label class="require-field">Working Time Start</label>
-                    <v-text-field
+                    <n-time
                       v-model="form.workingTimeStart"
                       :rules="[rules.required]"
-                      type="time"
-                    ></v-text-field>
+                    ></n-time>
                   </v-col>
                   <v-col md="3">
                     <label class="require-field">Working Time Stop</label>
-                    <v-text-field
+                    <n-time
                       v-model="form.workingTimeStop"
                       :rules="[rules.required]"
-                      type="time"
-                    ></v-text-field>
+                    ></n-time>
                   </v-col> </v-row
               ></v-col>
 
@@ -166,10 +164,7 @@
                   </v-col>
                   <v-col md="3">
                     <label>Empty Time</label>
-                    <v-text-field
-                      v-model="form.emptyTime"
-                      type="time"
-                    ></v-text-field>
+                    <n-time v-model="form.emptyTime"></n-time>
                   </v-col>
                 </v-row>
               </v-col>
