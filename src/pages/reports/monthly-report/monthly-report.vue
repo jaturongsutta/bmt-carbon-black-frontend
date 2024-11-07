@@ -80,10 +80,14 @@ let reportList = ref([]);
 onMounted(() => {
   ddlApi.getMonth().then((res) => {
     monthList.value = res;
+    // set default value current month
+    form.value.dataMonth = dateUtils.getToday().split("-")[1];
   });
 
   ddlApi.getYear().then((res) => {
     yearList.value = res;
+    // set default value current year
+    form.value.dataYear = dateUtils.getToday().split("-")[0];
   });
 
   apiReports.findbyReportType("Monthly").then((res) => {
