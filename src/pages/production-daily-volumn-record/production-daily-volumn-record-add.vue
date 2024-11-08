@@ -276,7 +276,7 @@ const onSave = async () => {
         line: form.value.line,
         grade: form.value.grade,
         productName: form.value.productName,
-        filename: filenameTxt.value,
+        filename: form.value.filename,
         filedata: filedata,
         shifts: [shiftData1.value, shiftData2.value, shiftData3.value],
       };
@@ -319,6 +319,7 @@ const handleFileChange = (event) => {
     const filename = file.name;
 
     filenameTxt.value = filename;
+    form.value.filename = filename;
 
     const formData = new FormData();
     formData.append("file", file);
