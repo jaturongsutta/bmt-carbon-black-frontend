@@ -319,7 +319,6 @@ const handleFileChange = (event) => {
     const filename = file.name;
 
     filenameTxt.value = filename;
-    form.value.filename = filename;
 
     const formData = new FormData();
     formData.append("file", file);
@@ -334,6 +333,8 @@ const handleFileChange = (event) => {
       .then((res) => {
         isLoading.value = false;
         if (res.result.status === 0) {
+          form.value.filename = filename;
+
           dateExcel = res.date;
           lineExcel = res.line;
           gradeExcel = res.grade;
