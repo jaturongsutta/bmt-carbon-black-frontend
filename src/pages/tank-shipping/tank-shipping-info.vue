@@ -115,19 +115,17 @@
                   </v-col>
                   <v-col md="3">
                     <label class="require-field">Working Time Start</label>
-                    <v-text-field
+                    <n-time
                       v-model="form.workingTimeStart"
                       :rules="[rules.required]"
-                      type="time"
-                    ></v-text-field>
+                    ></n-time>
                   </v-col>
                   <v-col md="3">
                     <label class="require-field">Working Time Stop</label>
-                    <v-text-field
+                    <n-time
                       v-model="form.workingTimeStop"
                       :rules="[rules.required]"
-                      type="time"
-                    ></v-text-field>
+                    ></n-time>
                   </v-col> </v-row
               ></v-col>
 
@@ -166,10 +164,11 @@
                   </v-col>
                   <v-col md="3">
                     <label>Empty Time</label>
-                    <v-text-field
+                    <n-time
+                      ref="emptyTime"
                       v-model="form.emptyTime"
-                      type="time"
-                    ></v-text-field>
+                      :rules="[validEmptyTime]"
+                    ></n-time>
                   </v-col>
                 </v-row>
               </v-col>
@@ -212,6 +211,8 @@ const route = useRoute();
 const router = useRouter();
 
 const mode = ref("Add");
+
+const emptyTime = ref(null);
 
 const form = ref({
   date: null,
@@ -288,7 +289,7 @@ const loadData = (id) => {
         Alert.error(res.message);
       } else {
         form.value = res;
-
+        form.value.tankShippingId = id;
         form.value.shippingType = res.shippingType
           ? res.shippingType.toString()
           : null;
@@ -335,12 +336,18 @@ const onSave = async () => {
 
 const totalQtyChange = (e) => {
   console.log("totalQtyChange", form.value);
+  if (emptyTime.value.validate) {
+    emptyTime.value.validate();
+  }
   if (
     form.value.date !== null &&
     form.value.lineTank !== null &&
     form.value.grade !== null &&
     form.value.productName !== null &&
-    form.value.totalQty !== null
+    form.value.totalQty !== null &&
+    form.value.tankShippingId !== null &&
+    form.value.workingTimeStart !== null &&
+    form.value.workingTimeStop !== null
   )
     api.getAdjectValue(form.value).then((res) => {
       if (res.status === 0) {
@@ -350,5 +357,12 @@ const totalQtyChange = (e) => {
         Alert.error(res.message);
       }
     });
+};
+
+const validEmptyTime = (value) => {
+  if (form.value.empty === "Y" && value === null) {
+    return "This field is required";
+  }
+  return true;
 };
 </script>
