@@ -134,7 +134,7 @@ const headers = [
       item.Packing_Weight ? numeral(item.Packing_Weight).format("0,0") : "",
   },
   {
-    title: "Total Qty (Kg.)",
+    title: "Total Q'ty (Kg.)",
     key: "Total_Qty",
     sortable: false,
     value: (item) =>

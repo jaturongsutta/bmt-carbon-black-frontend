@@ -1,7 +1,7 @@
 <template>
   <v-btn
     prepend-icon="mdi mdi-plus-circle-outline"
-    class="bg-gradient-info"
+    color="primary"
     v-show="canAccess"
   >
     <template v-slot:prepend>

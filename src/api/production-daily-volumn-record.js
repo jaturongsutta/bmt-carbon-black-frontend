@@ -64,3 +64,17 @@ export const remove = async (id) => {
     throw error;
   }
 };
+
+export const download = async (fileName) => {
+  const response = await axios.post(
+    `/production-daily-volumn-record/download`,
+    {
+      fileName,
+    },
+    {
+      responseType: "blob",
+    }
+  );
+
+  return response;
+};

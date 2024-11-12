@@ -46,9 +46,22 @@
               </v-col>
             </v-row>
           </v-form>
+          <dv-row v-if="mode !== 'Add'">
+            <label class="form-label">Loaded file</label> &nbsp; &nbsp;
+
+            <a
+              class="me-3"
+              href="javascript:;"
+              data-bs-toggle="tooltip"
+              @click="onDownload(form.filename)"
+              >{{ form.filename }}
+              <i class="fas fa-download text-secondary"></i>
+            </a>
+          </dv-row>
+
           <v-row class="mt-3">
             <v-col>
-              <label>Upload</label>
+              <!-- <label>Upload</label> -->
               <input
                 ref="fileInput"
                 type="file"
@@ -81,7 +94,7 @@
               </v-tabs>
 
               <v-tabs-window v-model="tab">
-                <v-tabs-window-item :value="1">
+                <v-tabs-window-item :value="1" eager>
                   <v-container fluid>
                     <detail-tab
                       ref="cShift1"
@@ -91,7 +104,7 @@
                     </detail-tab>
                   </v-container>
                 </v-tabs-window-item>
-                <v-tabs-window-item :value="2">
+                <v-tabs-window-item :value="2" eager>
                   <v-container fluid>
                     <detail-tab
                       ref="cShift2"
@@ -101,7 +114,7 @@
                     </detail-tab>
                   </v-container>
                 </v-tabs-window-item>
-                <v-tabs-window-item :value="3">
+                <v-tabs-window-item :value="3" eager>
                   <v-container fluid>
                     <detail-tab
                       ref="cShift3"
@@ -150,7 +163,7 @@ import summaryTab from "./summary-tab.vue";
 import * as ddlApi from "@/api/dropdown-list.js";
 import * as api from "@/api/production-daily-volumn-record.js";
 import * as dateUtils from "@/utils/date.js";
-const tab = ref(1);
+let tab = ref(1);
 const frmInfo = ref(null);
 const frmMainInput = ref(null);
 
@@ -263,7 +276,7 @@ const onSave = async () => {
         line: form.value.line,
         grade: form.value.grade,
         productName: form.value.productName,
-        filename: filenameTxt.value,
+        filename: form.value.filename,
         filedata: filedata,
         shifts: [shiftData1.value, shiftData2.value, shiftData3.value],
       };
@@ -320,6 +333,8 @@ const handleFileChange = (event) => {
       .then((res) => {
         isLoading.value = false;
         if (res.result.status === 0) {
+          form.value.filename = filename;
+
           dateExcel = res.date;
           lineExcel = res.line;
           gradeExcel = res.grade;
@@ -396,5 +411,24 @@ const validateFileUpload = (value) => {
     }
   }
   return true;
+};
+
+const onDownload = async (filename) => {
+  try {
+    console.log("filename", filename);
+    let response = await api.download(filename);
+    const url = URL.createObjectURL(
+      new Blob([response.data], {
+        type: "application/vnd.ms-excel",
+      })
+    );
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+    link.click();
+  } catch (error) {
+    Alert.error("Download file failed");
+  }
 };
 </script>
