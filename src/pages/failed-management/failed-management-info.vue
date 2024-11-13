@@ -67,14 +67,14 @@
                 ></v-text-field>
               </v-col>
 
-              <v-col md="3">
+              <!-- <v-col md="3">
                 <label class="require-field">Final Production # 2</label>
                 <v-text-field
                   v-model="form.finalProd2"
                   readonly
                   :rules="[rules.required]"
                 ></v-text-field>
-              </v-col>
+              </v-col> -->
             </v-row>
             <v-row>
               <v-col>

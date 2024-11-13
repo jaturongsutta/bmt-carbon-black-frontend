@@ -152,13 +152,13 @@ const headers = [
     value: (item) =>
       item.Failed_Value ? numeral(item.Failed_Value).format("0,0") : "0",
   },
-  {
-    title: "Final Production #2",
-    key: "Final_Prod_2",
-    sortable: false,
-    value: (item) =>
-      item.Final_Prod_2 ? numeral(item.Final_Prod_2).format("0,0") : "0",
-  },
+  // {
+  //   title: "Final Production #2",
+  //   key: "Final_Prod_2",
+  //   sortable: false,
+  //   value: (item) =>
+  //     item.Final_Prod_2 ? numeral(item.Final_Prod_2).format("0,0") : "0",
+  // },
   {
     title: "Created By",
     key: "Created_By",
