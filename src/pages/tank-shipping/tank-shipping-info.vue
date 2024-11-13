@@ -118,6 +118,7 @@
                     <n-time
                       v-model="form.workingTimeStart"
                       :rules="[rules.required]"
+                      @input="totalQtyChange"
                     ></n-time>
                   </v-col>
                   <v-col md="3">
@@ -125,6 +126,7 @@
                     <n-time
                       v-model="form.workingTimeStop"
                       :rules="[rules.required]"
+                      @input="totalQtyChange"
                     ></n-time>
                   </v-col> </v-row
               ></v-col>
