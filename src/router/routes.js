@@ -169,6 +169,20 @@ const routes = [
       },
     ],
   },
+
+  {
+    path: "/common-master/line",
+    meta: {
+      menuNo: "M1006",
+    },
+    children: [
+      {
+        path: "",
+        name: "line",
+        component: () => import("@/pages/line/line.vue"),
+      },
+    ],
+  },
 ];
 
 export default routes;
