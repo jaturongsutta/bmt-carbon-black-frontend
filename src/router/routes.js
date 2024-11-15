@@ -196,6 +196,19 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/common-master/master-index",
+    meta: {
+      menuNo: "M1007",
+    },
+    children: [
+      {
+        path: "",
+        name: "master-index",
+        component: () => import("@/pages/master-index/master-index.vue"),
+      },
+    ],
+  },
 ];
 
 export default routes;
