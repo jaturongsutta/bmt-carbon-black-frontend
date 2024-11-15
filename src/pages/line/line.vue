@@ -123,7 +123,10 @@ import moment from "moment";
 const Alert = inject("Alert");
 const frmInfo = ref(null);
 const router = useRouter();
-let formSearch = ref({});
+let formSearch = ref({
+  line: null,
+  status: "Y",
+});
 let form = ref({});
 
 const dialog = ref(false);
@@ -198,9 +201,11 @@ const loadData = async (paginate) => {
 };
 
 const onReset = () => {
-  formSearch.value = {};
-  items.value = [];
-  totalItems.value = 0;
+  formSearch.value = {
+    line: null,
+    status: "Y",
+  };
+  onSearch();
 };
 
 const onAdd = () => {
