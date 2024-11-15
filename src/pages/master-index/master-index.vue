@@ -342,7 +342,7 @@ const closeClick = () => {
 };
 
 const onDelete = (id) => {
-  Alert.confirm("Are you sure you want to delete this product ?").then(
+  Alert.confirm("Are you sure you want to delete this index ?").then(
     ({ isConfirmed }) => {
       if (isConfirmed) {
         isLoading.value = true;
