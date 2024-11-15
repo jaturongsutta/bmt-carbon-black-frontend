@@ -7,6 +7,13 @@
       <v-card-text>
         <v-row>
           <v-col>
+            <label>Line</label>
+            <v-select
+              v-model="formSearch.line"
+              :items="[{ title: 'All', value: null }, ...lineList]"
+            ></v-select>
+          </v-col>
+          <v-col>
             <label>Product Name</label>
             <v-select
               v-model="formSearch.product"
