@@ -183,6 +183,19 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/common-master/product",
+    meta: {
+      menuNo: "M1007",
+    },
+    children: [
+      {
+        path: "",
+        name: "product",
+        component: () => import("@/pages/product/product.vue"),
+      },
+    ],
+  },
 ];
 
 export default routes;
