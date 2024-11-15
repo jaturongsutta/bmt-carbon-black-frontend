@@ -127,13 +127,13 @@ let productList = ref([]);
 
 const headers = [
   { title: "", key: "action", sortable: false },
-  { title: "Product Name", key: "Product_Name", sortable: true },
-  { title: "Status", key: "Status", sortable: true },
-  { title: "Created By", key: "Created_By", sortable: true },
+  { title: "Product Name", key: "Product_Name", sortable: false },
+  { title: "Status", key: "Status", sortable: false },
+  { title: "Created By", key: "Created_By", sortable: false },
   {
     title: "Created Date",
     key: "Created_Date",
-    sortable: true,
+    sortable: false,
     value: (item) => {
       return item.Created_Date
         ? moment(item.Created_Date).utc().format("DD/MM/YYYY HH:mm:ss")

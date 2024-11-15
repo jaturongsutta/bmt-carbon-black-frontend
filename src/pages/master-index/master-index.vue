@@ -163,13 +163,15 @@ let productList = ref([]);
 
 const headers = [
   { title: "", key: "action", sortable: false },
-  { title: "Product Name", key: "Product_Name" },
+  { title: "Product Name", key: "Product_Name", sortable: false },
   {
     title: "YieId",
     key: "Yield",
+
     value: (item) => {
       return item.Yield ? numeral(item.Yield).format("0,0.000") : "";
     },
+    sortable: false,
   },
   {
     title: "R.H.",
@@ -177,6 +179,7 @@ const headers = [
     value: (item) => {
       return item.R_H ? numeral(item.R_H).format("0,0") : "";
     },
+    sortable: false,
   },
   {
     title: "Capacity Product Tank",
@@ -186,13 +189,14 @@ const headers = [
         ? numeral(item.Cap_Prod_Tank).format("0,0")
         : "";
     },
+    sortable: false,
   },
-  { title: "Status", key: "Status" },
-  { title: "Created By", key: "Created_By", sortable: true },
+  { title: "Status", key: "Status", sortable: false },
+  { title: "Created By", key: "Created_By", sortable: false },
   {
     title: "Created Date",
     key: "Created_Date",
-    sortable: true,
+    sortable: false,
     value: (item) => {
       return item.Created_Date
         ? moment(item.Created_Date).utc().format("DD/MM/YYYY HH:mm:ss")

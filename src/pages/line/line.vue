@@ -136,14 +136,14 @@ let lineList = ref([]);
 
 const headers = [
   { title: "", key: "action", sortable: false },
-  { title: "Line", key: "Line", sortable: true },
-  { title: "Tank", key: "Tank", sortable: true },
-  { title: "Status", key: "Status", sortable: true },
-  { title: "Created By", key: "Created_By", sortable: true },
+  { title: "Line", key: "Line", sortable: false },
+  { title: "Tank", key: "Tank", sortable: false },
+  { title: "Status", key: "Status", sortable: false },
+  { title: "Created By", key: "Created_By", sortable: false },
   {
     title: "Created Date",
     key: "Created_Date",
-    sortable: true,
+    sortable: false,
     value: (item) => {
       return item.Created_Date
         ? moment(item.Created_Date).utc().format("DD/MM/YYYY HH:mm:ss")
