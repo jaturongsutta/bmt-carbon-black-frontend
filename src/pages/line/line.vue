@@ -33,7 +33,11 @@
 
     <v-card class="mt-3">
       <v-card-text>
-        <n-btn-add label="Add" @click="onAdd"></n-btn-add>
+        <n-btn-add
+          label="Add"
+          @click="onAdd"
+          class="float-right mb-3 mr-3"
+        ></n-btn-add>
         <v-data-table-server
           v-model:page="currentPage"
           v-model:items-per-page="pageSize"
@@ -41,6 +45,7 @@
           :items="items"
           :items-length="totalItems"
           @update:options="loadData"
+          class="n-table"
         >
           <template v-slot:[`item.action`]="{ item }">
             <n-gbtn-edit @click="onEdit(item.Line_Id)"></n-gbtn-edit>
