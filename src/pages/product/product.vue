@@ -204,7 +204,6 @@ const onAdd = () => {
   form.value = {
     productId: null,
     productName: null,
-    tank: null,
     isActive: "Y",
   };
   dialog.value = true;
