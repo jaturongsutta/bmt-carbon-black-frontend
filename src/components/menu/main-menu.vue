@@ -146,12 +146,12 @@ const onSave = async () => {
         const res = await saveEdit(form.value);
       }
       isLoading.value = false;
-      await Alert.Success();
+      await Alert.success();
       router.back();
     } catch (error) {
       console.error(error);
       isLoading.value = false;
-      Alert.Error("Error", error.message);
+      Alert.error("Error", error.message);
     }
   }
 };
