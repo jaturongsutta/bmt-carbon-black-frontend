@@ -7,7 +7,7 @@
       <v-card-text>
         <v-row>
           <v-col>
-            <label>Product</label>
+            <label>Product Name</label>
             <v-select
               v-model="formSearch.product"
               :items="[{ title: 'All', value: null }, ...productList]"
@@ -61,7 +61,7 @@
       </v-card-text>
     </v-card>
 
-    <v-dialog v-model="dialog" max-width="600px">
+    <v-dialog v-model="dialog" max-width="400px">
       <v-form ref="frmInfo">
         <v-card>
           <v-card-title>
@@ -71,24 +71,15 @@
           <v-card-text>
             <v-container>
               <v-row>
-                <v-col cols="6">
-                  <label class="require-field">Product </label>
+                <v-col cols="12">
+                  <label class="require-field">Product Name</label>
                   <v-text-field
-                    v-model="form.productNo"
-                    :rules="[rules.required]"
-                    :readonly="mode === 'Edit'"
-                    type="number"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="6">
-                  <label class="require-field">Tank </label>
-                  <v-text-field
-                    v-model="form.tank"
+                    v-model="form.productName"
                     :rules="[rules.required]"
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="6">
+                <v-col cols="12">
                   <label class="require-field">Status </label>
                   <v-select
                     v-model="form.isActive"
@@ -136,8 +127,7 @@ let productList = ref([]);
 
 const headers = [
   { title: "", key: "action", sortable: false },
-  { title: "Product", key: "Product", sortable: true },
-  { title: "Tank", key: "Tank", sortable: true },
+  { title: "Product Name", key: "Product_Name", sortable: true },
   { title: "Status", key: "Status", sortable: true },
   { title: "Created By", key: "Created_By", sortable: true },
   {
@@ -213,7 +203,7 @@ const onAdd = () => {
   console.log("Add");
   form.value = {
     productId: null,
-    productNo: null,
+    productName: null,
     tank: null,
     isActive: "Y",
   };
@@ -226,9 +216,11 @@ const onEdit = (id) => {
   isLoadingPopup.value = true;
 
   api.getById(id).then((res) => {
+    console.log(res);
     isLoadingPopup.value = false;
     if (res.result.status === 0) {
       form.value = res;
+      console.log(form.value);
     } else {
       Alert.warning(res.result.message);
       isLoadingPopup.value = false;
