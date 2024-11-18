@@ -8,10 +8,11 @@
         <v-row>
           <v-col>
             <label>Product Name</label>
-            <v-select
+            <v-text-field    v-model="formSearch.product"></v-text-field>
+            <!-- <v-select
               v-model="formSearch.product"
               :items="[{ title: 'All', value: null }, ...productList]"
-            ></v-select>
+            ></v-select> -->
           </v-col>
           <v-col>
             <label>Status</label>
