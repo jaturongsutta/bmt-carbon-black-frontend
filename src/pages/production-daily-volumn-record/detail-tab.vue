@@ -517,6 +517,9 @@ watch(
         duration.hours() + "." + duration.minutes().toString().padStart(2, "0");
       form.value.Shift_Oper_Time = time;
     }
+    else{
+      form.value.Shift_Oper_Time = 0;
+    }
   }
 );
 

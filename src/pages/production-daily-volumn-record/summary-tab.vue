@@ -286,9 +286,9 @@ const convertToNumber = (value) => {
 // calculate summary
 const Total_Operating_Time = computed(() => {
   if (
-    formShift1.Shift_Oper_Time &&
-    formShift2.Shift_Oper_Time &&
-    formShift3.Shift_Oper_Time
+    formShift1.Shift_Oper_Time !==null &&
+    formShift2.Shift_Oper_Time  !==null &&
+    formShift3.Shift_Oper_Time  !==null
   ) {
     let [s1HH, s1MM] = formShift1.Shift_Oper_Time.toString().split(".");
     let [s2HH, s2MM] = formShift2.Shift_Oper_Time.toString().split(".");
