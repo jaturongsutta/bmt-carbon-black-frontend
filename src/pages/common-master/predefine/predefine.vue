@@ -138,7 +138,6 @@
 
 <script setup>
 import { onMounted, ref, inject } from "vue";
-import { useRoute, useRouter } from "vue-router";
 import { getPaging } from "@/utils/utils.js";
 import * as ddlApi from "@/api/dropdown-list.js";
 import * as api from "@/api/common-master/predefine.js";
@@ -146,13 +145,12 @@ import rules from "@/utils/rules";
 import moment from "moment";
 const Alert = inject("Alert");
 const frmInfo = ref(null);
-const router = useRouter();
-let formSearch = ref({});
-let form = ref({});
-
+const formSearch = ref({
+});
+const form = ref({});
+const mode = ref("Add");
 const dialog = ref(false);
-
-let statusList = ref([]);
+const statusList = ref([]);
 
 const headers = [
   { title: "", key: "action", sortable: false },
@@ -180,11 +178,11 @@ let currentPage = ref(1);
 let pageSize = ref(20);
 let totalItems = ref(0);
 
-const mode = ref("Add");
 
 onMounted(() => {
   ddlApi.getPredefine({ group: "Is_Active", sortby: "text" }).then((data) => {
     statusList.value = data;
+    formSearch.value.isActive = 'Y'
   });
 });
 
@@ -218,7 +216,10 @@ const loadData = async (paginate) => {
 };
 
 const onReset = () => {
-  formSearch.value = {};
+  formSearch.value = {
+    isActive: "Y",
+    
+  };
   items.value = [];
   totalItems.value = 0;
   onSearch();
