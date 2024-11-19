@@ -16,11 +16,11 @@
           </v-col>
           <v-col>
             <label>Value(EN)</label>
-            <v-text-field v-model="formSearch.valueEn"></v-text-field>
+            <v-text-field v-model="formSearch.valueEN"></v-text-field>
           </v-col>
           <v-col>
             <label>Value(TH)</label>
-            <v-text-field v-model="formSearch.valueTh"></v-text-field>
+            <v-text-field v-model="formSearch.valueTH"></v-text-field>
           </v-col>
           <v-col>
             <label>Status</label>
