@@ -15,11 +15,11 @@
             <v-text-field v-model="formSearch.predefineCd"></v-text-field>
           </v-col>
           <v-col>
-            <label>Value(En)</label>
+            <label>Value(EN)</label>
             <v-text-field v-model="formSearch.valueEn"></v-text-field>
           </v-col>
           <v-col>
-            <label>Value(Th)</label>
+            <label>Value(TH)</label>
             <v-text-field v-model="formSearch.valueTh"></v-text-field>
           </v-col>
           <v-col>
