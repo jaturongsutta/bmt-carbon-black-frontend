@@ -11,7 +11,7 @@
             <v-text-field v-model="formSearch.predefineGroup"></v-text-field>
           </v-col>
           <v-col>
-            <label>Predefine CD</label>
+            <label>Predefine Code</label>
             <v-text-field v-model="formSearch.predefineCd"></v-text-field>
           </v-col>
           <v-col>
@@ -155,7 +155,7 @@ const statusList = ref([]);
 const headers = [
   { title: "", key: "action", sortable: false },
   { title: "Predefine Group", key: "Predefine_Group", sortable: true },
-  { title: "Predefine_CD", key: "Predefine_CD", sortable: true },
+  { title: "Predefine Code", key: "Predefine_CD", sortable: true },
   { title: "Value(EN)", key: "Value_EN", sortable: true },
   { title: "Value(TH)", key: "Value_TH", sortable: true },
   { title: "Status", key: "Status_Name", sortable: true },
