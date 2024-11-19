@@ -80,7 +80,7 @@
                   <label class="require-field">Line </label>
                   <v-text-field
                     v-model="form.lineNo"
-                    :rules="[rules.required]"
+                    :rules="[rules.required, rules.nonNegative]"
                     :readonly="mode === 'Edit'"
                     type="number"
                   ></v-text-field>
