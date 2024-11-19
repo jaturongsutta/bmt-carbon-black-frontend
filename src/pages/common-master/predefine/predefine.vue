@@ -79,7 +79,7 @@
             <v-container>
               <v-row>
                 <v-col cols="6">
-                  <label>Predefine Group </label>
+                  <label class="require-field">Predefine Group </label>
                   <v-text-field
                     v-model="form.predefineGroup"
                     :rules="[rules.required]"
@@ -87,7 +87,7 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="6">
-                  <label>Predefine Code </label>
+                  <label class="require-field">Predefine Code </label>
                   <v-text-field
                     v-model="form.predefineCd"
                     :rules="[rules.required]"
@@ -96,14 +96,14 @@
                 </v-col>
 
                 <v-col cols="12">
-                  <label>Value(EN) </label>
+                  <label class="require-field">Value(EN) </label>
                   <v-text-field
                     v-model="form.valueEn"
                     :rules="[rules.required]"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12">
-                  <label>Value(TH) </label>
+                  <label class="require-field">Value(TH) </label>
                   <v-text-field
                     v-model="form.valueTh"
                     :rules="[rules.required]"
