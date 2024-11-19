@@ -154,16 +154,16 @@ const statusList = ref([]);
 
 const headers = [
   { title: "", key: "action", sortable: false },
-  { title: "Predefine Group", key: "Predefine_Group", sortable: true },
-  { title: "Predefine Code", key: "Predefine_CD", sortable: true },
-  { title: "Value(EN)", key: "Value_EN", sortable: true },
-  { title: "Value(TH)", key: "Value_TH", sortable: true },
-  { title: "Status", key: "Status_Name", sortable: true },
-  { title: "Updated By", key: "Updated_By", sortable: true },
+  { title: "Predefine Group", key: "Predefine_Group", sortable: false },
+  { title: "Predefine Code", key: "Predefine_CD", sortable: false },
+  { title: "Value(EN)", key: "Value_EN", sortable: false },
+  { title: "Value(TH)", key: "Value_TH", sortable: false },
+  { title: "Status", key: "Status_Name", sortable: false },
+  { title: "Updated By", key: "Updated_By", sortable: false },
   {
     title: "Updated Date",
     key: "Updated_Date",
-    sortable: true,
+    sortable: false,
     value: (item) => {
       return item.Updated_Date
         ? moment(item.Updated_Date).utc().format("DD/MM/YYYY HH:mm:ss")
