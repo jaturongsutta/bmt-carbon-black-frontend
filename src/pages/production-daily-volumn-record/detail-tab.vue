@@ -15,12 +15,12 @@
             <label>Shift Start</label>
             <n-time
               v-model="form.Shift_Start"
-              :rules="[rules.required]"
+            
             ></n-time>
           </v-col>
           <v-col md="3">
             <label>Shift End</label>
-            <n-time v-model="form.Shift_End" :rules="[rules.required]"></n-time>
+            <n-time v-model="form.Shift_End"  ></n-time>
           </v-col>
         </v-row>
       </v-form>
