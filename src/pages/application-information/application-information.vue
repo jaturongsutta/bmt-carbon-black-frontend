@@ -33,7 +33,7 @@ export default {
     const appDeploymentBackend = ref("-");
 
     onMounted(() => {
-      axios.get(`//last-commit`).then((response) => {
+      axios.get(`/last-commit`).then((response) => {
         appDeploymentBackend.value = response.data;
       });
     });
