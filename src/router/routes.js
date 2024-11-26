@@ -23,6 +23,15 @@ const routes = [
     },
   },
   {
+    path: "/application-information",
+    name: "application-information",
+    component: () =>
+      import("@/pages/application-information/application-information.vue"),
+    meta: {
+      requireAuth: false,
+    },
+  },
+  {
     path: "/common-master/user",
     meta: {
       menuNo: "M1001",
