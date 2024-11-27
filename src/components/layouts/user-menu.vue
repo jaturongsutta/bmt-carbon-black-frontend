@@ -128,12 +128,12 @@ export default {
             .then(async (res) => {
               if (res.data.status === 0) {
                 await Alert.success("Password has been changed successfully");
+                dialogChangePassword.value = false;
               } else if (res.data.status === 1) {
                 Alert.warning(res.data.message);
               } else {
                 Alert.error(res.data.message);
               }
-              //   dialogChangePassword.value = false;
             })
             .catch((error) => {
               console.log(error);
