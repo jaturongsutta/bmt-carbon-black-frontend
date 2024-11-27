@@ -7,30 +7,27 @@
 
       <v-card-text>
         <v-form @submit.prevent="onSave" ref="frmInfo">
-          <v-container class="px-0">
-            <v-row no-gutters>
-              <v-col md="6">
-                <v-row>
-                  <v-col md="3">
-                    <label class="require-field">Date</label>
-                    <n-date
-                      v-model="form.date"
-                      :rules="[rules.required]"
-                      :readonly="mode === 'Edit'"
-                      @update:model-value="totalQtyChange"
-                    ></n-date>
-                  </v-col>
-                  <v-col md="3">
-                    <label class="require-field">Link-Tank</label>
-                    <v-select
-                      v-model="form.lineTank"
-                      :items="lineTankList"
-                      :rules="[rules.required]"
-                      :readonly="mode === 'Edit'"
-                      @update:model-value="totalQtyChange"
-                    ></v-select>
-                  </v-col>
-                  <v-col md="3">
+          <v-row>
+            <v-col md="2">
+              <label class="require-field">Date</label>
+              <n-date
+                v-model="form.date"
+                :rules="[rules.required]"
+                :readonly="mode === 'Edit'"
+                @update:model-value="totalQtyChange"
+              ></n-date>
+            </v-col>
+            <v-col md="2">
+              <label class="require-field">Link-Tank</label>
+              <v-select
+                v-model="form.lineTank"
+                :items="lineTankList"
+                :rules="[rules.required]"
+                :readonly="mode === 'Edit'"
+                @update:model-value="totalQtyChange"
+              ></v-select>
+            </v-col>
+            <!-- <v-col md="3">
                     <label class="require-field">Grade</label>
                     <v-select
                       v-model="form.grade"
@@ -39,143 +36,126 @@
                       :readonly="mode === 'Edit'"
                       @update:model-value="totalQtyChange"
                     ></v-select>
-                  </v-col>
-                  <v-col md="3">
-                    <label class="require-field">Product Name</label>
-                    <v-select
-                      v-model="form.productName"
-                      :items="productList"
-                      :rules="[rules.required]"
-                      :readonly="mode === 'Edit'"
-                      @update:model-value="totalQtyChange"
-                    ></v-select>
-                  </v-col>
-                </v-row>
-              </v-col>
-              <v-col md="6">
-                <v-row>
-                  <v-col md="4">
-                    <label class="require-field">Shipping Type</label>
-                    <v-select
-                      v-model="form.shippingType"
-                      :items="shippingTypeList"
-                      :rules="[rules.required]"
-                    ></v-select>
-                  </v-col>
+                  </v-col> -->
+            <v-col md="2">
+              <label class="require-field">Product Name</label>
+              <v-select
+                v-model="form.productName"
+                :items="productList"
+                :rules="[rules.required]"
+                :readonly="mode === 'Edit'"
+                @update:model-value="totalQtyChange"
+              ></v-select>
+            </v-col>
 
-                  <v-col md="4">
-                    <label class="require-field">Class</label>
-                    <v-select
-                      v-model="form.class"
-                      :items="classList"
-                      :rules="[rules.required]"
-                    ></v-select>
-                  </v-col>
-                  <v-col md="4">
-                    <label class="require-field">Lot No.</label>
-                    <v-text-field
-                      v-model="form.lotNo"
-                      :rules="[rules.required]"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </v-col>
-            </v-row>
-          </v-container>
-          <v-container class="px-0">
-            <v-row no-gutters>
-              <v-col md="6"
-                ><v-row>
-                  <v-col md="3">
-                    <label class="require-field">Packing Weight (Kg.)</label>
-                    <!-- <v-text-field
+            <v-col md="2">
+              <label class="require-field">Shipping Type</label>
+              <v-select
+                v-model="form.shippingType"
+                :items="shippingTypeList"
+                :rules="[rules.required]"
+              ></v-select>
+            </v-col>
+
+            <v-col md="2">
+              <label class="require-field">Class</label>
+              <v-select
+                v-model="form.class"
+                :items="classList"
+                :rules="[rules.required]"
+              ></v-select>
+            </v-col>
+            <v-col md="2">
+              <label class="require-field">Lot No.</label>
+              <v-text-field
+                v-model="form.lotNo"
+                :rules="[rules.required]"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col md="2">
+              <label class="require-field">Packing Weight (Kg.)</label>
+              <!-- <v-text-field
                       v-model="form.packingWeight"
                       :rules="[rules.required, rules.integer]"
                       type="number"
                     ></v-text-field> -->
 
-                    <v-select
-                      :items="packingWeightList"
-                      v-model="form.packingWeight"
-                      :rules="[rules.required]"
-                    ></v-select>
-                  </v-col>
-                  <v-col md="3">
-                    <label class="require-field">Total Q'ty (Kg.)</label>
-                    <v-text-field
-                      v-model="form.totalQty"
-                      :rules="[
-                        rules.required,
-                        rules.integer,
-                        rules.nonNegative,
-                      ]"
-                      type="number"
-                      @input="totalQtyChange"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col md="3">
-                    <label class="require-field">Working Time Start</label>
-                    <n-time
-                      v-model="form.workingTimeStart"
-                      :rules="[rules.required]"
-                      @input="totalQtyChange"
-                    ></n-time>
-                  </v-col>
-                  <v-col md="3">
-                    <label class="require-field">Working Time Stop</label>
-                    <n-time
-                      v-model="form.workingTimeStop"
-                      :rules="[rules.required]"
-                      @input="totalQtyChange"
-                    ></n-time>
-                  </v-col> </v-row
-              ></v-col>
+              <v-select
+                :items="packingWeightList"
+                v-model="form.packingWeight"
+                :rules="[rules.required]"
+              ></v-select>
+            </v-col>
+            <v-col md="2">
+              <label class="require-field">Total Q'ty (Kg.)</label>
+              <v-text-field
+                v-model="form.totalQty"
+                :rules="[rules.required, rules.integer, rules.nonNegative]"
+                type="number"
+                @input="totalQtyChange"
+              ></v-text-field>
+            </v-col>
+            <v-col md="2">
+              <label class="require-field">Working Time Start</label>
+              <n-time
+                v-model="form.workingTimeStart"
+                :rules="[rules.required]"
+                @input="totalQtyChange"
+              ></n-time>
+            </v-col>
+            <v-col md="2">
+              <label class="require-field">Working Time Stop</label>
+              <n-time
+                v-model="form.workingTimeStop"
+                :rules="[rules.required]"
+                @input="totalQtyChange"
+              ></n-time>
+            </v-col>
 
-              <v-col md="6"
-                ><v-row>
-                  <v-col md="4">
-                    <label>Adjust Value</label>
-                    <v-text-field
-                      v-model="form.adjValue"
-                      readonly
-                    ></v-text-field>
-                  </v-col>
-                  <v-col md="4">
-                    <label>Additional Adjustment</label>
-                    <v-text-field
-                      v-model="form.additionalAdj"
-                      :rules="[rules.integer, rules.nonNegative]"
-                      type="number"
-                    ></v-text-field>
-                  </v-col> </v-row
-              ></v-col>
-            </v-row>
-          </v-container>
-          <v-container class="px-0">
-            <v-row no-gutters>
-              <v-col md="6">
-                <v-row no-gutters>
-                  <v-col md="3">
-                    <label>Empty</label>
-                    <v-checkbox
-                      v-model="form.empty"
-                      value="Y"
-                      label="Yes"
-                      @update:model-value="totalQtyChange"
-                    ></v-checkbox>
-                  </v-col>
-                  <v-col md="3">
-                    <label>Empty Time</label>
-                    <n-time
-                      ref="emptyTime"
-                      v-model="form.emptyTime"
-                      :rules="[validEmptyTime]"
-                    ></n-time>
-                  </v-col>
-                </v-row>
-              </v-col>
-            </v-row>
-          </v-container>
+            <v-col md="2">
+              <label>Adjust Value</label>
+              <v-text-field v-model="form.adjValue" readonly></v-text-field>
+            </v-col>
+            <v-col md="2">
+              <label>Additional Adjustment</label>
+              <v-text-field
+                v-model="form.additionalAdj"
+                :rules="[rules.integer, rules.nonNegative]"
+                type="number"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col md="2">
+              <label>Empty</label>
+              <v-checkbox
+                v-model="form.empty"
+                value="Y"
+                label="Yes"
+                @update:model-value="totalQtyChange"
+                @change="
+                  () => {
+                    if (form.empty !== 'Y') {
+                      form.emptyTime = null;
+                    }
+                  }
+                "
+              ></v-checkbox>
+            </v-col>
+            <v-col md="2">
+              <label>Empty Time</label>
+              <n-time
+                ref="emptyTime"
+                v-model="form.emptyTime"
+                :rules="[validEmptyTime]"
+                :disabled="form.empty !== 'Y'"
+              ></n-time>
+            </v-col>
+          </v-row>
 
           <v-row>
             <v-col>
@@ -219,7 +199,6 @@ const emptyTime = ref(null);
 const form = ref({
   date: null,
   lineTank: null,
-  grade: null,
   productName: null,
   shippingType: null,
   class: null,
@@ -235,7 +214,7 @@ const form = ref({
 });
 
 const lineTankList = ref([]);
-const gradeList = ref([]);
+// const gradeList = ref([]);
 const productList = ref([]);
 
 const packingWeightList = ref([]);
@@ -250,9 +229,9 @@ onMounted(() => {
     lineTankList.value = res;
   });
 
-  ddlApi.getPredefine("Grade").then((res) => {
-    gradeList.value = res;
-  });
+  // ddlApi.getPredefine("Grade").then((res) => {
+  //   gradeList.value = res;
+  // });
 
   ddlApi.product().then((res) => {
     productList.value = res;
@@ -267,7 +246,11 @@ onMounted(() => {
   });
 
   ddlApi.getPredefine("Packing_Weight").then((res) => {
-    packingWeightList.value = res;
+    let pw = res;
+    // soft by value desc
+    pw.sort((a, b) => b.value - a.value);
+
+    packingWeightList.value = pw;
   });
 
   if (route.params.id) {
@@ -344,7 +327,6 @@ const totalQtyChange = (e) => {
   if (
     form.value.date !== null &&
     form.value.lineTank !== null &&
-    form.value.grade !== null &&
     form.value.productName !== null &&
     form.value.totalQty !== null &&
     form.value.tankShippingId !== null &&

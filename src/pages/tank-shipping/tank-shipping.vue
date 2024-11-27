@@ -121,7 +121,7 @@ const headers = [
       item.Date ? moment.utc(item.Date).format("DD/MM/YYYY") : "",
   },
   { title: "Line-Tank", key: "Tank", sortable: false },
-  { title: "Grade", key: "Grade", sortable: false },
+  // { title: "Grade", key: "Grade", sortable: false },
   { title: "Product Name", key: "Product_Name", sortable: false },
   { title: "Shipping Type", key: "Shipping_Name", sortable: false },
   { title: "Class", key: "Class", sortable: false },
