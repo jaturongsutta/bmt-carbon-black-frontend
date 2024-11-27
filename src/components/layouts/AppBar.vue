@@ -14,7 +14,9 @@
       @click="homeClick"
     />
     <v-spacer></v-spacer>
+
     <label class="text-h6 me-2">{{ userFullname }}</label>
+    <user-menu class="text-h6 me-2"></user-menu>
 
     <v-btn icon="mdi-logout" variant="text" @click="logoutClick"></v-btn>
   </v-app-bar>

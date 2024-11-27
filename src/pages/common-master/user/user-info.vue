@@ -8,7 +8,10 @@
       <v-row>
         <v-col>
           <label>Username</label>
-          <v-text-field v-model="form.username"></v-text-field>
+          <v-text-field
+            v-model="form.username"
+            :readonly="mode === 'edit'"
+          ></v-text-field>
         </v-col>
         <v-col>
           <label>First Name</label>
@@ -53,6 +56,8 @@ const form = ref({
   isActive: "Y",
 });
 
+const mode = ref("add");
+
 const isLoading = ref(false);
 
 const statusList = ref([]);
@@ -62,10 +67,19 @@ onMounted(() => {
   });
 
   if (route.params.id) {
+    isLoading.value = true;
+    mode.value = "edit";
     const id = route.params.id;
-    api.getById(id).then((res) => {
-      form.value = res;
-    });
+    api
+      .getById(id)
+      .then((res) => {
+        form.value = res;
+        isLoading.value = false;
+      })
+      .catch((error) => {
+        isLoading.value = false;
+        Alert.error("Error ", error.message);
+      });
   }
 });
 
