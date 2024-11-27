@@ -14,6 +14,10 @@
           ></v-text-field>
         </v-col>
         <v-col>
+          <label>Password</label>
+          <v-text-field type="password" v-model="form.password"></v-text-field>
+        </v-col>
+        <v-col>
           <label>First Name</label>
           <v-text-field v-model="form.firstName"></v-text-field>
         </v-col>
@@ -51,6 +55,7 @@ const route = useRoute();
 const router = useRouter();
 const form = ref({
   username: "",
+  password: "",
   firstname: "",
   lastname: "",
   isActive: "Y",
