@@ -13,14 +13,11 @@
           </v-col>
           <v-col md="3">
             <label>Shift Start</label>
-            <n-time
-              v-model="form.Shift_Start"
-            
-            ></n-time>
+            <n-time v-model="form.Shift_Start"></n-time>
           </v-col>
           <v-col md="3">
             <label>Shift End</label>
-            <n-time v-model="form.Shift_End"  ></n-time>
+            <n-time v-model="form.Shift_End"></n-time>
           </v-col>
         </v-row>
       </v-form>
@@ -516,8 +513,7 @@ watch(
       const time =
         duration.hours() + "." + duration.minutes().toString().padStart(2, "0");
       form.value.Shift_Oper_Time = time;
-    }
-    else{
+    } else {
       form.value.Shift_Oper_Time = 0;
     }
   }
@@ -609,6 +605,18 @@ watch(
   () => form.value.T2_NG_Oil_Spray_checking,
   (newValue) => {
     form.value.T2_NG_Oil_Spray_checking_Total = newValue;
+  }
+);
+
+watch(
+  [
+    () => form.value.T3_Mixing_Other,
+    () => form.value.T3_Hoist_Other,
+    () => form.value.T3_Kande_Other,
+  ],
+  ([n1, n2, n3]) => {
+    form.value.T3_Total_Mixing_Volume_Other =
+      convertToInt(n1) + convertToInt(n2) + convertToInt(n3);
   }
 );
 </script>
