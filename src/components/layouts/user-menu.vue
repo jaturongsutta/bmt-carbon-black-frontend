@@ -12,7 +12,7 @@
         <v-list-item @click="changePasswordClick">
           <v-list-item-title>Change Password</v-list-item-title>
         </v-list-item>
-        <v-list-item to="application-information" v-if="isAdmin">
+        <v-list-item @click="applicationInformationClick" v-if="isAdmin">
           <v-list-item-title>Application Information</v-list-item-title>
         </v-list-item>
       </v-list>
@@ -109,6 +109,10 @@ export default {
       dialogChangePassword.value = true;
     };
 
+    const applicationInformationClick = () => {
+      router.push({ name: "application-information" });
+    };
+
     const validatePasswordMatch = () => {
       return (
         newPassword.value === confirmPassword.value || "Password does not match"
@@ -151,6 +155,7 @@ export default {
       frmChangePassword,
       userProfileClick,
       changePasswordClick,
+      applicationInformationClick,
       validatePasswordMatch,
       saveChangePasswordClick,
       rules,
