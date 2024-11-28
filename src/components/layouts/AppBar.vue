@@ -48,7 +48,7 @@ const logoutClick = () => {
 };
 
 const userFullname = computed(() => {
-  return authStore.user?.firstName + " " + authStore.user?.lastName;
+  return authStore.user?.firstName ?? "" + " " + authStore.user?.lastName ?? "";
 });
 
 const toggleMinimalMenu = () => {

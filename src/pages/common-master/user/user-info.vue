@@ -6,26 +6,30 @@
 
     <v-card-text>
       <v-row>
-        <v-col>
+        <v-col md="3">
           <label>Username</label>
           <v-text-field
             v-model="form.username"
             :readonly="mode === 'edit'"
           ></v-text-field>
         </v-col>
-        <v-col>
+        <v-col md="3">
           <label>Password</label>
           <v-text-field type="password" v-model="form.password"></v-text-field>
         </v-col>
-        <v-col>
+        <v-col md="3">
           <label>First Name</label>
           <v-text-field v-model="form.firstName"></v-text-field>
         </v-col>
-        <v-col>
+        <v-col md="3">
           <label>Last Name</label>
           <v-text-field v-model="form.lastName"></v-text-field>
         </v-col>
-        <v-col>
+        <v-col md="3">
+          <label>Role</label>
+          <v-select v-model="form.roles" :items="roleList" multiple></v-select>
+        </v-col>
+        <v-col md="3">
           <label>Status</label>
           <v-select v-model="form.isActive" :items="statusList"></v-select>
         </v-col>
@@ -61,6 +65,11 @@ const form = ref({
   isActive: "Y",
 });
 
+const roleList = ref([
+  { title: "Admin", value: "1" },
+  { title: "User", value: "2" },
+]);
+
 const mode = ref("add");
 
 const isLoading = ref(false);
@@ -71,6 +80,10 @@ onMounted(() => {
     statusList.value = data;
   });
 
+  ddlApi.role().then((data) => {
+    roleList.value = data;
+  });
+
   if (route.params.id) {
     isLoading.value = true;
     mode.value = "edit";
@@ -79,6 +92,9 @@ onMounted(() => {
       .getById(id)
       .then((res) => {
         form.value = res;
+
+        // convert roles data number to string
+        form.value.roles = res.roles.map((item) => item.toString());
         isLoading.value = false;
       })
       .catch((error) => {
@@ -91,6 +107,7 @@ onMounted(() => {
 const onSave = async () => {
   isLoading.value = true;
   let res;
+  console.log(form.value);
 
   try {
     if (route.params.id) {
