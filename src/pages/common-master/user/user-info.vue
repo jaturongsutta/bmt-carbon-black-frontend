@@ -19,7 +19,7 @@
         </v-col>
         <v-col md="4">
           <label>Role</label>
-          <v-select v-model="form.roles" :items="roleList" multiple></v-select>
+          <v-select v-model="form.roles" :items="roleList"></v-select>
         </v-col>
         <v-col md="4">
           <label>First Name</label>
