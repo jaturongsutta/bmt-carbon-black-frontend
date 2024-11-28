@@ -15,6 +15,7 @@
                   v-model="form.date"
                   :rules="[rules.required]"
                   :readonly="mode === 'Edit' || validFileSuccess"
+                  :min-date="minDate"
                 ></n-date>
               </v-col>
               <v-col md="3">
@@ -141,8 +142,9 @@
           <v-row>
             <v-col>
               <div class="d-flex justify-center mb-3">
-                <n-btn-save @click="onSave"> </n-btn-save>
-                <n-btn-cancel @click="router.go(-1)" class="ml-3" />
+                <n-btn-save @click="onSave" v-if="mode !== 'View'">
+                </n-btn-save>
+                <n-btn-back @click="router.go(-1)" class="ml-3" />
               </div>
             </v-col>
           </v-row>
@@ -159,6 +161,7 @@ import { useRoute, useRouter } from "vue-router";
 import rules from "@/utils/rules";
 import detailTab from "./detail-tab.vue";
 import summaryTab from "./summary-tab.vue";
+import moment from "moment";
 
 import * as ddlApi from "@/api/dropdown-list.js";
 import * as api from "@/api/production-daily-volumn-record.js";
@@ -166,6 +169,7 @@ import * as dateUtils from "@/utils/date.js";
 let tab = ref(1);
 const frmInfo = ref(null);
 const frmMainInput = ref(null);
+const minDate = ref(null);
 
 const cShift1 = ref(null);
 const cShift2 = ref(null);
@@ -212,9 +216,16 @@ onMounted(() => {
   });
 
   if (route.params.id) {
-    mode.value = "Edit";
+    if (route.query.view === "Y") {
+      mode.value = "View";
+    } else {
+      mode.value = "Edit";
+    }
     loadData(route.params.id);
   } else {
+    minDate.value = moment(
+      new Date().setDate(new Date().getDate() - 10)
+    ).format("YYYY-MM-DD");
     form.value.date = dateUtils.getToday();
   }
 });

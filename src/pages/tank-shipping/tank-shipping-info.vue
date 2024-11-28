@@ -14,6 +14,7 @@
                 v-model="form.date"
                 :rules="[rules.required]"
                 :readonly="mode === 'Edit'"
+                :min-date="minDate"
                 @update:model-value="totalQtyChange"
               ></n-date>
             </v-col>
@@ -160,17 +161,8 @@
           <v-row>
             <v-col>
               <div class="d-flex justify-center mb-3">
-                <v-btn
-                  prepend-icon="mdi mdi-content-save "
-                  color="primary"
-                  type="submit"
-                >
-                  <template v-slot:prepend>
-                    <v-icon color="white" size="large"></v-icon>
-                  </template>
-                  Save
-                </v-btn>
-                <n-btn-cancel @click="router.go(-1)" class="ml-3" />
+                <n-btn-save type="submit" v-if="mode !== 'View'"></n-btn-save>
+                <n-btn-back @click="router.go(-1)" class="ml-3" />
               </div>
             </v-col>
           </v-row>
@@ -187,6 +179,7 @@ import { useRoute, useRouter } from "vue-router";
 import rules from "@/utils/rules";
 import * as api from "@/api/tank-shipping.js";
 import * as ddlApi from "@/api/dropdown-list.js";
+import moment from "moment";
 const frmInfo = ref(null);
 const Alert = inject("Alert");
 const route = useRoute();
@@ -195,6 +188,8 @@ const router = useRouter();
 const mode = ref("Add");
 
 const emptyTime = ref(null);
+
+const minDate = ref(null);
 
 const form = ref({
   date: null,
@@ -254,12 +249,27 @@ onMounted(() => {
   });
 
   if (route.params.id) {
-    mode.value = "Edit";
+    if (route.query.view === "Y") {
+      mode.value = "View";
+    } else {
+      mode.value = "Edit";
+    }
+
     loadData(route.params.id);
   } else {
+    // set minDate current day - 10days
+    minDate.value = moment(
+      new Date().setDate(new Date().getDate() - 10)
+    ).format("YYYY-MM-DD");
+    console.log(minDate.value);
     // Add Mode
     if (route.query.date) {
-      form.value.date = route.query.date;
+      const queryDate = moment(route.query.date);
+      if (queryDate.isSameOrAfter(minDate.value)) {
+        form.value.date = route.query.date;
+      } else {
+        form.value.date = null;
+      }
     }
   }
 });

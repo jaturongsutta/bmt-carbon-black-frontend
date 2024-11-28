@@ -151,7 +151,12 @@
             </tr>
           </template>
           <template v-slot:[`item.action`]="{ item }">
+            <n-gbtn-view
+              v-if="moment().diff(moment.utc(item.Date), 'days') > 10"
+              @click="onView(item.Prod_Daily_Id)"
+            ></n-gbtn-view>
             <n-gbtn-edit
+              v-else
               @click="onEdit(item.Prod_Daily_Id)"
               :permission="false"
             ></n-gbtn-edit>
@@ -528,6 +533,14 @@ const onReset = () => {
 
 const onAdd = () => {
   router.push({ name: "production-daily-volumn-record-add" });
+};
+
+const onView = (id) => {
+  router.push({
+    name: `production-daily-volumn-record-add`,
+    params: { id: id },
+    query: { view: "Y" },
+  });
 };
 
 const onEdit = (id) => {

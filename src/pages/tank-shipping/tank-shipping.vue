@@ -68,13 +68,17 @@
           hover
         >
           <template v-slot:[`item.action`]="{ item }">
+            <!-- cannot edit if item.Create_Date over 5 days -->
+            <n-gbtn-view
+              v-if="moment().diff(moment.utc(item.Date), 'days') > 10"
+              @click="onView(item.Tank_Shipping_Id)"
+            ></n-gbtn-view>
             <n-gbtn-edit
+              v-else
               @click="onEdit(item.Tank_Shipping_Id)"
-              :permission="false"
             ></n-gbtn-edit>
             <n-gbtn-delete
               @click="onDelete(item.Tank_Shipping_Id)"
-              :permission="false"
             ></n-gbtn-delete>
           </template>
           <template v-slot:bottom>
@@ -205,6 +209,14 @@ const onAdd = () => {
     query: {
       date: form.value.date,
     },
+  });
+};
+
+const onView = (id) => {
+  router.push({
+    name: `tank-shipping-info`,
+    params: { id: id },
+    query: { view: "Y" },
   });
 };
 
