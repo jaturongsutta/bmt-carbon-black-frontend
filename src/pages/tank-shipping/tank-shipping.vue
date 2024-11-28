@@ -73,13 +73,12 @@
               v-if="moment().diff(moment.utc(item.Date), 'days') > 10"
               @click="onView(item.Tank_Shipping_Id)"
             ></n-gbtn-view>
-            <n-gbtn-edit
-              v-else
-              @click="onEdit(item.Tank_Shipping_Id)"
-            ></n-gbtn-edit>
-            <n-gbtn-delete
-              @click="onDelete(item.Tank_Shipping_Id)"
-            ></n-gbtn-delete>
+            <div v-else>
+              <n-gbtn-edit @click="onEdit(item.Tank_Shipping_Id)"></n-gbtn-edit>
+              <n-gbtn-delete
+                @click="onDelete(item.Tank_Shipping_Id)"
+              ></n-gbtn-delete>
+            </div>
           </template>
           <template v-slot:bottom>
             <n-pagination
