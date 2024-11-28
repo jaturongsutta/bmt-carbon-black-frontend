@@ -28,6 +28,7 @@
         @update:model-value="handleChange"
         model-type="yyyy-MM-dd"
         :format="format"
+        :min-date="mainProps.minDate"
         @invalid-select="handleInvalidSelect"
       />
     </v-menu>
@@ -47,6 +48,7 @@ const mainProps = defineProps({
   today: Boolean,
   hideDetails: Boolean,
   rules: Array,
+  minDate: String | Date,
 });
 const emit = defineEmits(["update:modelValue"]);
 
