@@ -6,30 +6,31 @@
 
     <v-card-text>
       <v-row>
-        <v-col md="3">
+        <v-col md="4">
           <label>Username</label>
           <v-text-field
             v-model="form.username"
             :readonly="mode === 'edit'"
           ></v-text-field>
         </v-col>
-        <v-col md="3">
+        <v-col md="4">
           <label>Password</label>
           <v-text-field type="password" v-model="form.password"></v-text-field>
         </v-col>
-        <v-col md="3">
-          <label>First Name</label>
-          <v-text-field v-model="form.firstName"></v-text-field>
-        </v-col>
-        <v-col md="3">
-          <label>Last Name</label>
-          <v-text-field v-model="form.lastName"></v-text-field>
-        </v-col>
-        <v-col md="3">
+        <v-col md="4">
           <label>Role</label>
           <v-select v-model="form.roles" :items="roleList" multiple></v-select>
         </v-col>
-        <v-col md="3">
+        <v-col md="4">
+          <label>First Name</label>
+          <v-text-field v-model="form.firstName"></v-text-field>
+        </v-col>
+        <v-col md="4">
+          <label>Last Name</label>
+          <v-text-field v-model="form.lastName"></v-text-field>
+        </v-col>
+
+        <v-col md="4">
           <label>Status</label>
           <v-select v-model="form.isActive" :items="statusList"></v-select>
         </v-col>
