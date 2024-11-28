@@ -38,6 +38,15 @@ export const getYear = async () => {
   return years;
 };
 
+export const role = async () => {
+  try {
+    const { data } = await axios.get(`dropdown-list/role`);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const line = async () => {
   try {
     const { data } = await axios.get(`dropdown-list/line`);
