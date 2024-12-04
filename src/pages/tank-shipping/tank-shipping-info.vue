@@ -338,6 +338,7 @@ const totalQtyChange = (e) => {
     form.value.date !== null &&
     form.value.lineTank !== null &&
     form.value.productName !== null &&
+    form.value.class !== null &&
     form.value.totalQty !== null &&
     form.value.tankShippingId !== null &&
     form.value.workingTimeStart !== null &&
