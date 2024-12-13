@@ -526,9 +526,7 @@ const onReset = () => {
     grade: null,
     productName: null,
   };
-  setTimeout(() => {
-    isLoading.value = false;
-  }, 1000);
+  onSearch();
 };
 
 const onAdd = () => {
