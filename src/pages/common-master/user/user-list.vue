@@ -83,11 +83,11 @@ let statusList = ref([]);
 
 const headers = [
   { title: "", key: "action", sortable: false },
-  { title: "Username", key: "Username", sortable: true },
-  { title: "First Name", key: "First_Name", sortable: true },
-  { title: "Last Name", key: "Last_Name", sortable: true },
-  { title: "Position Name", key: "Position_Name", sortable: true },
-  { title: "Status", key: "Status", sortable: true },
+  { title: "Username", key: "Username", sortable: false },
+  { title: "First Name", key: "First_Name", sortable: false },
+  { title: "Last Name", key: "Last_Name", sortable: false },
+  // { title: "Position Name", key: "Position_Name", sortable: true },
+  { title: "Status", key: "Status", sortable: false },
   // { title: "Created By", key: "Created_By", sortable: true },
   // {
   //   title: "Created Date",
@@ -99,11 +99,11 @@ const headers = [
   //       : "";
   //   },
   // },
-  { title: "Updated By", key: "Updated_By", sortable: true },
+  { title: "Updated By", key: "Updated_By", sortable: false },
   {
     title: "Updated Date",
     key: "Updated_Date",
-    sortable: true,
+    sortable: false,
     value: (item) => {
       return item.Updated_Date
         ? moment.utc(item.Updated_Date).format("DD/MM/YYYY HH:mm:ss")
