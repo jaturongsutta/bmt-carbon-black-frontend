@@ -81,7 +81,7 @@
                 </v-col>
 
                 <v-col cols="3">
-                  <label>Value(EN) </label>
+                  <label>Role Name EN </label>
                   <v-text-field
                     v-model="form.roleNameEn"
                     :rules="[rules.required]"
