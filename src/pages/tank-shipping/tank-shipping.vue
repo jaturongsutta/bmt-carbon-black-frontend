@@ -5,27 +5,28 @@
         <h4>Tank Shipping</h4>
       </v-card-title>
       <v-card-text>
-        <v-row>
-          <v-col>
-            <label>Date</label>
-            <n-date v-model="form.date"></n-date>
-          </v-col>
-          <v-col>
-            <label>Line-Tank</label>
-            <v-select
-              v-model="form.tank"
-              :items="[{ title: 'All', value: null }, ...lineTankList]"
-            ></v-select>
-          </v-col>
-          <v-col>
-            <label>Product Name</label>
-            <v-select
-              v-model="form.product"
-              :items="[{ title: 'All', value: null }, ...productList]"
-            ></v-select>
-          </v-col>
-        </v-row>
-
+        <v-form ref="frmSearch">
+          <v-row>
+            <v-col>
+              <label>Date</label>
+              <n-date v-model="form.date"></n-date>
+            </v-col>
+            <v-col>
+              <label>Line-Tank</label>
+              <v-select
+                v-model="form.tank"
+                :items="[{ title: 'All', value: null }, ...lineTankList]"
+              ></v-select>
+            </v-col>
+            <v-col>
+              <label>Product Name</label>
+              <v-select
+                v-model="form.product"
+                :items="[{ title: 'All', value: null }, ...productList]"
+              ></v-select>
+            </v-col>
+          </v-row>
+        </v-form>
         <div class="row">
           <div class="d-flex justify-center">
             <v-btn
@@ -70,7 +71,7 @@
           <template v-slot:[`item.action`]="{ item }">
             <!-- cannot edit if item.Create_Date over 5 days -->
             <n-gbtn-view
-              v-if="moment().diff(moment.utc(item.Date), 'days') > 10"
+              v-if="moment().diff(moment.utc(item.Date), 'days') > 30"
               @click="onView(item.Tank_Shipping_Id)"
             ></n-gbtn-view>
             <div v-else>
@@ -102,8 +103,11 @@ import * as api from "@/api/tank-shipping.js";
 import * as ddlApi from "@/api/dropdown-list.js";
 import { getPaging } from "@/utils/utils.js";
 import numeral from "numeral";
+import rules from "@/utils/rules.js";
+import * as dateUtils from "@/utils/date.js";
 const router = useRouter();
 const Alert = inject("Alert");
+const frmSearch = ref(null);
 let form = ref({
   date: null,
   line: null,
@@ -113,7 +117,6 @@ let form = ref({
 const lineTankList = ref([]);
 
 let productList = ref([]);
-
 const headers = [
   { title: "", key: "action", width: "100px", sortable: false },
   {
@@ -195,7 +198,7 @@ const onSearch = async () => {
 
 const onReset = () => {
   form.value = {
-    date: null,
+    date: dateUtils.getToday(),
     line: null,
     product: null,
   };

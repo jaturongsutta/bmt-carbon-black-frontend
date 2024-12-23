@@ -9,11 +9,7 @@
           <v-row>
             <v-col>
               <label>Date</label>
-              <n-date
-                v-model="form.date"
-                :min-date="minDate"
-                :rules="[rules.required]"
-              ></n-date>
+              <n-date v-model="form.date"></n-date>
             </v-col>
             <v-col>
               <label>Line</label>
@@ -479,12 +475,7 @@ let currentPage = ref(1);
 let pageSize = ref(20);
 let totalItems = ref(3);
 
-const minDate = ref(null);
-
 onMounted(() => {
-  // get min date 30 days ago
-  minDate.value = dateUtils.getDateAgo(30);
-
   ddlApi.getPredefine("Grade").then((res) => {
     gradeList.value = res;
   });
@@ -501,10 +492,6 @@ onMounted(() => {
 });
 
 const loadData = async (paginate) => {
-  const { valid } = await frmSearch.value.validate();
-  if (!valid) {
-    return;
-  }
   const { page, itemsPerPage } = paginate;
 
   const searchOptions = getPaging({ page, itemsPerPage });
