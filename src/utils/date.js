@@ -107,6 +107,11 @@ export function getToday() {
   return today;
 }
 
+export function getDateAgo(days) {
+  const date = moment().utc().subtract(days, "days").format("YYYY-MM-DD");
+  return date;
+}
+
 export function getFirstDateOfMonth(dateString) {
   let currentYear;
   let currentMonth;
