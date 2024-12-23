@@ -5,34 +5,39 @@
         <h4>Production Daily Volume Record</h4>
       </v-card-title>
       <v-card-text>
-        <v-row>
-          <v-col>
-            <label>Date</label>
-            <n-date v-model="form.date"></n-date>
-          </v-col>
-          <v-col>
-            <label>Line</label>
-            <v-select
-              v-model="form.line"
-              :items="[{ title: 'All', value: null }, ...lineList]"
-            ></v-select>
-          </v-col>
-          <v-col>
-            <label>Grade</label>
-            <v-select
-              v-model="form.grade"
-              :items="[{ title: 'All', value: null }, ...gradeList]"
-            ></v-select>
-          </v-col>
-          <v-col>
-            <label>Product Name</label>
-            <v-select
-              v-model="form.productName"
-              :items="[{ title: 'All', value: null }, ...productList]"
-            ></v-select>
-          </v-col>
-        </v-row>
-
+        <v-form ref="frmSearch">
+          <v-row>
+            <v-col>
+              <label>Date</label>
+              <n-date
+                v-model="form.date"
+                :min-date="minDate"
+                :rules="[rules.required]"
+              ></n-date>
+            </v-col>
+            <v-col>
+              <label>Line</label>
+              <v-select
+                v-model="form.line"
+                :items="[{ title: 'All', value: null }, ...lineList]"
+              ></v-select>
+            </v-col>
+            <v-col>
+              <label>Grade</label>
+              <v-select
+                v-model="form.grade"
+                :items="[{ title: 'All', value: null }, ...gradeList]"
+              ></v-select>
+            </v-col>
+            <v-col>
+              <label>Product Name</label>
+              <v-select
+                v-model="form.productName"
+                :items="[{ title: 'All', value: null }, ...productList]"
+              ></v-select>
+            </v-col>
+          </v-row>
+        </v-form>
         <div class="row">
           <div class="d-flex justify-center">
             <v-btn
@@ -152,7 +157,7 @@
           </template>
           <template v-slot:[`item.action`]="{ item }">
             <n-gbtn-view
-              v-if="moment().diff(moment.utc(item.Date), 'days') > 10"
+              v-if="moment().diff(moment.utc(item.Date), 'days') > 30"
               @click="onView(item.Prod_Daily_Id)"
             ></n-gbtn-view>
             <n-gbtn-edit
@@ -185,9 +190,10 @@ import { getPaging } from "@/utils/utils.js";
 import numeral from "numeral";
 
 import * as dateUtils from "@/utils/date.js";
-
+import rules from "@/utils/rules.js";
 const router = useRouter();
 const Alert = inject("Alert");
+const frmSearch = ref(null);
 let form = ref({});
 
 let gradeList = ref([]);
@@ -473,7 +479,12 @@ let currentPage = ref(1);
 let pageSize = ref(20);
 let totalItems = ref(3);
 
+const minDate = ref(null);
+
 onMounted(() => {
+  // get min date 30 days ago
+  minDate.value = dateUtils.getDateAgo(30);
+
   ddlApi.getPredefine("Grade").then((res) => {
     gradeList.value = res;
   });
@@ -490,6 +501,10 @@ onMounted(() => {
 });
 
 const loadData = async (paginate) => {
+  const { valid } = await frmSearch.value.validate();
+  if (!valid) {
+    return;
+  }
   const { page, itemsPerPage } = paginate;
 
   const searchOptions = getPaging({ page, itemsPerPage });
