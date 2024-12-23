@@ -224,7 +224,7 @@ onMounted(() => {
     loadData(route.params.id);
   } else {
     minDate.value = moment(
-      new Date().setDate(new Date().getDate() - 10)
+      new Date().setDate(new Date().getDate() - 30)
     ).format("YYYY-MM-DD");
     form.value.date = dateUtils.getToday();
   }
