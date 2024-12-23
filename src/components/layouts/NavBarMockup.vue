@@ -133,7 +133,7 @@ const menuAll = [
     UserName: "system",
     In_Role: "Administrator",
     Menu_No: "M1002",
-    Menu_Name: "Production Daily Volumn Record",
+    Menu_Name: "Production Daily Volume Record",
     Menu_Group: "M1000",
     URL: "/production-daily-volumn-record",
     Menu_Seq: 1,

@@ -2,7 +2,7 @@
   <div>
     <v-card>
       <v-card-title>
-        <h4>Production Daily Volumn Record</h4>
+        <h4>Production Daily Volume Record</h4>
       </v-card-title>
 
       <v-card-text>
