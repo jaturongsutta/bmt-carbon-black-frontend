@@ -259,7 +259,7 @@ onMounted(() => {
   } else {
     // set minDate current day - 10days
     minDate.value = moment(
-      new Date().setDate(new Date().getDate() - 10)
+      new Date().setDate(new Date().getDate() - 30)
     ).format("YYYY-MM-DD");
     console.log(minDate.value);
     // Add Mode
