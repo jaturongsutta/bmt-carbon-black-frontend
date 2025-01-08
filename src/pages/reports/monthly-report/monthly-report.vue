@@ -81,7 +81,10 @@ onMounted(() => {
   ddlApi.getMonth().then((res) => {
     monthList.value = res;
     // set default value current month
-    form.value.dataMonth = dateUtils.getToday().split("-")[1];
+    form.value.dataMonth = parseInt(
+      dateUtils.getToday().split("-")[1],
+      10
+    ).toString();
   });
 
   ddlApi.getYear().then((res) => {
