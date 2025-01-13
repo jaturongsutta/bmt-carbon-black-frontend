@@ -198,7 +198,7 @@ const onSearch = async () => {
 
 const onReset = () => {
   form.value = {
-    date: dateUtils.getToday(),
+    date: null,
     line: null,
     product: null,
   };
