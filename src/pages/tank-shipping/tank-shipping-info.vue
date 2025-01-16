@@ -304,6 +304,8 @@ const onSave = async () => {
   if (valid) {
     try {
       isLoading.value = true;
+      form.value.empty = form.value.empty !== "Y" ? "N" : "Y";
+
       let res = null;
       if (mode.value === "Add") {
         res = await api.add(form.value);
