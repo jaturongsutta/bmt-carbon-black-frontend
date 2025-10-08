@@ -10,7 +10,7 @@
     ></v-app-bar-nav-icon>
     <img
       class="logo-sta ml-3"
-      src="@/assets/imgs/logo.png"
+      src="@/assets/imgs/logo2.png"
       @click="homeClick"
     />
     <v-spacer></v-spacer>
